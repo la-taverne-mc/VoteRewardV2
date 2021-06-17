@@ -91,6 +91,10 @@ public class CommandManager implements CommandExecutor {
                 return true;
             } // rv stat
 
+            if (args[0].equalsIgnoreCase("admin")) {
+                return playerAdminCommands(player, args);
+            } // rv admin ...
+
             if (args[0].equalsIgnoreCase("fakevote")) {
                 int nbReward = 1;
                 UUID targetPlayerUUID = player.getUniqueId();
@@ -168,6 +172,59 @@ public class CommandManager implements CommandExecutor {
                 }
             } // rv reload
         }
+
+        return false;
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean playerAdminCommands(Player player, String... args) {
+
+        if (args.length < 2) {
+            Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+            return true;
+        }
+
+        if (args[1].equalsIgnoreCase("bag")) {
+            if (args.length < 3) {
+                Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+                return true;
+            }
+
+            if (args[2].equalsIgnoreCase("see")) {
+                if (args.length < 4) {
+                    Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+                    return true;
+                }
+
+                OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[3]);
+                if (!targetPlayer.hasPlayedBefore()) {
+                    Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.hasNoPlayedBeforeInServer"));
+                    return true;
+                }
+
+                player.openInventory(GUI.getGUI(player, GUI.ETypeGui.Bag, 0, targetPlayer.getUniqueId()));
+                return true;
+            } // rv admin bag see [player]
+
+            if (args[2].equalsIgnoreCase("get")) {
+                if (args.length < 4) {
+                    Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+                    return true;
+                }
+
+                OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[3]);
+                if (!targetPlayer.hasPlayedBefore()) {
+                    Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.hasNoPlayedBeforeInServer"));
+                    return true;
+                }
+
+                Bag.retrievingBag(Bag.getPlayerBag(targetPlayer.getUniqueId()), player);
+                return true;
+            } // rv admin bag get [player]
+
+            Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+            return true;
+        } // rv admin bag ...
 
         return false;
     }

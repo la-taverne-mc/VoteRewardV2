@@ -29,17 +29,19 @@ public class GUI {
 
     private static final HashMap<UUID, GUI> guiList = new HashMap<>();
 
-    private final Player owner;
-
     private ETypeGui type;
     private Inventory inventory = null;
+    private UUID targetUUID = null;
 
-    private GUI(Player owner, ETypeGui type) {
+    private GUI(ETypeGui type) {
         this.type = type;
-        this.owner = owner;
     }
 
     public static Inventory getGUI(Player owner, ETypeGui type, int page) {
+        return getGUI(owner, type, page, owner.getUniqueId());
+    }
+
+    public static Inventory getGUI(Player owner, ETypeGui type, int page, UUID targetUUID) {
         GUI gui;
 
         if (guiList.containsKey(owner.getUniqueId())) {
@@ -49,7 +51,11 @@ public class GUI {
                 gui.type = type;
             }
         } else {
-            gui = new GUI(owner, type);
+            gui = new GUI(type);
+        }
+
+        if (targetUUID != null) {
+            gui.targetUUID = targetUUID;
         }
 
         switch (type) {
@@ -73,7 +79,7 @@ public class GUI {
 
         ItemStack[] content = new ItemStack[54];
 
-        List<Reward> bagContent = Bag.getPlayerBag(owner.getUniqueId()).getBagContent();
+        List<Reward> bagContent = Bag.getPlayerBag(this.targetUUID).getBagContent();
 
         for (int i = 0; i < 45; i++) {
             int index = i + (page * 45);

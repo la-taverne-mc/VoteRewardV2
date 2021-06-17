@@ -1,0 +1,67 @@
+main: fr.lataverne.votereward.VoteReward
+
+name: VoteReward
+
+description: Manage the vote rewards and the bags
+
+authors:
+  - syuko
+
+version: 2.0.0
+
+api-version: 1.16
+
+commands:
+  votereward:
+    description: Command of the plugin VoteReward
+    usage: "Usage: /rv [bag|stat|admin|stop]"
+    permission: rv.command
+    default: true
+    aliases:
+      - votereward
+      - rv
+    permission-message: "§bVoteReward §f: §7Vous n'avez pas la permission"
+
+permissions:
+  rv.*:
+    description: Adds all permissions
+    default: op
+    children:
+      rv.admin: true
+      rv.player: true
+  rv.admin:
+    description: Adds all admin permissions
+    default: op
+    children:
+      rv.admin.reload: true
+      rv.admin.fakevote: true
+  rv.admin.reload:
+    description: Adds the permission to reload the plugin
+    default: op
+  rv.admin.fakevote:
+    description: Adds all permissions about fakevote feature
+    default: op
+    children:
+      rv.admin.fakevote.me: true
+      rv.admin.fakevote.other: true
+  rv.player:
+    description: Adds all player permissions
+    default: true
+    children:
+      rv.player.bag: true
+  rv.player.bag:
+    description: Adds all bag permissions
+    default: true
+    children:
+      rv.player.bag.see: true
+      rv.player.bag.get: true
+      rv.player.stat: true
+  rv.player.bag.see:
+    description: Adds the permission to see his bag
+    default: true
+  rv.player.bag.get:
+    description: Adds the permission to get his bag
+    default: true
+  rv.player.stat:
+    description: Adds the permission to see the available rewards
+    default: true

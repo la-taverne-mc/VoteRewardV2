@@ -1,0 +1,42 @@
+# Configuration for the plugin
+system:
+  achievableRewardsPath: "plugins/VoteReward/AchievableRewards.yml"
+  bagsDirectory: "plugins/VoteReward/Bags/"
+
+# All messages that can be sent by the plugin
+message:
+  consoleSuffix: "§2[§fVR§2]"
+  messageSuffix: "§bVoteReward §f:"
+  system:
+    existingConfig: "§aFichier config existant"
+    nonExistingConfig: "§cFichier config inexistant"
+    startMessage: "§aPlugin VoteReward opérationnel"
+    stopMessage: "§cPlugin VoteReward désactivé"
+    bagsDirectoryNotFound: "§cDossier contenant les données des bags est introuvable"
+    achievableRewardsFileNotFound: "§cFichier contenant les récompenses obtenables est introuvable"
+    reloadComplete: "§aReload fini"
+    deleteFileFailed: "§aImpossible de supprimer le fichier {1}"
+    bagsLoading: "§eChargement des sacs de récompenses"
+    bagsLoadingSucceeds: "§aChargement des sacs de récompenses fini"
+  player:
+    misuseCommand: "§cMauvaise utilisation de la commande"
+    retrieveRewards: "§aVous avez récuperé {1} récompenses"
+    noRewardToBeRetrieved: "§cIl n'y a pas de récompenses à récuperer"
+    rewardsAddedInBag: "§a{1} récompenses ont été ajoutées dans le sac des récompenses"
+    noAchievableRewardsAvailable: "§cAucune récompense disponible"
+    hasNoPlayedBeforeInServer: "§cLe joueur est introuvable ou n'a jamais joué sur le serveur"
+    notPermission: "§cVous n'avez pas la permission de faire ceci! §8Permission manquante: {1}"
+  admin:
+    reloading: "§7Reload..."
+    successfulReload: "§aReload réussi"
+
+# All string used in the different interfaces
+gui:
+  navigationButton:
+    previousPage: "§r§a← Page précédente"
+    nextPage: "§r§aPage suivante →"
+  bagSee:
+    title: "Sac de récompenses"
+    getRewards: "§r§eRécuperer les récompenses"
+  stat:
+    title: "Récompenses obtenables"

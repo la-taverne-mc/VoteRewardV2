@@ -2,6 +2,7 @@ package fr.lataverne.votereward;
 
 import fr.lataverne.votereward.managers.CommandManager;
 import fr.lataverne.votereward.managers.EventListener;
+import fr.lataverne.votereward.managers.InternalPermission;
 import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
@@ -51,6 +52,8 @@ public class VoteReward extends JavaPlugin {
 
         EventListener eventListener = new EventListener();
         Bukkit.getPluginManager().registerEvents(eventListener, this);
+
+        InternalPermission.loadingInternalPermissions();
 
         sendMessageToConsole(getConfig().getString("message.system.startMessage"));
     }

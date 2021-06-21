@@ -226,6 +226,50 @@ public class CommandManager implements CommandExecutor {
             return true;
         } // rv admin bag ...
 
+        if (args[1].equalsIgnoreCase("stop")) {
+            if (args.length < 3) {
+                Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+                return true;
+            }
+
+            if (args[2].equalsIgnoreCase("see")) {
+
+                boolean value = InternalPermission.isActivate("rv.player.bag.see");
+
+                if (InternalPermission.setInternalPermission("rv.player.bag.see", value)) {
+                    if (value) {
+                        Helper.sendMessageToPlayer(player, "admin.stopCommandSucceeds.featureActivated");
+                    } else {
+                        Helper.sendMessageToPlayer(player, "admin.stopCommandSucceeds.featureDisabled");
+                    }
+                } else {
+                    Helper.sendMessageToPlayer(player, "admin.stopCommandFailed");
+                }
+
+                return true;
+            } // rv admin stop see
+
+            if (args[2].equalsIgnoreCase("get")) {
+
+                boolean value = InternalPermission.isActivate("rv.player.bag.get");
+
+                if (InternalPermission.setInternalPermission("rv.player.bag.get", value)) {
+                    if (value) {
+                        Helper.sendMessageToPlayer(player, "admin.stopCommandSucceeds.featureActivated");
+                    } else {
+                        Helper.sendMessageToPlayer(player, "admin.stopCommandSucceeds.featureDisabled");
+                    }
+                } else {
+                    Helper.sendMessageToPlayer(player, "admin.stopCommandFailed");
+                }
+
+                return true;
+            } // rv admin stop get
+
+            Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
+            return true;
+        } // rv admin stop ...
+
         return false;
     }
 }

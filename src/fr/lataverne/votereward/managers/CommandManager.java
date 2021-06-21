@@ -18,6 +18,8 @@ import java.util.UUID;
 public class CommandManager implements CommandExecutor {
     @SuppressWarnings({"deprecation", "NullableProblems"})
     @Override
+    // We recommend collapsing the code to make it more readable.
+    // Intellij Idea shortcut: Ctrl + Shift + NumPad -
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
         if (sender instanceof Player) {

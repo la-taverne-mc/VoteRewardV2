@@ -16,55 +16,55 @@ import java.util.List;
 
 public class EventListener implements Listener {
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void OnInventoryClosed(InventoryCloseEvent event) {
-        GUI.removeGUI(event.getPlayer().getUniqueId());
-    }
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void OnInventoryClosed(InventoryCloseEvent event) {
+		GUI.removeGUI(event.getPlayer().getUniqueId());
+	}
 
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onMenuClicked(InventoryClickEvent event) {
-        if (event.getView().getTitle().equals(GUI.getRvBagTitle())) {
-            event.setCancelled(true);
+	@EventHandler (priority = EventPriority.LOWEST)
+	public void onMenuClicked(InventoryClickEvent event) {
+		if (event.getView().getTitle().equals(GUI.getRvBagTitle())) {
+			event.setCancelled(true);
 
-            Player player = (Player) event.getWhoClicked();
+			Player player = (Player) event.getWhoClicked();
 
-            if (event.getRawSlot() == 45 || event.getRawSlot() == 53) {
-                int page = 0;
+			if (event.getRawSlot() == 45 || event.getRawSlot() == 53) {
+				int page = 0;
 
-                ItemStack itemClicked = event.getCurrentItem();
-                List<String> lore;
-                if (itemClicked != null && itemClicked.getItemMeta() != null && (lore = itemClicked.getItemMeta().getLore()) != null) {
-                    for (String line : lore) {
-                        try {
-                            line = ChatColor.stripColor(line).replace("Page ", "");
-                            page = Integer.parseInt(line);
-                            break;
-                        } catch (NumberFormatException ignored) {
-                            player.sendMessage(line);
-                        }
-                    }
-                }
+				ItemStack itemClicked = event.getCurrentItem();
+				List<String> lore;
+				if (itemClicked != null && itemClicked.getItemMeta() != null && (lore = itemClicked.getItemMeta().getLore()) != null) {
+					for (String line : lore) {
+						try {
+							line = ChatColor.stripColor(line).replace("Page ", "");
+							page = Integer.parseInt(line);
+							break;
+						} catch (NumberFormatException ignored) {
+							player.sendMessage(line);
+						}
+					}
+				}
 
-                event.getWhoClicked().openInventory(GUI.getGUI(player, GUI.ETypeGui.Bag, page));
-            }
+				event.getWhoClicked().openInventory(GUI.getGUI(player, GUI.ETypeGui.Bag, page));
+			}
 
-            if (event.getRawSlot() == 49) {
-                player.closeInventory();
-                if (Helper.playerHasPermission(player, "rv.player.bag.get")) {
-                    Bag.retrievingBag(Bag.getPlayerBag(player.getUniqueId()), player);
-                }
-            }
+			if (event.getRawSlot() == 49) {
+				player.closeInventory();
+				if (Helper.playerHasPermission(player, "rv.player.bag.get")) {
+					Bag.retrievingBag(Bag.getPlayerBag(player.getUniqueId()), player);
+				}
+			}
 
-            return;
-        }
+			return;
+		}
 
-        if (event.getView().getTitle().equals(GUI.getRvStatTitle())) {
-            event.setCancelled(true);
-        }
-    }
+		if (event.getView().getTitle().equals(GUI.getRvStatTitle())) {
+			event.setCancelled(true);
+		}
+	}
 
-    @EventHandler (priority = EventPriority.HIGHEST)
-    public void onPlayerDisconnected(PlayerQuitEvent event) {
-        Bag.getPlayerBag(event.getPlayer().getUniqueId()).saveBag();
-    }
+	@EventHandler (priority = EventPriority.HIGHEST)
+	public void onPlayerDisconnected(PlayerQuitEvent event) {
+		Bag.getPlayerBag(event.getPlayer().getUniqueId()).saveBag();
+	}
 }

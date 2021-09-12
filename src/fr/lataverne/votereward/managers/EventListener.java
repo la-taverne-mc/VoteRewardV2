@@ -16,7 +16,12 @@ import java.util.List;
 
 public class EventListener implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler (priority = EventPriority.LOWEST)
+    public void OnInventoryClosed(InventoryCloseEvent event) {
+        GUI.removeGUI(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onMenuClicked(InventoryClickEvent event) {
         if (event.getView().getTitle().equals(GUI.getRvBagTitle())) {
             event.setCancelled(true);
@@ -40,7 +45,7 @@ public class EventListener implements Listener {
                     }
                 }
 
-                event.getWhoClicked().openInventory(GUI.getGUI(player,GUI.ETypeGui.Bag ,page));
+                event.getWhoClicked().openInventory(GUI.getGUI(player, GUI.ETypeGui.Bag, page));
             }
 
             if (event.getRawSlot() == 49) {
@@ -58,13 +63,8 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerDisconnected(PlayerQuitEvent event) {
         Bag.getPlayerBag(event.getPlayer().getUniqueId()).saveBag();
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void OnInventoryClosed(InventoryCloseEvent event) {
-        GUI.removeGUI(event.getPlayer().getUniqueId());
     }
 }

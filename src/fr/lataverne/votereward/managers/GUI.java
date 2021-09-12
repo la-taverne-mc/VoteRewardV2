@@ -22,192 +22,192 @@ import java.util.UUID;
 
 public class GUI {
 
-    public enum ETypeGui {
-        Bag,
-        Stat
-    }
+	public enum ETypeGui {
+		Bag,
+		Stat
+	}
 
-    private static final HashMap<UUID, GUI> guiList = new HashMap<>();
+	private static final HashMap<UUID, GUI> guiList = new HashMap<>();
 
-    private final Player owner;
+	private final Player owner;
 
-    private ETypeGui type;
-    private Inventory inventory = null;
+	private ETypeGui type;
 
-    private GUI(Player owner, ETypeGui type) {
-        this.type = type;
-        this.owner = owner;
-    }
+	private Inventory inventory = null;
 
-    public static Inventory getGUI(Player owner, ETypeGui type, int page) {
-        GUI gui;
+	private GUI(Player owner, ETypeGui type) {
+		this.type = type;
+		this.owner = owner;
+	}
 
-        if (guiList.containsKey(owner.getUniqueId())) {
-            gui = guiList.get(owner.getUniqueId());
-            if (gui.type != type) {
-                gui.inventory = null;
-                gui.type = type;
-            }
-        } else {
-            gui = new GUI(owner, type);
-        }
+	public static Inventory getGUI(Player owner, ETypeGui type, int page) {
+		GUI gui;
 
-        switch (type) {
-            case Bag:
-                gui.createBagView(page);
-                break;
-            case Stat:
-                gui.createStatView(page);
-                break;
-            default:
-                break;
-        }
+		if (guiList.containsKey(owner.getUniqueId())) {
+			gui = guiList.get(owner.getUniqueId());
+			if (gui.type != type) {
+				gui.inventory = null;
+				gui.type = type;
+			}
+		} else {
+			gui = new GUI(owner, type);
+		}
 
-        return gui.inventory;
-    }
+		switch (type) {
+			case Bag:
+				gui.createBagView(page);
+				break;
+			case Stat:
+				gui.createStatView(page);
+				break;
+			default:
+				break;
+		}
 
-    private void createBagView(int page) {
-        if (this.inventory ==  null) {
-            this.inventory = Bukkit.createInventory(null, 54, getRvBagTitle());
-        }
+		return gui.inventory;
+	}
 
-        ItemStack[] content = new ItemStack[54];
+	public static String getRvBagTitle() {
+		return VoteReward.getInstance().getConfig().getString("gui.bagSee.title");
+	}
 
-        List<Reward> bagContent = Bag.getPlayerBag(owner.getUniqueId()).getBagContent();
+	public static String getRvStatTitle() {
+		return VoteReward.getInstance().getConfig().getString("gui.stat.title");
+	}
 
-        for (int i = 0; i < 45; i++) {
-            int index = i + (page * 45);
-            if (index < bagContent.size()) {
-                ItemStack reward = bagContent.get(index).getItemStack().clone();
-                ItemMeta rewardMeta = reward.getItemMeta();
-                if (rewardMeta != null) {
-                    List<String> rewardLore = rewardMeta.getLore();
-                    if (rewardLore == null) {
-                        rewardLore = new ArrayList<>();
-                    }
-                    rewardLore.add(ChatColor.BLUE + "Expire le " + bagContent.get(index).getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+	public static void removeGUI(UUID uuid) {
+		guiList.remove(uuid);
+	}
 
-                    rewardMeta.setLore(rewardLore);
-                    reward.setItemMeta(rewardMeta);
-                }
+	private static void setNavigationButtons(ItemStack[] content, int currentPage) {
+		int previousPage = currentPage > 0 ? currentPage - 1 : -1;
+		int nextPage = currentPage + 1;
 
-                content[i] = reward;
-            }
-            else {
-                content[i] = null;
-            }
-        }
+		ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+		ItemMeta previousPageMeta = previousPageItem.getItemMeta();
+		if (previousPageMeta != null) {
+			previousPageMeta.setDisplayName(Helper.colorizeString(VoteReward.getInstance().getConfig().getString("gui.navigationButton.previousPage")));
+			List<String> lore = previousPageMeta.getLore();
+			if (lore == null) {
+				lore = new ArrayList<>();
+			}
+			lore.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Page " + previousPage);
+			previousPageMeta.setLore(lore);
+			previousPageItem.setItemMeta(previousPageMeta);
+		}
 
-        setNavigationButtons(content, page);
+		ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+		ItemMeta nextPageMeta = nextPageItem.getItemMeta();
+		if (nextPageMeta != null) {
+			nextPageMeta.setDisplayName(Helper.colorizeString(VoteReward.getInstance().getConfig().getString("gui.navigationButton.nextPage")));
+			List<String> lore = nextPageMeta.getLore();
+			if (lore == null) {
+				lore = new ArrayList<>();
+			}
+			lore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "Page " + nextPage);
+			nextPageMeta.setLore(lore);
+			nextPageItem.setItemMeta(nextPageMeta);
+		}
 
-        ItemStack getRewardsItem = new ItemStack(Material.TRIPWIRE_HOOK, 1);
-        ItemMeta getRewardsMeta = getRewardsItem.getItemMeta();
-        if (getRewardsMeta != null) {
-            getRewardsMeta.setDisplayName(VoteReward.getInstance().getConfig().getString("gui.bagSee.getRewards"));
-            getRewardsItem.setItemMeta(getRewardsMeta);
-        }
-        content[49] = getRewardsItem;
+		ItemStack emptySpaceItem = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+		ItemMeta emptySpaceMeta = emptySpaceItem.getItemMeta();
+		if (emptySpaceMeta != null) {
+			emptySpaceMeta.setDisplayName(ChatColor.RESET + "");
+			emptySpaceItem.setItemMeta(emptySpaceMeta);
+		}
 
-        this.inventory.setContents(content);
-    }
+		content[content.length - 9] = previousPage > -1 ? previousPageItem : emptySpaceItem;
+		content[content.length - 8] = emptySpaceItem;
+		content[content.length - 7] = emptySpaceItem;
+		content[content.length - 6] = emptySpaceItem;
+		content[content.length - 5] = emptySpaceItem;
+		content[content.length - 4] = emptySpaceItem;
+		content[content.length - 3] = emptySpaceItem;
+		content[content.length - 2] = emptySpaceItem;
+		content[content.length - 1] = nextPageItem;
+	}
 
-    private void createStatView(int page) {
-        if (this.inventory == null) {
-            this.inventory = Bukkit.createInventory(null, 54, getRvStatTitle());
-        }
+	private void createBagView(int page) {
+		if (this.inventory == null) {
+			this.inventory = Bukkit.createInventory(null, 54, getRvBagTitle());
+		}
 
-        ItemStack[] content = new ItemStack[54];
+		ItemStack[] content = new ItemStack[54];
 
-        AchievableReward[] achievableRewards = AchievableReward.getAchievableRewards();
+		List<Reward> bagContent = Bag.getPlayerBag(owner.getUniqueId()).getBagContent();
 
-        DecimalFormat df = new DecimalFormat("###.##");
+		for (int i = 0; i < 45; i++) {
+			int index = i + (page * 45);
+			if (index < bagContent.size()) {
+				ItemStack reward = bagContent.get(index).getItemStack().clone();
+				ItemMeta rewardMeta = reward.getItemMeta();
+				if (rewardMeta != null) {
+					List<String> rewardLore = rewardMeta.getLore();
+					if (rewardLore == null) {
+						rewardLore = new ArrayList<>();
+					}
+					rewardLore.add(ChatColor.BLUE + "Expire le " + bagContent.get(index).getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-        for (int i = 0; i < 45; i++) {
-            int index = i + (page * 45);
-            if (index < achievableRewards.length) {
-                ItemStack itemStack = achievableRewards[index].getItemStack().clone();
-                ItemMeta itemMeta = itemStack.getItemMeta();
-                if (itemMeta != null) {
-                    List<String> lore = itemMeta.getLore();
-                    if (lore == null) {
-                        lore = new ArrayList<>();
-                    }
-                    lore.add(ChatColor.GRAY + "Pourcentage d'obtention :" + achievableRewards[index].getPercentage());
-                    lore.add(ChatColor.GRAY + "Chance réelle d'obtention :" + df.format(achievableRewards[index].getRealChanceOfDrop()));
-                    lore.add("");
-                    lore.add(ChatColor.BLUE + "Clic pour modifier le pourcentage d'obtention");
+					rewardMeta.setLore(rewardLore);
+					reward.setItemMeta(rewardMeta);
+				}
 
-                    itemMeta.setLore(lore);
-                    itemStack.setItemMeta(itemMeta);
-                }
-                content[i] = itemStack;
-            } else {
-                content[i] = null;
-            }
-        }
+				content[i] = reward;
+			} else {
+				content[i] = null;
+			}
+		}
 
-        setNavigationButtons(content, page);
+		setNavigationButtons(content, page);
 
-        this.inventory.setContents(content);
-    }
+		ItemStack getRewardsItem = new ItemStack(Material.TRIPWIRE_HOOK, 1);
+		ItemMeta getRewardsMeta = getRewardsItem.getItemMeta();
+		if (getRewardsMeta != null) {
+			getRewardsMeta.setDisplayName(VoteReward.getInstance().getConfig().getString("gui.bagSee.getRewards"));
+			getRewardsItem.setItemMeta(getRewardsMeta);
+		}
+		content[49] = getRewardsItem;
 
-    public static void removeGUI(UUID uuid) {
-        guiList.remove(uuid);
-    }
+		this.inventory.setContents(content);
+	}
 
-    public static String getRvBagTitle() {
-        return VoteReward.getInstance().getConfig().getString("gui.bagSee.title");
-    }
+	private void createStatView(int page) {
+		if (this.inventory == null) {
+			this.inventory = Bukkit.createInventory(null, 54, getRvStatTitle());
+		}
 
-    public static String getRvStatTitle() {
-        return VoteReward.getInstance().getConfig().getString("gui.stat.title");
-    }
+		ItemStack[] content = new ItemStack[54];
 
-    private static void setNavigationButtons(ItemStack[] content, int currentPage) {
-        int previousPage = currentPage > 0 ? currentPage - 1 : -1;
-        int nextPage = currentPage + 1;
+		AchievableReward[] achievableRewards = AchievableReward.getAchievableRewards();
 
-        ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta previousPageMeta = previousPageItem.getItemMeta();
-        if (previousPageMeta != null) {
-            previousPageMeta.setDisplayName(Helper.colorizeString(VoteReward.getInstance().getConfig().getString("gui.navigationButton.previousPage")));
-            List<String> lore = previousPageMeta.getLore();
-            if (lore == null) {
-                lore = new ArrayList<>();
-            }
-            lore.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Page " + previousPage);
-            previousPageMeta.setLore(lore);
-            previousPageItem.setItemMeta(previousPageMeta);
-        }
+		DecimalFormat df = new DecimalFormat("###.##");
 
-        ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta nextPageMeta = nextPageItem.getItemMeta();
-        if (nextPageMeta != null) {
-            nextPageMeta.setDisplayName(Helper.colorizeString(VoteReward.getInstance().getConfig().getString("gui.navigationButton.nextPage")));
-            List<String> lore = nextPageMeta.getLore();
-            if (lore == null) {
-                lore = new ArrayList<>();
-            }
-            lore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "Page " + nextPage);
-            nextPageMeta.setLore(lore);
-            nextPageItem.setItemMeta(nextPageMeta);
-        }
+		for (int i = 0; i < 45; i++) {
+			int index = i + (page * 45);
+			if (index < achievableRewards.length) {
+				ItemStack itemStack = achievableRewards[index].getItemStack().clone();
+				ItemMeta itemMeta = itemStack.getItemMeta();
+				if (itemMeta != null) {
+					List<String> lore = itemMeta.getLore();
+					if (lore == null) {
+						lore = new ArrayList<>();
+					}
+					lore.add(ChatColor.GRAY + "Pourcentage d'obtention :" + achievableRewards[index].getPercentage());
+					lore.add(ChatColor.GRAY + "Chance réelle d'obtention :" + df.format(achievableRewards[index].getRealChanceOfDrop()));
+					lore.add("");
+					lore.add(ChatColor.BLUE + "Clic pour modifier le pourcentage d'obtention");
 
-        ItemStack emptySpaceItem = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
-        ItemMeta emptySpaceMeta = emptySpaceItem.getItemMeta();
-        if (emptySpaceMeta != null) {
-            emptySpaceMeta.setDisplayName(ChatColor.RESET + "");
-            emptySpaceItem.setItemMeta(emptySpaceMeta);
-        }
+					itemMeta.setLore(lore);
+					itemStack.setItemMeta(itemMeta);
+				}
+				content[i] = itemStack;
+			} else {
+				content[i] = null;
+			}
+		}
 
-        content[content.length - 9] = previousPage > -1 ? previousPageItem : emptySpaceItem;
-        content[content.length - 8] = emptySpaceItem;
-        content[content.length - 7] = emptySpaceItem;
-        content[content.length - 6] = emptySpaceItem;
-        content[content.length - 5] = emptySpaceItem;
-        content[content.length - 4] = emptySpaceItem;
-        content[content.length - 3] = emptySpaceItem;
-        content[content.length - 2] = emptySpaceItem;
-        content[content.length - 1] = nextPageItem;
-    }
+		setNavigationButtons(content, page);
+
+		this.inventory.setContents(content);
+	}
 }

@@ -5,25 +5,27 @@ import org.bukkit.inventory.ItemStack;
 import java.time.LocalDate;
 
 public class Reward {
-    private final LocalDate expiration;
-    private final ItemStack itemStack;
-    private final int achievableRewardId;
+	private final LocalDate expiration;
 
-    public Reward(ItemStack itemStack, LocalDate expiration, int achievableRewardId) {
-        this.expiration = expiration;
-        this.itemStack = itemStack;
-        this.achievableRewardId = achievableRewardId;
-    }
+	private final ItemStack itemStack;
 
-    public ItemStack getItemStack() {
-        return itemStack;
-    }
+	private final int achievableRewardId;
 
-    public LocalDate getExpirationDate() {
-        return expiration;
-    }
+	public Reward(ItemStack itemStack, LocalDate expiration, int achievableRewardId) {
+		this.expiration = expiration;
+		this.itemStack = itemStack;
+		this.achievableRewardId = achievableRewardId;
+	}
 
-    public int getAchievableRewardId() {
-        return achievableRewardId;
-    }
+	public int getAchievableRewardId() {
+		return achievableRewardId;
+	}
+
+	public LocalDate getExpirationDate() {
+		return expiration;
+	}
+
+	public ItemStack getItemStack() {
+		return itemStack;
+	}
 }

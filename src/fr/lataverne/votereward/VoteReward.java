@@ -21,216 +21,216 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Main class that extends JavaPlugin.
  */
 public class VoteReward extends JavaPlugin {
 
-    private static VoteReward instance;
+	private static VoteReward instance;
 
-    /**
-     * Called when the plugin is enabled.
-     */
-    @Override
-    public void onEnable() {
-        instance = this;
+	public static VoteReward getInstance() {
+		return VoteReward.instance;
+	}
 
-        Path bagsDirectory = Paths.get(Objects.requireNonNull(VoteReward.getInstance().getConfig().getString("system.bagsDirectory")));
-        if (!Files.exists(bagsDirectory)) {
-            try {
-                Files.createDirectory(bagsDirectory);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+	public static void sendMessageToConsole(String message) {
+		String str = instance.getConfig().getString("message.consoleSuffix") + " " + ChatColor.RESET + message;
+		Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
+	}
 
-        CommandManager commandManager = new CommandManager();
-        Objects.requireNonNull(getCommand("votereward")).setExecutor(commandManager);
+	@Override
+	public void onDisable() {
+		saveBagOfAllPlayers();
+		sendMessageToConsole(getConfig().getString("message.system.stopMessage"));
+	}
 
-        EventListener eventListener = new EventListener();
-        Bukkit.getPluginManager().registerEvents(eventListener, this);
+	/**
+	 * Called when the plugin is enabled.
+	 */
+	@Override
+	public void onEnable() {
+		instance = this;
 
-        sendMessageToConsole(getConfig().getString("message.system.startMessage"));
-    }
+		Path bagsDirectory = Paths.get(Objects.requireNonNull(VoteReward.getInstance().getConfig().getString("system.bagsDirectory")));
+		if (!Files.exists(bagsDirectory)) {
+			try {
+				Files.createDirectory(bagsDirectory);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
-    @Override
-    public void onDisable() {
-        sendMessageToConsole(getConfig().getString("message.system.stopMessage"));
-    }
+		CommandManager commandManager = new CommandManager();
+		Objects.requireNonNull(getCommand("votereward")).setExecutor(commandManager);
 
-    /**
-     * Method for reload the plugin's config.
-     * If the config don't exist then we save the default config.
-     */
-    @Override
-    public void reloadConfig() {
-        boolean configExist = true;
-        if (!new File("plugins/VoteReward/config.yml").exists()) {
-            saveDefaultConfig();
-            configExist = false;
-        }
+		EventListener eventListener = new EventListener();
+		Bukkit.getPluginManager().registerEvents(eventListener, this);
 
-        super.reloadConfig();
+		sendMessageToConsole(getConfig().getString("message.system.startMessage"));
+	}
 
-        if (configExist) {
-            sendMessageToConsole(getConfig().getString("message.system.existingConfig"));
-        } else {
-            sendMessageToConsole(getConfig().getString("message.system.nonExistingConfig"));
-        }
+	/**
+	 * Method for reload the plugin's config.
+	 * If the config don't exist then we save the default config.
+	 */
+	@Override
+	public void reloadConfig() {
+		boolean configExist = true;
+		if (!new File("plugins/VoteReward/config.yml").exists()) {
+			saveDefaultConfig();
+			configExist = false;
+		}
 
-        loadAchievableRewards();
-        loadBags();
+		super.reloadConfig();
 
-        sendMessageToConsole(getConfig().getString("message.system.reloadComplete"));
-    }
+		if (configExist) {
+			sendMessageToConsole(getConfig().getString("message.system.existingConfig"));
+		} else {
+			sendMessageToConsole(getConfig().getString("message.system.nonExistingConfig"));
+		}
 
-    private static void loadAchievableRewards() {
-        String dataFilePath = instance.getConfig().getString("system.achievableRewardsPath");
-        File dataFile = null;
-        if (dataFilePath != null) {
-            dataFile = new File(dataFilePath);
-        }
+		loadAchievableRewards();
+		loadBags();
 
-        if (dataFilePath == null || !dataFile.exists()) {
-            sendMessageToConsole(instance.getConfig().getString("message.system.achievableRewardsFileNotFound") + " (Path: " + dataFilePath + ")");
-            return;
-        }
+		sendMessageToConsole(getConfig().getString("message.system.reloadComplete"));
+	}
 
-        AchievableReward.clear();
+	private static void addExpirationDate(LocalDate expiration, ItemStack rewardItem, ItemMeta rewardItemMeta) {
+		List<String> rewardItemLore = rewardItemMeta.getLore();
+		if (rewardItemLore == null) {
+			rewardItemLore = new ArrayList<>();
+		}
 
-        YamlConfiguration achievableRewardFile = new YamlConfiguration();
-        try {
-            achievableRewardFile.load(dataFile);
-            for (String key : achievableRewardFile.getKeys(false)) {
-                String type = achievableRewardFile.getString(key + ".type");
-                Material materialType;
-                if (type != null && (materialType = Material.getMaterial(type)) != null) {
-                    int amount = achievableRewardFile.contains(key + ".amount") ? achievableRewardFile.getInt(key + ".amount") : 1;
-                    double percentage = achievableRewardFile.contains(key + ".percent") ? achievableRewardFile.getDouble(key + ".percent") : 0.0;
-                    int id = Integer.parseInt(key.replace("reward_", ""));
+		rewardItemLore.add(ChatColor.BLUE + "Expiration : " + expiration);
 
-                    ItemStack itemStack = new ItemStack(materialType, amount);
+		rewardItemMeta.setLore(rewardItemLore);
+		rewardItem.setItemMeta(rewardItemMeta);
+	}
 
-                    AchievableReward.addNewAchievableRewards(new AchievableReward(itemStack, percentage, id), id);
-                }
-            }
-        } catch (InvalidConfigurationException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+	private static void loadAchievableRewards() {
+		String dataFilePath = instance.getConfig().getString("system.achievableRewardsPath");
+		File dataFile = null;
+		if (dataFilePath != null) {
+			dataFile = new File(dataFilePath);
+		}
 
-    private static void loadBags() {
-        String dataDirectoryPath = instance.getConfig().getString("system.bagsDirectory");
-        File dataDirectory = null;
-        if (dataDirectoryPath != null) {
-            dataDirectory = new File(dataDirectoryPath);
-        }
+		if (dataFilePath == null || !dataFile.exists()) {
+			sendMessageToConsole(instance.getConfig().getString("message.system.achievableRewardsFileNotFound") + " (Path: " + dataFilePath + ")");
+			return;
+		}
 
-        if (dataDirectoryPath == null || !dataDirectory.exists()) {
-            sendMessageToConsole(instance.getConfig().getString("message.system.bagsDirectoryNotFound"));
-            return;
-        }
+		AchievableReward.clear();
 
-        File[] fileList = dataDirectory.listFiles();
+		YamlConfiguration achievableRewardFile = new YamlConfiguration();
+		try {
+			achievableRewardFile.load(dataFile);
+			for (String key : achievableRewardFile.getKeys(false)) {
+				String type = achievableRewardFile.getString(key + ".type");
+				Material materialType;
+				if (type != null && (materialType = Material.getMaterial(type)) != null) {
+					int amount = achievableRewardFile.contains(key + ".amount") ? achievableRewardFile.getInt(key + ".amount") : 1;
+					double percentage = achievableRewardFile.contains(key + ".percent") ? achievableRewardFile.getDouble(key + ".percent") : 0.0;
+					int id = Integer.parseInt(key.replace("reward_", ""));
 
-        if (fileList == null) {
-            return;
-        }
+					ItemStack itemStack = new ItemStack(materialType, amount);
 
-        sendMessageToConsole(instance.getConfig().getString("message.system.bagsLoading"));
+					AchievableReward.addNewAchievableRewards(new AchievableReward(itemStack, percentage, id), id);
+				}
+			}
+		} catch (InvalidConfigurationException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-        for (File file : fileList) {
-            YamlConfiguration bagContent = new YamlConfiguration();
-            try {
-                bagContent.load(file);
+	private static void loadBags() {
+		String dataDirectoryPath = instance.getConfig().getString("system.bagsDirectory");
+		File dataDirectory = null;
+		if (dataDirectoryPath != null) {
+			dataDirectory = new File(dataDirectoryPath);
+		}
 
-                UUID owner = UUID.fromString(file.getName().replace(".yml", ""));
+		if (dataDirectoryPath == null || !dataDirectory.exists()) {
+			sendMessageToConsole(instance.getConfig().getString("message.system.bagsDirectoryNotFound"));
+			return;
+		}
 
-                Bag.clear();
+		File[] fileList = dataDirectory.listFiles();
 
-                Bag playerBag = Bag.getPlayerBag(owner);
+		if (fileList == null) {
+			return;
+		}
 
-                for (String key : bagContent.getKeys(false)) {
-                    int id;
-                    if (bagContent.contains(key + ".ID") && (id = bagContent.getInt(key + ".ID")) != -1) {
-                        AchievableReward achievableReward = AchievableReward.getAchievableReward(id);
-                        if (achievableReward != null) {
-                            String expirationString = bagContent.getString(key + ".expiration");
-                            if (expirationString == null) {
-                                expirationString = "01/01/1975";
-                            }
+		sendMessageToConsole(instance.getConfig().getString("message.system.bagsLoading"));
 
-                            LocalDate expiration = LocalDate.parse(expirationString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		for (File file : fileList) {
+			YamlConfiguration bagContent = new YamlConfiguration();
+			try {
+				bagContent.load(file);
 
-                            ItemStack rewardItem = achievableReward.getItemStack().clone();
-                            ItemMeta rewardItemMeta = rewardItem.getItemMeta();
-                            if (rewardItemMeta != null) {
-                                List<String> rewardItemLore = rewardItemMeta.getLore();
-                                if (rewardItemLore == null) {
-                                    rewardItemLore = new ArrayList<>();
-                                }
+				UUID owner = UUID.fromString(file.getName().replace(".yml", ""));
 
-                                rewardItemLore.add(ChatColor.BLUE + "Expiration : " + expiration);
+				Bag.clear();
 
-                                rewardItemMeta.setLore(rewardItemLore);
-                                rewardItem.setItemMeta(rewardItemMeta);
+				Bag playerBag = Bag.getPlayerBag(owner);
 
-                                playerBag.addNewReward(new Reward(rewardItem, expiration, id));
-                            }
-                        }
-                    } else {
-                        String type = bagContent.getString(key + ".type");
-                        Material materialType;
-                        if (type != null && (materialType = Material.getMaterial(type)) != null) {
-                            int amount = bagContent.contains(key + ".amount") ? bagContent.getInt(key + ".amount") : 1;
-                            String expirationString = bagContent.getString(key + ".expiration");
-                            if (expirationString == null) {
-                                expirationString = "01/01/1975";
-                            }
+				for (String key : bagContent.getKeys(false)) {
+					int id;
+					if (bagContent.contains(key + ".ID") && (id = bagContent.getInt(key + ".ID")) != -1) {
+						AchievableReward achievableReward = AchievableReward.getAchievableReward(id);
+						if (achievableReward != null) {
+							String expirationString = bagContent.getString(key + ".expiration");
+							if (expirationString == null) {
+								expirationString = "01/01/1975";
+							}
 
-                            LocalDate expiration = LocalDate.parse(expirationString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+							LocalDate expiration = LocalDate.parse(expirationString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-                            ItemStack rewardItem = new ItemStack(materialType, amount);
-                            ItemMeta rewardItemMeta = rewardItem.getItemMeta();
-                            if (rewardItemMeta != null) {
-                                List<String> rewardItemLore = rewardItemMeta.getLore();
-                                if (rewardItemLore == null) {
-                                    rewardItemLore = new ArrayList<>();
-                                }
+							ItemStack rewardItem = achievableReward.getItemStack().clone();
+							ItemMeta rewardItemMeta = rewardItem.getItemMeta();
+							if (rewardItemMeta != null) {
+								addExpirationDate(expiration, rewardItem, rewardItemMeta);
 
-                                rewardItemLore.add(ChatColor.BLUE + "Expiration : " + expiration);
+								playerBag.addNewReward(new Reward(rewardItem, expiration, id));
+							}
+						}
+					} else {
+						String type = bagContent.getString(key + ".type");
+						Material materialType;
+						if (type != null && (materialType = Material.getMaterial(type)) != null) {
+							int amount = bagContent.contains(key + ".amount") ? bagContent.getInt(key + ".amount") : 1;
+							String expirationString = bagContent.getString(key + ".expiration");
+							if (expirationString == null) {
+								expirationString = "01/01/1975";
+							}
 
-                                rewardItemMeta.setLore(rewardItemLore);
-                                rewardItem.setItemMeta(rewardItemMeta);
+							LocalDate expiration = LocalDate.parse(expirationString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-                                playerBag.addNewReward(new Reward(rewardItem, expiration, -1));
-                            }
-                        }
-                    }
-                }
+							ItemStack rewardItem = new ItemStack(materialType, amount);
+							ItemMeta rewardItemMeta = rewardItem.getItemMeta();
+							if (rewardItemMeta != null) {
+								addExpirationDate(expiration, rewardItem, rewardItemMeta);
 
-            } catch (InvalidConfigurationException | IOException e) {
-                e.printStackTrace();
-            }
-        }
+								playerBag.addNewReward(new Reward(rewardItem, expiration, -1));
+							}
+						}
+					}
+				}
 
-        sendMessageToConsole(instance.getConfig().getString("message.system.bagsLoadingSucceeds"));
-    }
+			} catch (InvalidConfigurationException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 
-    private static void saveBagOfAllPlayers() {
-        for (Bag bag : Bag.getBags()) {
-            bag.saveBag();
-        }
-    }
+		sendMessageToConsole(instance.getConfig().getString("message.system.bagsLoadingSucceeds"));
+	}
 
-    public static void sendMessageToConsole(String message) {
-        String str = instance.getConfig().getString("message.consoleSuffix") + " " + ChatColor.RESET + message;
-        Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
-    }
-
-    public static VoteReward getInstance() {
-        return VoteReward.instance;
-    }
+	private static void saveBagOfAllPlayers() {
+		for (Bag bag : Bag.getBags()) {
+			bag.saveBag();
+		}
+	}
 }

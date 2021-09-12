@@ -2,76 +2,81 @@ package fr.lataverne.votereward.objects;
 
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class AchievableReward {
-    private final ItemStack itemStack;
-    private final double percentage;
-    private final int id;
+	private static final HashMap<Integer, AchievableReward> achievableRewards = new HashMap<>();
 
-    private static final HashMap<Integer, AchievableReward> achievableRewards = new HashMap<>();
+	private final ItemStack itemStack;
 
-    public AchievableReward(ItemStack itemStack, double percentage, int id) {
-        this.itemStack = itemStack;
-        this.percentage = percentage;
-        this.id = id;
-    }
+	private final double percentage;
 
-    public ItemStack getItemStack() {
-        return this.itemStack;
-    }
+	private final int id;
 
-    public double getPercentage() {
-        return this.percentage;
-    }
+	public AchievableReward(ItemStack itemStack, double percentage, int id) {
+		this.itemStack = itemStack;
+		this.percentage = percentage;
+		this.id = id;
+	}
 
-    public double getRealChanceOfDrop() {
-        int total = 0;
-        for (AchievableReward achievableReward : achievableRewards.values()) {
-            total += achievableReward.percentage * 100;
-        }
+	public static void addNewAchievableRewards(AchievableReward achievableReward, int id) {
+		AchievableReward.achievableRewards.put(id, achievableReward);
+	}
 
-        return (this.percentage * 100) * 100 / total;
-    }
+	public static void clear() {
+		AchievableReward.achievableRewards.clear();
+	}
 
-    public int getId() {
-        return id;
-    }
+	public static AchievableReward getAchievableReward(int id) {
+		return AchievableReward.achievableRewards.get(id);
+	}
 
-    public static AchievableReward[] getAchievableRewards() {
-        return achievableRewards.values().toArray(new AchievableReward[0]);
-    }
+	public static AchievableReward[] getAchievableRewards() {
+		return achievableRewards.values().toArray(new AchievableReward[0]);
+	}
 
-    public static AchievableReward getRandomReward() {
-        if (achievableRewards.size() == 0) {
-            return null;
-        }
+	public static int getNumberOfAchievableRewards() {
+		return achievableRewards.size();
+	}
 
-        ArrayList<Integer> randomized = new ArrayList<>();
+	public static AchievableReward getRandomReward() {
+		if (achievableRewards.size() == 0) {
+			return null;
+		}
 
-        for (Map.Entry<Integer, AchievableReward> entry : achievableRewards.entrySet()) {
-            for (int i = 0; i < entry.getValue().percentage * 100; i++) {
-                randomized.add(entry.getKey());
-            }
-        }
+		ArrayList<Integer> randomized = new ArrayList<>();
 
-        int randomIndex = randomized.get(new Random().nextInt(randomized.size() - 1));
-        return achievableRewards.get(randomIndex);
-    }
+		for (Map.Entry<Integer, AchievableReward> entry : achievableRewards.entrySet()) {
+			for (int i = 0; i < entry.getValue().percentage * 100; i++) {
+				randomized.add(entry.getKey());
+			}
+		}
 
-    public static int getNumberOfAchievableRewards() {
-        return achievableRewards.size();
-    }
+		int randomIndex = randomized.get(new Random().nextInt(randomized.size() - 1));
+		return achievableRewards.get(randomIndex);
+	}
 
-    public static AchievableReward getAchievableReward(int id) {
-        return AchievableReward.achievableRewards.get(id);
-    }
+	public int getId() {
+		return id;
+	}
 
-    public static void addNewAchievableRewards(AchievableReward achievableReward, int id) {
-        AchievableReward.achievableRewards.put(id, achievableReward);
-    }
+	public ItemStack getItemStack() {
+		return this.itemStack;
+	}
 
-    public static void clear() {
-        AchievableReward.achievableRewards.clear();
-    }
+	public double getPercentage() {
+		return this.percentage;
+	}
+
+	public double getRealChanceOfDrop() {
+		int total = 0;
+		for (AchievableReward achievableReward : achievableRewards.values()) {
+			total += achievableReward.percentage * 100;
+		}
+
+		return (this.percentage * 100) * 100 / total;
+	}
 }

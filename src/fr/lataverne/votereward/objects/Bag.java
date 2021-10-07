@@ -18,119 +18,116 @@ import java.util.UUID;
 
 public class Bag {
 
-    private static final HashMap<UUID, Bag> bags = new HashMap<>();
+	private static final HashMap<UUID, Bag> bags = new HashMap<>();
 
-    private final ArrayList<Reward> bagContent;
-    private final UUID owner;
+	private final ArrayList<Reward> bagContent;
 
-    public Bag(ArrayList<Reward> inventoryContent, UUID owner) {
-        this.bagContent = inventoryContent;
-        this.owner = owner;
-    }
+	private final UUID owner;
 
-    public static Bag getPlayerBag(UUID uuid) {
-        Bag bag = Bag.bags.containsKey(uuid) ? Bag.bags.get(uuid) : createPlayerBag(uuid);
-        bag.checkExpirationDates();
-        return bag;
-    }
+	public Bag(ArrayList<Reward> inventoryContent, UUID owner) {
+		this.bagContent = inventoryContent;
+		this.owner = owner;
+	}
 
-    public static Bag[] getBags() {
-        return bags.values().toArray(new Bag[0]);
-    }
+	public static void clear() {
+		Bag.bags.clear();
+	}
 
-    public static void clear() {
-        Bag.bags.clear();
-    }
+	public static Bag[] getBags() {
+		return bags.values().toArray(new Bag[0]);
+	}
 
-    public static void retrievingBag(Bag bag, Player player) {
-        retrievingBag(bag, player, 35);
-    }
+	public static Bag getPlayerBag(UUID uuid) {
+		Bag bag = Bag.bags.containsKey(uuid) ? Bag.bags.get(uuid) : createPlayerBag(uuid);
+		bag.checkExpirationDates();
+		return bag;
+	}
 
-    public static void retrievingBag(Bag bag, Player player, int maxNbRewardsRetrieving) {
+	public static void retrievingBag(Bag bag, Player player) {
+		retrievingBag(bag, player, 35);
+	}
 
-        if (bag.getBagContent().size() == 0) {
-            Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.noRewardToBeRetrieved"));
-            return;
-        }
+	public static void retrievingBag(Bag bag, Player player, int maxNbRewardsRetrieving) {
 
-        int nbRewardsRetrieving = 0;
-        int nbItemInBag = bag.getBagContent().size();
+		if (bag.getBagContent().size() == 0) {
+			Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.noRewardToBeRetrieved"));
+			return;
+		}
 
-        while (!Helper.inventoryPlayerIsFull(player) && nbRewardsRetrieving < nbItemInBag && nbRewardsRetrieving < maxNbRewardsRetrieving) {
-            Reward reward = bag.getRandomReward();
-            player.getInventory().addItem(reward.getItemStack().clone());
-            bag.removeReward(reward);
-            nbRewardsRetrieving++;
-        }
+		int nbRewardsRetrieving = 0;
+		int nbItemInBag = bag.getBagContent().size();
 
-        String message = Helper.replaceValueInString(Helper.getMessageOnConfig("player.retrieveRewards"), Integer.toString(nbRewardsRetrieving));
-        Helper.sendMessageToPlayer(player, message);
-    }
+		while (!Helper.inventoryPlayerIsFull(player) && nbRewardsRetrieving < nbItemInBag && nbRewardsRetrieving < maxNbRewardsRetrieving) {
+			Reward reward = bag.getRandomReward();
+			player.getInventory().addItem(reward.getItemStack().clone());
+			bag.removeReward(reward);
+			nbRewardsRetrieving++;
+		}
 
-    private static Bag createPlayerBag(UUID uuid) {
-        Bag newBag = new Bag(new ArrayList<>(), uuid);
-        Bag.bags.put(uuid, newBag);
-        return newBag;
-    }
+		String message = Helper.replaceValueInString(Helper.getMessageOnConfig("player.retrieveRewards"), Integer.toString(nbRewardsRetrieving));
+		Helper.sendMessageToPlayer(player, message);
+	}
 
-    public void addNewReward(Reward item) {
-        this.bagContent.add(item);
-    }
+	public void addNewReward(Reward item) {
+		this.bagContent.add(item);
+	}
 
-    public void removeReward(Reward reward) {
-        this.bagContent.remove(reward);
-    }
+	public ArrayList<Reward> getBagContent() {
+		return this.bagContent;
+	}
 
-    public ArrayList<Reward> getBagContent() {
-        return this.bagContent;
-    }
+	public Reward getRandomReward() {
+		if (this.bagContent.size() > 0) {
+			return this.bagContent.get(new Random().nextInt(bagContent.size()));
+		} else {
+			return null;
+		}
+	}
 
-    public Reward getRandomReward() {
-        if (this.bagContent.size() > 0) {
-            return this.bagContent.get(new Random().nextInt(bagContent.size()));
-        } else {
-            return null;
-        }
-    }
+	public void removeReward(Reward reward) {
+		this.bagContent.remove(reward);
+	}
 
-    public void saveBag() {
-        Path path = Paths.get(VoteReward.getInstance().getConfig().getString("system.bagsDirectory") + owner + ".yml");
+	public void saveBag() {
+		Path path = Paths.get(VoteReward.getInstance().getConfig().getString("system.bagsDirectory") + owner + ".yml");
 
-        if (Files.exists(path)) {
-            try {
-                Files.delete(path);
-            } catch (Exception ignored){
-                String message = Helper.replaceValueInString(VoteReward.getInstance().getConfig().getString("message.system.deleteFileFailed"), path.toString());
-                VoteReward.sendMessageToConsole(message);
-            }
-        }
+		if (Files.exists(path)) {
+			try {
+				Files.delete(path);
+			} catch (Exception ignored) {
+				String message = Helper.replaceValueInString(VoteReward.getInstance().getConfig().getString("message.system.deleteFileFailed"), path.toString());
+				VoteReward.sendMessageToConsole(message);
+			}
+		}
 
-        if (bagContent.size() == 0) {
-            return;
-        }
+		if (bagContent.size() == 0) {
+			return;
+		}
 
-        try {
-            Files.createFile(path);
+		try {
+			Files.createFile(path);
 
-            for (int i = 0; i < bagContent.size(); i++) {
-                Reward reward = bagContent.get(i);
-                String strReward = "reward_" + i + ":\n"
-                + "  type: " + reward.getItemStack().getType().name() + "\n"
-                + "  amount: " + reward.getItemStack().getAmount() + "\n"
-                + "  ID: " + reward.getAchievableRewardId() + "\n"
-                + "  expiration: " + reward.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n";
+			for (int i = 0; i < bagContent.size(); i++) {
+				Reward reward = bagContent.get(i);
+				String strReward = "reward_" + i + ":\n" + "  type: " + reward.getItemStack().getType().name() + "\n" + "  amount: " + reward.getItemStack().getAmount() + "\n" + "  ID: " + reward.getAchievableRewardId() + "\n" + "  expiration: " + reward.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n";
 
-                Files.write(path, strReward.getBytes(), StandardOpenOption.APPEND);
-            }
+				Files.write(path, strReward.getBytes(), StandardOpenOption.APPEND);
+			}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    private void checkExpirationDates() {
-        if (this.bagContent.size() > 0) {
-            this.bagContent.removeIf(reward -> reward.getExpirationDate().isBefore(LocalDate.now()));
-        }
-    }
+	private static Bag createPlayerBag(UUID uuid) {
+		Bag newBag = new Bag(new ArrayList<>(), uuid);
+		Bag.bags.put(uuid, newBag);
+		return newBag;
+	}
+
+	private void checkExpirationDates() {
+		if (this.bagContent.size() > 0) {
+			this.bagContent.removeIf(reward -> reward.getExpirationDate().isBefore(LocalDate.now()));
+		}
+	}
 }

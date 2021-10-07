@@ -196,33 +196,32 @@ public class CommandManager implements CommandExecutor {
                 return true;
             } // rv fakevote [amount] [player]
 
-            if (args[0].equalsIgnoreCase("help")) {
-                int page = 0;
+			if (args[0].equalsIgnoreCase("help")) {
+				int page = 0;
 
-                if (args.length > 1) {
-                    try {
-                        page = Integer.parseInt(args[1]);
-                    } catch (NumberFormatException ignored) {
+				if (args.length > 1) {
+					try {
+						page = Integer.parseInt(args[1]);
+					} catch (NumberFormatException ignored) {
 
-                    }
-                }
+					}
+				}
 
-                Helper.sendHelpPage(player, page);
+				Helper.sendHelpPage(player, page);
 
-                return true;
-            } // rv help [page]
+				return true;
+			} // rv help [page]
 
-            if (args[0].equalsIgnoreCase("reload")) {
-                if (Helper.playerHasPermission(player, "rv.admin.reload")) {
-                    Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("admin.reloading"));
+			if (args[0].equalsIgnoreCase("reload")) {
+				if (Helper.playerHasPermission(player, "rv.admin.reload")) {
+					Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("admin.reloading"));
 
-                    VoteReward.getInstance().reloadConfig();
+					VoteReward.getInstance().reloadConfig();
 
-                    Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("admin.successfulReload"));
-                }
-            } // rv reload
-        }
-
+					Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("admin.successfulReload"));
+				}
+			} // rv reload
+		}
         return false;
     }
 

@@ -10,20 +10,18 @@ import org.bukkit.event.EventHandler;
 import java.time.LocalDate;
 
 public class VotifierManager {
+	@SuppressWarnings ("deprecation")
+	@EventHandler
+	public void voteListener(VotifierEvent e) {
+		if (Bukkit.getOfflinePlayer(e.getVote().getUsername()).hasPlayedBefore()) {
+			LocalDate expirationDate = LocalDate.now().plusDays(15);
+			AchievableReward achievableReward = AchievableReward.getRandomReward();
+			if (achievableReward == null) {
+				return;
+			}
 
-    @SuppressWarnings("deprecation")
-    @EventHandler
-    public void voteListener(VotifierEvent e)
-    {
-        if(Bukkit.getOfflinePlayer(e.getVote().getUsername()).hasPlayedBefore())
-        {
-            LocalDate expirationDate = LocalDate.now().plusDays(15);
-            AchievableReward achievableReward = AchievableReward.getRandomReward();
-            if (achievableReward == null) {
-                return;
-            }
-            Reward reward = new Reward(achievableReward.getItemStack().clone(), expirationDate, achievableReward.getId());
-            Bag.getPlayerBag(Bukkit.getOfflinePlayer(e.getVote().getUsername()).getUniqueId()).addNewReward(reward);
-        }
-    }
+			Reward reward = new Reward(achievableReward.getItemStack().clone(), expirationDate, achievableReward.getId());
+			Bag.getPlayerBag(Bukkit.getOfflinePlayer(e.getVote().getUsername()).getUniqueId()).addNewReward(reward);
+		}
+	}
 }

@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="VoteReward-2.0.0">
-    <output-path>$PROJECT_DIR$/out/artifacts/VoteReward_2_0_0</output-path>
-    <root id="archive" name="VoteReward-2.0.0.jar">
-      <element id="module-output" name="VoteRewardV2" />
-    </root>
-  </artifact>
-</component>

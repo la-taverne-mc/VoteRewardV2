@@ -35,7 +35,7 @@ public class CommandManager implements CommandExecutor {
                 }
 
                 if (args[1].equalsIgnoreCase("see")) {
-                    if (Helper.playerHasPermission(player,"rv.player.bag.see")) {
+                    if (Helper.playerHasPermission(player, "rv.player.bag.see")) {
                         int page = 0;
 
                         if (args.length > 2) {
@@ -102,6 +102,9 @@ public class CommandManager implements CommandExecutor {
                 }
 
                 if (args[1].equalsIgnoreCase("see")) {
+                    if (!Helper.playerHasPermission(player, "rv.admin.stop.see")) {
+                        return true;
+                    }
 
                     boolean value = InternalPermission.isActivate("rv.player.bag.see");
 
@@ -119,6 +122,9 @@ public class CommandManager implements CommandExecutor {
                 } // rv stop see
 
                 if (args[1].equalsIgnoreCase("get")) {
+                    if (!Helper.playerHasPermission(player, "rv.admin.stop.get")) {
+                        return true;
+                    }
 
                     boolean value = InternalPermission.isActivate("rv.player.bag.get");
 
@@ -235,6 +241,10 @@ public class CommandManager implements CommandExecutor {
             }
 
             if (args[2].equalsIgnoreCase("see")) {
+                if (!Helper.playerHasPermission(player, "rv.admin.bag.see")) {
+                    return true;
+                }
+
                 if (args.length < 4) {
                     Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
                     return true;
@@ -251,6 +261,10 @@ public class CommandManager implements CommandExecutor {
             } // rv admin bag see [player]
 
             if (args[2].equalsIgnoreCase("get")) {
+                if (!Helper.playerHasPermission(player, "rv.admin.bag.get")) {
+                    return true;
+                }
+
                 if (args.length < 4) {
                     Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
                     return true;

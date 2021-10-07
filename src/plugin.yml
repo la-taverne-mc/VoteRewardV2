@@ -35,6 +35,8 @@ permissions:
     children:
       rv.admin.reload: true
       rv.admin.fakevote: true
+      rv.admin.bag: true
+      rv.admin.stop: true
   rv.admin.reload:
     description: Adds the permission to reload the plugin
     default: op
@@ -44,6 +46,30 @@ permissions:
     children:
       rv.admin.fakevote.me: true
       rv.admin.fakevote.other: true
+  rv.admin.bag:
+    description: Adds all admin permissions about bags
+    default: op
+    children:
+      rv.admin.bag.see: true
+      rv.admin.bag.get: true
+  rv.admin.bag.see:
+    description: Adds the permissions for see the bag of another player
+    default: op
+  rv.admin.bag.get:
+    description: Adds the permission for get the bag of another player
+    default: op
+  rv.admin.stop:
+    description: Adds the permissions for enable/disable the see and get commands of the bags for all players
+    default: op
+    children:
+      rv.admin.stop.get: true
+      rv.admin.stop.see: true
+  rv.admin.stop.get:
+    description: Adds the permission for enable/disable get command of the bags for all players
+    default: op
+  rv.admin.stop.see:
+    description: Adds the permission for enable/disable see command of the bags for all players
+    default: op
   rv.player:
     description: Adds all player permissions
     default: true

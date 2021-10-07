@@ -70,6 +70,8 @@ public class VoteReward extends JavaPlugin {
 		EventListener eventListener = new EventListener();
 		Bukkit.getPluginManager().registerEvents(eventListener, this);
 
+		InternalPermission.loadingInternalPermissions();
+
 		sendMessageToConsole(getConfig().getString("message.system.startMessage"));
 	}
 

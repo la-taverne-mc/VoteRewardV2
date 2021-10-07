@@ -2,6 +2,7 @@ package fr.lataverne.votereward;
 
 import fr.lataverne.votereward.managers.CommandManager;
 import fr.lataverne.votereward.managers.EventListener;
+import fr.lataverne.votereward.managers.InternalPermission;
 import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
@@ -30,7 +31,6 @@ import java.util.UUID;
  * Main class that extends JavaPlugin.
  */
 public class VoteReward extends JavaPlugin {
-
 	private static VoteReward instance;
 
 	public static VoteReward getInstance() {

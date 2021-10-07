@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class GUI {
-
 	public enum ETypeGui {
 		Bag,
 		Stat

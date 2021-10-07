@@ -1,5 +1,6 @@
 package fr.lataverne.votereward;
 
+import fr.lataverne.votereward.managers.InternalPermission;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -7,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.stream.IntStream;
 
 public abstract class Helper {
-
 	public static String colorizeString(String str) {
 		if (str == null) {
 			return null;
@@ -32,7 +32,12 @@ public abstract class Helper {
 
 	public static boolean playerHasPermission(Player player, String permission) {
 		if (player.hasPermission(permission)) {
-			return true;
+			if (InternalPermission.isActivate(permission)) {
+          return true;
+      } else {
+          Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.featureDisabled"));
+          return false;
+      }
 		} else {
 			Helper.sendMessageToPlayer(player, Helper.replaceValueInString(Helper.getMessageOnConfig("player.notPermission"), permission));
 			return false;

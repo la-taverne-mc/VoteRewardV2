@@ -2,6 +2,9 @@
 system:
   achievableRewardsPath: "plugins/VoteReward/AchievableRewards.yml"
   bagsDirectory: "plugins/VoteReward/Bags/"
+  internalPermission:
+    rv-player-bag-see: true
+    rv-player-bag-get: false
 
 # All messages that can be sent by the plugin
 message:
@@ -18,6 +21,9 @@ message:
     deleteFileFailed: "§aImpossible de supprimer le fichier {1}"
     bagsLoading: "§eChargement des sacs de récompenses"
     bagsLoadingSucceeds: "§aChargement des sacs de récompenses fini"
+    internalPermLoading: "§eChargement des permissions internes"
+    internalPermView: "§fPermission interne \"{1}\" mise sur {2}"
+    internalPermLoadingSucceeds: "§aChargement des permissions internes fini"
   player:
     misuseCommand: "§cMauvaise utilisation de la commande"
     retrieveRewards: "§aVous avez récuperé {1} récompenses"
@@ -26,9 +32,14 @@ message:
     noAchievableRewardsAvailable: "§cAucune récompense disponible"
     hasNoPlayedBeforeInServer: "§cLe joueur est introuvable ou n'a jamais joué sur le serveur"
     notPermission: "§cVous n'avez pas la permission de faire ceci! §8Permission manquante: {1}"
+    featureDisabled: "§cCette fonctionnalité est désactivée"
   admin:
     reloading: "§7Reload..."
     successfulReload: "§aReload réussi"
+    stopCommandFailed: "§cL'activation/désactivation de la fonctionnalité a échouée !"
+    stopCommandSucceeds:
+      featureActivated: "§aLa fonctionnalité est maintenant activée"
+      featureDisabled: "§7La fonctionnalité est maintenant désactivée"
 
 # All string used in the different interfaces
 gui:

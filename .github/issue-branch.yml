@@ -1,0 +1,10 @@
+mode: chatops
+silent: false
+branchName: short
+autoCloseIssue: true
+defaultBranch: 'master'
+openDraftPR: true
+copyIssueDescriptionToPR: false
+copyIssueLabelsToPR: true
+copyIssueAssigneeToPR: true
+commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'

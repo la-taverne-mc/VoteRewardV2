@@ -9,8 +9,10 @@ import fr.lataverne.votereward.objects.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,25 +29,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Main class that extends JavaPlugin.
- */
+@SuppressWarnings ("ClassNamePrefixedWithPackageName")
 public class VoteReward extends JavaPlugin {
-	private static VoteReward instance;
+	private static VoteReward instance = null;
 
 	public static VoteReward getInstance() {
 		return VoteReward.instance;
 	}
 
-	public static void sendMessageToConsole(String message) {
-		String str = instance.getConfig().getString("message.consoleSuffix") + " " + ChatColor.RESET + message;
+	public static void sendMessageToConsole(final String message) {
+		String str = VoteReward.instance.getConfig().getString("message.consoleSuffix") + " " + ChatColor.RESET + message;
 		Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
 	}
 
 	@Override
 	public void onDisable() {
-		saveBagOfAllPlayers();
-		sendMessageToConsole(getConfig().getString("message.system.stopMessage"));
+		VoteReward.saveBagOfAllPlayers();
+		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
 	}
 
 	/**
@@ -53,26 +53,26 @@ public class VoteReward extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable() {
-		instance = this;
+		//noinspection AssignmentToStaticFieldFromInstanceMethod
+		VoteReward.instance = this;
 
 		Path bagsDirectory = Paths.get(Objects.requireNonNull(VoteReward.getInstance().getConfig().getString("system.bagsDirectory")));
 		if (!Files.exists(bagsDirectory)) {
 			try {
 				Files.createDirectory(bagsDirectory);
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (final IOException ignored) {
 			}
 		}
 
-		CommandManager commandManager = new CommandManager();
-		Objects.requireNonNull(getCommand("votereward")).setExecutor(commandManager);
+		CommandExecutor commandManager = new CommandManager();
+		Objects.requireNonNull(this.getCommand("votereward")).setExecutor(commandManager);
 
-		EventListener eventListener = new EventListener();
+		Listener eventListener = new EventListener();
 		Bukkit.getPluginManager().registerEvents(eventListener, this);
 
 		InternalPermission.loadingInternalPermissions();
 
-		sendMessageToConsole(getConfig().getString("message.system.startMessage"));
+		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.startMessage"));
 	}
 
 	/**
@@ -83,25 +83,25 @@ public class VoteReward extends JavaPlugin {
 	public void reloadConfig() {
 		boolean configExist = true;
 		if (!new File("plugins/VoteReward/config.yml").exists()) {
-			saveDefaultConfig();
+			this.saveDefaultConfig();
 			configExist = false;
 		}
 
 		super.reloadConfig();
 
 		if (configExist) {
-			sendMessageToConsole(getConfig().getString("message.system.existingConfig"));
+			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.existingConfig"));
 		} else {
-			sendMessageToConsole(getConfig().getString("message.system.nonExistingConfig"));
+			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
 		}
 
-		loadAchievableRewards();
-		loadBags();
+		VoteReward.loadAchievableRewards();
+		VoteReward.loadBags();
 
-		sendMessageToConsole(getConfig().getString("message.system.reloadComplete"));
+		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
 	}
 
-	private static void addExpirationDate(LocalDate expiration, ItemStack rewardItem, ItemMeta rewardItemMeta) {
+	private static void addExpirationDate(final LocalDate expiration, final ItemStack rewardItem, final ItemMeta rewardItemMeta) {
 		List<String> rewardItemLore = rewardItemMeta.getLore();
 		if (rewardItemLore == null) {
 			rewardItemLore = new ArrayList<>();
@@ -114,14 +114,14 @@ public class VoteReward extends JavaPlugin {
 	}
 
 	private static void loadAchievableRewards() {
-		String dataFilePath = instance.getConfig().getString("system.achievableRewardsPath");
+		String dataFilePath = VoteReward.instance.getConfig().getString("system.achievableRewardsPath");
 		File dataFile = null;
 		if (dataFilePath != null) {
 			dataFile = new File(dataFilePath);
 		}
 
 		if (dataFilePath == null || !dataFile.exists()) {
-			sendMessageToConsole(instance.getConfig().getString("message.system.achievableRewardsFileNotFound") + " (Path: " + dataFilePath + ")");
+			VoteReward.sendMessageToConsole(VoteReward.instance.getConfig().getString("message.system.achievableRewardsFileNotFound") + " (Path: " + dataFilePath + ")");
 			return;
 		}
 
@@ -130,33 +130,34 @@ public class VoteReward extends JavaPlugin {
 		YamlConfiguration achievableRewardFile = new YamlConfiguration();
 		try {
 			achievableRewardFile.load(dataFile);
-			for (String key : achievableRewardFile.getKeys(false)) {
+			for (final String key : achievableRewardFile.getKeys(false)) {
 				String type = achievableRewardFile.getString(key + ".type");
-				Material materialType;
-				if (type != null && (materialType = Material.getMaterial(type)) != null) {
-					int amount = achievableRewardFile.contains(key + ".amount") ? achievableRewardFile.getInt(key + ".amount") : 1;
-					double percentage = achievableRewardFile.contains(key + ".percent") ? achievableRewardFile.getDouble(key + ".percent") : 0.0;
-					int id = Integer.parseInt(key.replace("reward_", ""));
+				if (type != null) {
+					Material materialType = Material.getMaterial(type);
+					if (materialType != null) {
+						int amount = achievableRewardFile.contains(key + ".amount") ? achievableRewardFile.getInt(key + ".amount") : 1;
+						double percentage = achievableRewardFile.contains(key + ".percent") ? achievableRewardFile.getDouble(key + ".percent") : 0.0;
+						int id = Integer.parseInt(key.replace("reward_", ""));
 
-					ItemStack itemStack = new ItemStack(materialType, amount);
+						ItemStack itemStack = new ItemStack(materialType, amount);
 
-					AchievableReward.addNewAchievableRewards(new AchievableReward(itemStack, percentage, id), id);
+						AchievableReward.addNewAchievableRewards(new AchievableReward(itemStack, percentage, id), id);
+					}
 				}
 			}
-		} catch (InvalidConfigurationException | IOException e) {
-			e.printStackTrace();
+		} catch (final IOException | InvalidConfigurationException ignored) {
 		}
 	}
 
 	private static void loadBags() {
-		String dataDirectoryPath = instance.getConfig().getString("system.bagsDirectory");
+		String dataDirectoryPath = VoteReward.instance.getConfig().getString("system.bagsDirectory");
 		File dataDirectory = null;
 		if (dataDirectoryPath != null) {
 			dataDirectory = new File(dataDirectoryPath);
 		}
 
 		if (dataDirectoryPath == null || !dataDirectory.exists()) {
-			sendMessageToConsole(instance.getConfig().getString("message.system.bagsDirectoryNotFound"));
+			VoteReward.sendMessageToConsole(VoteReward.instance.getConfig().getString("message.system.bagsDirectoryNotFound"));
 			return;
 		}
 
@@ -166,9 +167,9 @@ public class VoteReward extends JavaPlugin {
 			return;
 		}
 
-		sendMessageToConsole(instance.getConfig().getString("message.system.bagsLoading"));
+		VoteReward.sendMessageToConsole(VoteReward.instance.getConfig().getString("message.system.bagsLoading"));
 
-		for (File file : fileList) {
+		for (final File file : fileList) {
 			YamlConfiguration bagContent = new YamlConfiguration();
 			try {
 				bagContent.load(file);
@@ -179,22 +180,22 @@ public class VoteReward extends JavaPlugin {
 
 				Bag playerBag = Bag.getPlayerBag(owner);
 
-				for (String key : bagContent.getKeys(false)) {
+				for (final String key : bagContent.getKeys(false)) {
 					int id;
 					if (bagContent.contains(key + ".ID") && (id = bagContent.getInt(key + ".ID")) != -1) {
 						AchievableReward achievableReward = AchievableReward.getAchievableReward(id);
 						if (achievableReward != null) {
-							String expirationString = bagContent.getString(key + ".expiration");
+							String expirationString = bagContent.getString(key + ".expirationDate");
 							if (expirationString == null) {
 								expirationString = "01/01/1975";
 							}
 
 							LocalDate expiration = LocalDate.parse(expirationString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-							ItemStack rewardItem = achievableReward.getItemStack().clone();
+							ItemStack rewardItem = new ItemStack(achievableReward.itemStack());
 							ItemMeta rewardItemMeta = rewardItem.getItemMeta();
 							if (rewardItemMeta != null) {
-								addExpirationDate(expiration, rewardItem, rewardItemMeta);
+								VoteReward.addExpirationDate(expiration, rewardItem, rewardItemMeta);
 
 								playerBag.addNewReward(new Reward(rewardItem, expiration, id));
 							}
@@ -204,7 +205,7 @@ public class VoteReward extends JavaPlugin {
 						Material materialType;
 						if (type != null && (materialType = Material.getMaterial(type)) != null) {
 							int amount = bagContent.contains(key + ".amount") ? bagContent.getInt(key + ".amount") : 1;
-							String expirationString = bagContent.getString(key + ".expiration");
+							String expirationString = bagContent.getString(key + ".expirationDate");
 							if (expirationString == null) {
 								expirationString = "01/01/1975";
 							}
@@ -214,24 +215,22 @@ public class VoteReward extends JavaPlugin {
 							ItemStack rewardItem = new ItemStack(materialType, amount);
 							ItemMeta rewardItemMeta = rewardItem.getItemMeta();
 							if (rewardItemMeta != null) {
-								addExpirationDate(expiration, rewardItem, rewardItemMeta);
+								VoteReward.addExpirationDate(expiration, rewardItem, rewardItemMeta);
 
 								playerBag.addNewReward(new Reward(rewardItem, expiration, -1));
 							}
 						}
 					}
 				}
-
-			} catch (InvalidConfigurationException | IOException e) {
-				e.printStackTrace();
+			} catch (final InvalidConfigurationException | IOException ignored) {
 			}
 		}
 
-		sendMessageToConsole(instance.getConfig().getString("message.system.bagsLoadingSucceeds"));
+		VoteReward.sendMessageToConsole(VoteReward.instance.getConfig().getString("message.system.bagsLoadingSucceeds"));
 	}
 
 	private static void saveBagOfAllPlayers() {
-		for (Bag bag : Bag.getBags()) {
+		for (final Bag bag : Bag.getBags()) {
 			bag.saveBag();
 		}
 	}

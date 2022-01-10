@@ -20,7 +20,7 @@ commands:
     aliases:
       - votereward
       - rv
-    permission-message: "§bVoteReward §f: §7Vous n'avez pas la permission"
+    permission-message: "§bVoteReward §f: §7You don't have permission"
 
 permissions:
   rv.*:

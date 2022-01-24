@@ -1,5 +1,6 @@
 package fr.lataverne.votereward.managers;
 
+import fr.lataverne.votereward.Constant;
 import fr.lataverne.votereward.Helper;
 import fr.lataverne.votereward.objects.Bag;
 import org.bukkit.ChatColor;
@@ -18,14 +19,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class EventListener implements Listener {
+    private final BagManager bagManager;
+
+    public EventListener(BagManager bagManager) {
+        this.bagManager = bagManager;
+    }
+
     @EventHandler (priority = EventPriority.LOWEST)
-    public static void OnInventoryClosed(@NotNull final InventoryCloseEvent event) {
+    public static void OnInventoryClosed(@NotNull InventoryCloseEvent event) {
         HumanEntity player = event.getPlayer();
         GUI.removeGUI(player.getUniqueId());
     }
 
     @EventHandler (priority = EventPriority.LOWEST)
-    public static void onMenuClicked(@NotNull final InventoryClickEvent event) {
+    public void onMenuClicked(@NotNull InventoryClickEvent event) {
         InventoryView view = event.getView();
         String title = view.getTitle();
 
@@ -42,11 +49,11 @@ public class EventListener implements Listener {
                     List<String> lore = itemClicked.getItemMeta().getLore();
 
                     if (lore != null) {
-                        for (final String line : lore) {
+                        for (String line : lore) {
                             try {
                                 String pageStr = ChatColor.stripColor(line).replace("Page ", "");
                                 page = Integer.parseInt(pageStr);
-                            } catch (final NumberFormatException ignored) {
+                            } catch (NumberFormatException ignored) {
                                 player.sendMessage(line);
                             }
                         }
@@ -59,7 +66,8 @@ public class EventListener implements Listener {
             if (event.getRawSlot() == 49) {
                 player.closeInventory();
                 if (Helper.playerHasPermission(player, "rv.player.bag.get")) {
-                    Bag.retrievingBag(Bag.getPlayerBag(player.getUniqueId()), player);
+                    Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
+                    BagManager.giveBag(bag, player, Constant.MAX_NB_REWARDS_RETRIEVING);
                 }
             }
 
@@ -72,7 +80,7 @@ public class EventListener implements Listener {
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
-    public static void onPlayerDisconnected(final @NotNull PlayerQuitEvent event) {
-        Bag.getPlayerBag(event.getPlayer().getUniqueId()).saveBag();
+    public void onPlayerDisconnected(@NotNull PlayerQuitEvent event) {
+        this.bagManager.saveBag(event.getPlayer().getUniqueId());
     }
 }

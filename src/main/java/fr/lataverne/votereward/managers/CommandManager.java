@@ -21,11 +21,39 @@ import java.util.UUID;
 
 public class CommandManager implements CommandExecutor {
 
+	private final BagManager bagManager;
+
+	public CommandManager(BagManager bagManager) {
+		this.bagManager = bagManager;
+	}
+
+	private static void sendHelpPage(Player player, int page) {
+		if (player != null) {
+			player.sendMessage("");
+			player.sendMessage("");
+			player.sendMessage(ChatColor.RED + "Help command" + ChatColor.GRAY + " | Page " + page);
+			player.sendMessage("");
+
+			switch (page) {
+				case 2 -> player.sendMessage(ChatColor.RED + "Voir l'aide" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv help " + ChatColor.GRAY + "[page]");
+				case 1 -> {
+					player.sendMessage(ChatColor.RED + "Voir son sac de récompense" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv bag see " + ChatColor.GRAY + "[page]");
+					player.sendMessage(ChatColor.RED + "Récuperer son sac de récompense" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv bag get " + ChatColor.GRAY + "[amount]");
+					player.sendMessage(ChatColor.RED + "Voir les récompenses disponibles" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv stat " + ChatColor.GRAY + "[page]");
+					player.sendMessage(ChatColor.RED + "Générer un faux vote" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv fakevote " + ChatColor.GRAY + "[amount] " + ChatColor.GRAY + "[player]");
+					player.sendMessage(ChatColor.RED + "Recharger le plugin" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv reload");
+				}
+			}
+
+			player.sendMessage("");
+			player.sendMessage(ChatColor.RED + "Help command" + ChatColor.GRAY + " | Page " + page);
+		}
+	}
+
 	@Override
-	public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, final String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
 		if (sender instanceof Player player) {
-
 			if (args.length < 1) {
 				Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
 				return true;
@@ -44,7 +72,7 @@ public class CommandManager implements CommandExecutor {
 						if (args.length > 2) {
 							try {
 								page = Integer.parseInt(args[2]);
-							} catch (final NumberFormatException ignored) {
+							} catch (NumberFormatException ignored) {
 
 							}
 						}
@@ -62,12 +90,13 @@ public class CommandManager implements CommandExecutor {
 						if (args.length > 2) {
 							try {
 								maxNbRewardsRetrieving = Integer.parseInt(args[2]);
-							} catch (final NumberFormatException ignored) {
+							} catch (NumberFormatException ignored) {
 
 							}
 						}
 
-						Bag.retrievingBag(Bag.getPlayerBag(player.getUniqueId()), player, maxNbRewardsRetrieving);
+						Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
+						BagManager.giveBag(bag, player, maxNbRewardsRetrieving);
 					} else {
 						Helper.sendMessageToPlayer(player, Helper.replaceValueInString(Helper.getMessageOnConfig("player.notPermission"), "message.player.notPermission"));
 					}
@@ -83,7 +112,7 @@ public class CommandManager implements CommandExecutor {
 					if (args.length > 2) {
 						try {
 							page = Integer.parseInt(args[2]);
-						} catch (final NumberFormatException ignored) {
+						} catch (NumberFormatException ignored) {
 
 						}
 					}
@@ -95,7 +124,7 @@ public class CommandManager implements CommandExecutor {
 			} // rv stat
 
 			if ("admin".equalsIgnoreCase(args[0])) {
-				return CommandManager.playerAdminCommands(player, args);
+				return this.playerAdminCommands(player, args);
 			} // rv admin ...
 
 			if ("stop".equalsIgnoreCase(args[0])) {
@@ -155,13 +184,14 @@ public class CommandManager implements CommandExecutor {
 				if (args.length > 1) {
 					try {
 						nbReward = Integer.parseInt(args[1]);
-					} catch (final NumberFormatException ignored) {
+					} catch (NumberFormatException ignored) {
 					}
 				}
 
 				if (args.length > 2) {
 					if (Helper.playerHasPermission(player, "rv.admin.fakevote.other")) {
-						@SuppressWarnings ("deprecation") OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[2]);
+						@SuppressWarnings ("deprecation")
+						OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[2]);
 						if (targetPlayer.hasPlayedBefore()) {
 							targetPlayerUUID = targetPlayer.getUniqueId();
 						} else {
@@ -188,8 +218,9 @@ public class CommandManager implements CommandExecutor {
 					AchievableReward achievableReward = AchievableReward.getRandomReward();
 
 					if (achievableReward != null) {
-						Reward reward = new Reward(new ItemStack(achievableReward.itemStack()), expirationDate, achievableReward.id());
-						Bag.getPlayerBag(targetPlayerUUID).addNewReward(reward);
+						Reward reward = new Reward(new ItemStack(achievableReward.itemStack()), expirationDate);
+						Bag bag = this.bagManager.getOrCreateBag(targetPlayerUUID);
+						bag.addReward(reward);
 					}
 				}
 
@@ -205,7 +236,7 @@ public class CommandManager implements CommandExecutor {
 				if (args.length > 1) {
 					try {
 						page = Integer.parseInt(args[1]);
-					} catch (final NumberFormatException ignored) {
+					} catch (NumberFormatException ignored) {
 
 					}
 				}
@@ -228,7 +259,7 @@ public class CommandManager implements CommandExecutor {
 		return false;
 	}
 
-	private static boolean playerAdminCommands(final Player player, final String... args) {
+	private boolean playerAdminCommands(Player player, String @NotNull ... args) {
 
 		if (args.length < 2) {
 			Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
@@ -277,7 +308,9 @@ public class CommandManager implements CommandExecutor {
 					return true;
 				}
 
-				Bag.retrievingBag(Bag.getPlayerBag(targetPlayer.getUniqueId()), player);
+				Bag bag = this.bagManager.getOrCreateBag(targetPlayer.getUniqueId());
+				BagManager.giveBag(bag, player, Constant.MAX_NB_REWARDS_RETRIEVING);
+
 				return true;
 			} // rv admin bag get [player]
 
@@ -286,28 +319,5 @@ public class CommandManager implements CommandExecutor {
 		} // rv admin bag ...
 
 		return false;
-	}
-
-	private static void sendHelpPage(final Player player, final int page) {
-		if (player != null) {
-			player.sendMessage("");
-			player.sendMessage("");
-			player.sendMessage(ChatColor.RED + "Help command" + ChatColor.GRAY + " | Page " + page);
-			player.sendMessage("");
-
-			switch (page) {
-				case 2 -> player.sendMessage(ChatColor.RED + "Voir l'aide" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv help " + ChatColor.GRAY + "[page]");
-				case 1 -> {
-					player.sendMessage(ChatColor.RED + "Voir son sac de récompense" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv bag see " + ChatColor.GRAY + "[page]");
-					player.sendMessage(ChatColor.RED + "Récuperer son sac de récompense" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv bag get " + ChatColor.GRAY + "[amount]");
-					player.sendMessage(ChatColor.RED + "Voir les récompenses disponibles" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv stat " + ChatColor.GRAY + "[page]");
-					player.sendMessage(ChatColor.RED + "Générer un faux vote" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv fakevote " + ChatColor.GRAY + "[amount] " + ChatColor.GRAY + "[player]");
-					player.sendMessage(ChatColor.RED + "Recharger le plugin" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "/rv reload");
-				}
-			}
-
-			player.sendMessage("");
-			player.sendMessage(ChatColor.RED + "Help command" + ChatColor.GRAY + " | Page " + page);
-		}
 	}
 }

@@ -11,17 +11,20 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
-public class VotifierManager implements Listener {
+public record VotifierManager(BagManager bagManager) implements Listener {
+
 	@EventHandler
-	public static void voteListener(@NotNull final VotifierEvent e) {
+	public void voteListener(@NotNull VotifierEvent e) {
 		Vote vote = e.getVote();
 		String username = vote.getUsername();
 
-		@SuppressWarnings ("deprecation") OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(username);
+		@SuppressWarnings ("deprecation")
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(username);
 
 		if (offlinePlayer.hasPlayedBefore()) {
 			LocalDate expirationDate = LocalDate.now().plusDays(Constant.EXPIRATION_TIME);
@@ -31,8 +34,18 @@ public class VotifierManager implements Listener {
 			}
 
 			ItemStack clone = new ItemStack(achievableReward.itemStack());
-			Reward reward = new Reward(clone, expirationDate, achievableReward.id());
-			Bag.getPlayerBag(offlinePlayer.getUniqueId()).addNewReward(reward);
+			Reward reward = new Reward(clone, expirationDate);
+
+			Bag bag = this.bagManager.getOrCreateBag(offlinePlayer.getUniqueId());
+			bag.addReward(reward);
 		}
+	}
+
+	@Contract (pure = true)
+	@Override
+	public @NotNull String toString() {
+		return "VotifierManager{" +
+				"bagManager=" + this.bagManager +
+				"}";
 	}
 }

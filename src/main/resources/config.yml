@@ -1,7 +1,7 @@
 # Configuration for the plugin
 system:
   achievableRewardsPath: "plugins/VoteReward/AchievableRewards.yml"
-  bagsDirectory: "plugins/VoteReward/Bags/"
+  bagsFolder: "plugins/VoteReward/Bags/"
   internalPermission:
     rv-player-bag-see: true
     rv-player-bag-get: false
@@ -15,7 +15,6 @@ message:
     nonExistingConfig: "§cFichier config inexistant"
     startMessage: "§aPlugin VoteReward opérationnel"
     stopMessage: "§cPlugin VoteReward désactivé"
-    bagsDirectoryNotFound: "§cDossier contenant les données des bags est introuvable"
     achievableRewardsFileNotFound: "§cFichier contenant les récompenses obtenables est introuvable"
     reloadComplete: "§aReload fini"
     deleteFileFailed: "§aImpossible de supprimer le fichier {1}"

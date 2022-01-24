@@ -3,7 +3,6 @@ package fr.lataverne.votereward.managers;
 import fr.lataverne.votereward.Helper;
 import fr.lataverne.votereward.VoteReward;
 import fr.lataverne.votereward.objects.AchievableReward;
-import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
@@ -32,16 +32,16 @@ public class GUI {
 
     private @Nullable Inventory inventory = null;
 
-    private GUI(final ETypeGui type, final UUID targetUUID) {
+    private GUI(ETypeGui type, UUID targetUUID) {
         this.type = type;
         this.targetUUID = targetUUID;
     }
 
-    public static Inventory getGUI(final Player owner, final ETypeGui type, final int page) {
+    public static Inventory getGUI(Player owner, ETypeGui type, int page) {
         return GUI.getGUI(owner, type, page, owner.getUniqueId());
     }
 
-    public static Inventory getGUI(final Player owner, final ETypeGui type, final int page, final UUID targetUUID) {
+    public static Inventory getGUI(@NotNull Player owner, ETypeGui type, int page, UUID targetUUID) {
         GUI gui;
 
         if (GUI.guiList.containsKey(owner.getUniqueId())) {
@@ -70,7 +70,7 @@ public class GUI {
         return VoteReward.getInstance().getConfig().getString("gui.stat.title");
     }
 
-    public static void removeGUI(final UUID uuid) {
+    public static void removeGUI(UUID uuid) {
         GUI.guiList.remove(uuid);
     }
 
@@ -79,7 +79,7 @@ public class GUI {
         return "GUI{" + "targetUUID=" + this.targetUUID + ", type=" + this.type + ", inventory=" + this.inventory + '}';
     }
 
-    private static void setNavigationButtons(final ItemStack[] content, final int currentPage) {
+    private static void setNavigationButtons(ItemStack[] content, int currentPage) {
         int previousPage = currentPage > 0 ? currentPage - 1 : -1;
         int nextPage = currentPage + 1;
 
@@ -127,14 +127,14 @@ public class GUI {
         content[content.length - 1] = nextPageItem;
     }
 
-    private void createBagView(final int page) {
+    private void createBagView(int page) {
         if (this.inventory == null) {
             this.inventory = Bukkit.createInventory(null, 54, GUI.getRvBagTitle());
         }
 
         ItemStack[] content = new ItemStack[54];
 
-        List<Reward> bagContent = Bag.getPlayerBag(this.targetUUID).getBagContent();
+        List<Reward> bagContent = VoteReward.getInstance().getBagManager().getOrCreateBag(this.targetUUID).getBagContent().stream().toList();
 
         for (int i = 0; i < 45; i++) {
             int index = i + (page * 45);
@@ -171,7 +171,7 @@ public class GUI {
         this.inventory.setContents(content);
     }
 
-    private void createStatView(final int page) {
+    private void createStatView(int page) {
         if (this.inventory == null) {
             this.inventory = Bukkit.createInventory(null, 54, GUI.getRvStatTitle());
         }

@@ -127,4 +127,8 @@ public enum Helper {
 		String suffixMessage = Helper.getMessageOnConfig("message.messageSuffix");
 		player.sendMessage(Helper.colorizeString(suffixMessage + " &r" + message));
 	}
+
+	public static @Nullable String getStringInConfig(String path) {
+		return VoteReward.getInstance().getConfig().getString(path);
+	}
 }

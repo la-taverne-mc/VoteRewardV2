@@ -1,9 +1,6 @@
 package fr.lataverne.votereward;
 
-import fr.lataverne.votereward.managers.BagManager;
-import fr.lataverne.votereward.managers.CommandManager;
-import fr.lataverne.votereward.managers.EventListener;
-import fr.lataverne.votereward.managers.InternalPermission;
+import fr.lataverne.votereward.managers.*;
 import fr.lataverne.votereward.objects.AchievableReward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,6 +22,8 @@ public class VoteReward extends JavaPlugin {
 	private static VoteReward instance = null;
 
 	private BagManager bagManager = null;
+
+	private GuiManager guiManager = null;
 
 	public static VoteReward getInstance() {
 		return VoteReward.instance;
@@ -86,11 +85,12 @@ public class VoteReward extends JavaPlugin {
 		VoteReward.instance = this;
 
 		this.bagManager = new BagManager(this);
+		this.guiManager = new GuiManager();
 
-		CommandExecutor commandManager = new CommandManager(this.bagManager);
+		CommandExecutor commandManager = new CommandManager(this.bagManager, this.guiManager);
 		Objects.requireNonNull(this.getCommand("votereward")).setExecutor(commandManager);
 
-		Listener eventListener = new EventListener(this.bagManager);
+		Listener eventListener = new EventListener(this);
 		Bukkit.getPluginManager().registerEvents(eventListener, this);
 
 		InternalPermission.loadingInternalPermissions();
@@ -128,10 +128,15 @@ public class VoteReward extends JavaPlugin {
 		return this.bagManager;
 	}
 
+	public GuiManager getGuiManager() {
+		return this.guiManager;
+	}
+
 	@Override
 	public @NotNull String toString() {
 		return "VoteReward{" +
 				"bagManager=" + this.bagManager +
+				", guiManager=" + this.guiManager +
 				"}";
 	}
 }

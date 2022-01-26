@@ -73,8 +73,6 @@ public class BagManager {
             return null;
         }
 
-        VoteReward.sendMessageToConsole(file.getAbsolutePath());
-
         FileReader reader;
 
         try {
@@ -98,7 +96,7 @@ public class BagManager {
         } catch (FileNotFoundException e) {
             VoteReward.sendMessageToConsole(ChatColor.RED + "The \"" + file.getPath() + "\" file wasn't found");
         } catch (IOException | IllegalArgumentException | NoSuchElementException e) {
-            VoteReward.sendMessageToConsole(e.getMessage());
+            VoteReward.sendMessageToConsole(ChatColor.RED + "Error : " + e.getMessage());
         }
 
         return null;

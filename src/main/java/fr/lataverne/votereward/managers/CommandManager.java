@@ -3,6 +3,9 @@ package fr.lataverne.votereward.managers;
 import fr.lataverne.votereward.Constant;
 import fr.lataverne.votereward.Helper;
 import fr.lataverne.votereward.VoteReward;
+import fr.lataverne.votereward.gui.BagView;
+import fr.lataverne.votereward.gui.Gui;
+import fr.lataverne.votereward.gui.RewardGroupStatsView;
 import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
@@ -23,8 +26,11 @@ public class CommandManager implements CommandExecutor {
 
 	private final BagManager bagManager;
 
-	public CommandManager(BagManager bagManager) {
+	private final GuiManager guiManager;
+
+	public CommandManager(BagManager bagManager, GuiManager guiManager) {
 		this.bagManager = bagManager;
+		this.guiManager = guiManager;
 	}
 
 	private static void sendHelpPage(Player player, int page) {
@@ -59,6 +65,18 @@ public class CommandManager implements CommandExecutor {
 				return true;
 			}
 
+			if ("testBagAdd".equalsIgnoreCase(args[0])) {
+				ItemStack item = player.getInventory().getItemInMainHand();
+
+				Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
+				bag.addReward(new Reward(item, LocalDate.now().plusDays(3)));
+			}
+
+			if ("testBagSee".equalsIgnoreCase(args[0])) {
+				Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
+				player.sendMessage(bag.toString());
+			}
+
 			if ("bag".equalsIgnoreCase(args[0])) {
 				if (args.length < 2) {
 					Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
@@ -67,21 +85,15 @@ public class CommandManager implements CommandExecutor {
 
 				if ("see".equalsIgnoreCase(args[1])) {
 					if (Helper.playerHasPermission(player, "rv.player.bag.see")) {
-						int page = 0;
 
-						if (args.length > 2) {
-							try {
-								page = Integer.parseInt(args[2]);
-							} catch (NumberFormatException ignored) {
+						Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
+						BagView bagView = this.guiManager.getBagView(player, bag);
 
-							}
-						}
-
-						player.openInventory(GUI.getGUI(player, ETypeGui.Bag, page));
+						player.openInventory(bagView.getInventory());
 					}
 
 					return true;
-				} // rv bag see [page]
+				} // rv bag see
 
 				if ("get".equalsIgnoreCase(args[1])) {
 					if (Helper.playerHasPermission(player, "rv.player.bag.get")) {
@@ -117,7 +129,8 @@ public class CommandManager implements CommandExecutor {
 						}
 					}
 
-					player.openInventory(GUI.getGUI(player, ETypeGui.Stat, page));
+					RewardGroupStatsView rewardGroupStatsView = this.guiManager.getRewardGroupStatsView(player, page);
+					player.openInventory(rewardGroupStatsView.getInventory());
 				}
 
 				return true;
@@ -282,13 +295,16 @@ public class CommandManager implements CommandExecutor {
 					return true;
 				}
 
-				@SuppressWarnings ("deprecation") OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[3]);
+				@SuppressWarnings ("deprecation")
+				OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[3]);
 				if (!targetPlayer.hasPlayedBefore()) {
 					Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.hasNoPlayedBeforeInServer"));
 					return true;
 				}
 
-				player.openInventory(GUI.getGUI(player, ETypeGui.Bag, 0, targetPlayer.getUniqueId()));
+				Bag bag = this.bagManager.getOrCreateBag(targetPlayer.getUniqueId());
+				Gui gui = this.guiManager.getBagView(player, bag);
+				player.openInventory(gui.getInventory());
 				return true;
 			} // rv admin bag see [player]
 

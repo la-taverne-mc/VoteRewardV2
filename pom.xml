@@ -12,7 +12,7 @@
     <name>VoteReward</name>
 
     <properties>
-        <java.version>16</java.version>
+        <java.version>17</java.version>
         <spigot.version>1.18-R0.1-SNAPSHOT</spigot.version>
         <nuvotifier.version>2.6.0</nuvotifier.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -92,6 +92,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

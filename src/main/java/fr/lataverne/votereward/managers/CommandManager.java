@@ -6,7 +6,6 @@ import fr.lataverne.votereward.VoteReward;
 import fr.lataverne.votereward.gui.BagView;
 import fr.lataverne.votereward.gui.Gui;
 import fr.lataverne.votereward.gui.RewardGroupStatsView;
-import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
 import org.bukkit.Bukkit;
@@ -16,10 +15,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class CommandManager implements CommandExecutor {
@@ -28,9 +25,12 @@ public class CommandManager implements CommandExecutor {
 
 	private final GuiManager guiManager;
 
-	public CommandManager(BagManager bagManager, GuiManager guiManager) {
+	private final RewardGroupManager rewardGroupManager;
+
+	public CommandManager(BagManager bagManager, GuiManager guiManager, RewardGroupManager rewardGroupManager) {
 		this.bagManager = bagManager;
 		this.guiManager = guiManager;
+		this.rewardGroupManager = rewardGroupManager;
 	}
 
 	private static void sendHelpPage(Player player, int page) {
@@ -63,18 +63,6 @@ public class CommandManager implements CommandExecutor {
 			if (args.length < 1) {
 				Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.misuseCommand"));
 				return true;
-			}
-
-			if ("testBagAdd".equalsIgnoreCase(args[0])) {
-				ItemStack item = player.getInventory().getItemInMainHand();
-
-				Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
-				bag.addReward(new Reward(item, LocalDate.now().plusDays(3)));
-			}
-
-			if ("testBagSee".equalsIgnoreCase(args[0])) {
-				Bag bag = this.bagManager.getOrCreateBag(player.getUniqueId());
-				player.sendMessage(bag.toString());
 			}
 
 			if ("bag".equalsIgnoreCase(args[0])) {
@@ -218,20 +206,15 @@ public class CommandManager implements CommandExecutor {
 					}
 				}
 
-				if (AchievableReward.getNumberOfAchievableRewards() == 0) {
+				if (this.rewardGroupManager.getNumberOfAchievableRewards() == 0) {
 					Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.noAchievableRewardsAvailable"));
 					return true;
 				}
 
-				LocalDate localDateNow = LocalDate.now();
-
 				for (int i = 0; i < nbReward; i++) {
+					Reward reward = this.rewardGroupManager.getRandomReward();
 
-					LocalDate expirationDate = localDateNow.plusDays(Constant.EXPIRATION_TIME);
-					AchievableReward achievableReward = AchievableReward.getRandomReward();
-
-					if (achievableReward != null) {
-						Reward reward = new Reward(new ItemStack(achievableReward.itemStack()), expirationDate);
+					if (reward != null) {
 						Bag bag = this.bagManager.getOrCreateBag(targetPlayerUUID);
 						bag.addReward(reward);
 					}

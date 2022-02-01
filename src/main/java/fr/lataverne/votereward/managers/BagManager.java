@@ -180,7 +180,6 @@ public class BagManager {
                 Pair<UUID, Bag> ownerAndBag = BagManager.parseBagFile(file);
                 if (ownerAndBag != null) {
                     this.bags.put(ownerAndBag.getKey(), ownerAndBag.getValue());
-                    ownerAndBag.getValue().verifyExpirationDates();
                 }
             }
         }

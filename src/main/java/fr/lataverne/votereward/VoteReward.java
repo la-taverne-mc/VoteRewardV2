@@ -1,20 +1,14 @@
 package fr.lataverne.votereward;
 
 import fr.lataverne.votereward.managers.*;
-import fr.lataverne.votereward.objects.AchievableReward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 
 @SuppressWarnings ("ClassNamePrefixedWithPackageName")
@@ -25,6 +19,8 @@ public class VoteReward extends JavaPlugin {
 
 	private GuiManager guiManager = null;
 
+	private RewardGroupManager rewardGroupManager = null;
+
 	public static VoteReward getInstance() {
 		return VoteReward.instance;
 	}
@@ -34,45 +30,11 @@ public class VoteReward extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
 	}
 
-	private static void loadAchievableRewards() {
-		String dataFilePath = VoteReward.instance.getConfig().getString("system.achievableRewardsPath");
-		File dataFile = null;
-		if (dataFilePath != null) {
-			dataFile = new File(dataFilePath);
-		}
-
-		if (dataFilePath == null || !dataFile.exists()) {
-			VoteReward.sendMessageToConsole(VoteReward.instance.getConfig().getString("message.system.achievableRewardsFileNotFound") + " (Path: " + dataFilePath + ")");
-			return;
-		}
-
-		AchievableReward.clear();
-
-		YamlConfiguration achievableRewardFile = new YamlConfiguration();
-		try {
-			achievableRewardFile.load(dataFile);
-			for (String key : achievableRewardFile.getKeys(false)) {
-				String type = achievableRewardFile.getString(key + ".type");
-				if (type != null) {
-					Material materialType = Material.getMaterial(type);
-					if (materialType != null) {
-						int amount = achievableRewardFile.contains(key + ".amount") ? achievableRewardFile.getInt(key + ".amount") : 1;
-						double percentage = achievableRewardFile.contains(key + ".percent") ? achievableRewardFile.getDouble(key + ".percent") : 0.0;
-						int id = Integer.parseInt(key.replace("reward_", ""));
-
-						ItemStack itemStack = new ItemStack(materialType, amount);
-
-						AchievableReward.addNewAchievableRewards(new AchievableReward(itemStack, percentage, id), id);
-					}
-				}
-			}
-		} catch (IOException | InvalidConfigurationException ignored) {
-		}
-	}
-
 	@Override
 	public void onDisable() {
+		this.rewardGroupManager.saveRewardGroups();
 		this.bagManager.saveBags();
+
 		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
 	}
 
@@ -86,12 +48,15 @@ public class VoteReward extends JavaPlugin {
 
 		this.bagManager = new BagManager(this);
 		this.guiManager = new GuiManager();
+		this.rewardGroupManager = new RewardGroupManager();
 
-		CommandExecutor commandManager = new CommandManager(this.bagManager, this.guiManager);
+		CommandExecutor commandManager = new CommandManager(this.bagManager, this.guiManager, this.rewardGroupManager);
 		Objects.requireNonNull(this.getCommand("votereward")).setExecutor(commandManager);
 
 		Listener eventListener = new EventListener(this);
+		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardGroupManager);
 		Bukkit.getPluginManager().registerEvents(eventListener, this);
+		Bukkit.getPluginManager().registerEvents(votifierManager, this);
 
 		InternalPermission.loadingInternalPermissions();
 
@@ -118,7 +83,7 @@ public class VoteReward extends JavaPlugin {
 			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
 		}
 
-		VoteReward.loadAchievableRewards();
+		this.rewardGroupManager.loadRewardGroups();
 		this.bagManager.loadBags();
 
 		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
@@ -137,6 +102,7 @@ public class VoteReward extends JavaPlugin {
 		return "VoteReward{" +
 				"bagManager=" + this.bagManager +
 				", guiManager=" + this.guiManager +
+				", rewardGroupManager=" + this.rewardGroupManager +
 				"}";
 	}
 }

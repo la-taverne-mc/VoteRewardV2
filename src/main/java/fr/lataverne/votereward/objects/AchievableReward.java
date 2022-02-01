@@ -1,61 +1,42 @@
 package fr.lataverne.votereward.objects;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import fr.lataverne.votereward.VoteReward;
+import fr.lataverne.votereward.utils.json.ItemStackJson;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+public record AchievableReward(ItemStack reward, double percentage) {
 
-public record AchievableReward(ItemStack itemStack, double percentage, int id) {
-    private static final HashMap<Integer, AchievableReward> achievableRewards = new HashMap<>();
+    public static @Nullable AchievableReward parseJson(@NotNull JsonElement elemAchievableReward) {
+        try {
+            if (elemAchievableReward.isJsonObject()) {
+                JsonObject jsonAchievableReward = elemAchievableReward.getAsJsonObject();
 
-    public static void addNewAchievableRewards(final AchievableReward achievableReward, final int id) {
-        AchievableReward.achievableRewards.put(id, achievableReward);
-    }
+                if (jsonAchievableReward.has("reward") && jsonAchievableReward.has("percentage")) {
+                    ItemStack reward = ItemStackJson.deserialize(jsonAchievableReward.get("reward"));
+                    double percentage = jsonAchievableReward.get("percentage").getAsDouble();
 
-    public static void clear() {
-        AchievableReward.achievableRewards.clear();
-    }
-
-    public static AchievableReward getAchievableReward(final int id) {
-        return AchievableReward.achievableRewards.get(id);
-    }
-
-    public static AchievableReward[] getAchievableRewards() {
-        return AchievableReward.achievableRewards.values().toArray(new AchievableReward[0]);
-    }
-
-    public static int getNumberOfAchievableRewards() {
-        return AchievableReward.achievableRewards.size();
-    }
-
-    public static @Nullable AchievableReward getRandomReward() {
-        if (AchievableReward.achievableRewards.isEmpty()) {
-            return null;
-        }
-
-        List<Integer> randomized = new ArrayList<>();
-
-        for (final Map.Entry<Integer, AchievableReward> entry : AchievableReward.achievableRewards.entrySet()) {
-            AchievableReward value = entry.getValue();
-            for (int i = 0; i < value.percentage * 100; i++) {
-                randomized.add(entry.getKey());
+                    return new AchievableReward(reward, percentage);
+                }
             }
+        } catch (IllegalStateException | ClassCastException ignored) {
+            VoteReward.sendMessageToConsole(ChatColor.RED + "Unable to parse the json to AchievableReward");
+            VoteReward.sendMessageToConsole(ChatColor.RED + "Json : " + elemAchievableReward);
         }
 
-        int randomIndex = randomized.get(new SecureRandom().nextInt(randomized.size() - 1)).intValue();
-        return AchievableReward.achievableRewards.get(randomIndex);
+        return null;
     }
 
-    public double getRealChanceOfDrop() {
-        int total = 0;
-        for (final AchievableReward achievableReward : AchievableReward.achievableRewards.values()) {
-            total += achievableReward.percentage * 100;
-        }
+    public @NotNull JsonElement toJson() {
+        JsonObject jsonAchievableReward = new JsonObject();
 
-        return (this.percentage * 100) * 100 / total;
+        jsonAchievableReward.add("reward", ItemStackJson.serialize(this.reward));
+        jsonAchievableReward.addProperty("percentage", this.percentage);
+
+        return jsonAchievableReward;
     }
 }

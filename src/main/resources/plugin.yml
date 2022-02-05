@@ -9,85 +9,16 @@ authors:
 
 version: 2.0.0
 
-api-version: 1.16
-
-commands:
-  votereward:
-    description: Command of the plugin VoteReward
-    usage: "Usage: /rv [bag|stat|admin|stop]"
-    permission: rv.command
-    default: true
-    aliases:
-      - votereward
-      - rv
-    permission-message: "§bVoteReward §f: §7You don't have permission"
+api-version: 1.18
 
 permissions:
-  rv.*:
-    description: Adds all permissions
-    default: op
-    children:
-      rv.admin: true
-      rv.player: true
-  rv.admin:
-    description: Adds all admin permissions
-    default: op
-    children:
-      rv.admin.reload: true
-      rv.admin.fakevote: true
-      rv.admin.bag: true
-      rv.admin.stop: true
-  rv.admin.reload:
-    description: Adds the permission to reload the plugin
-    default: op
-  rv.admin.fakevote:
-    description: Adds all permissions about fakevote feature
-    default: op
-    children:
-      rv.admin.fakevote.me: true
-      rv.admin.fakevote.other: true
-  rv.admin.bag:
-    description: Adds all admin permissions about bags
-    default: op
-    children:
-      rv.admin.bag.see: true
-      rv.admin.bag.get: true
-  rv.admin.bag.see:
-    description: Adds the permissions for see the bag of another player
-    default: op
-  rv.admin.bag.get:
-    description: Adds the permission for get the bag of another player
-    default: op
-  rv.admin.stop:
-    description: Adds the permissions for enable/disable the see and get commands of the bags for all players
-    default: op
-    children:
-      rv.admin.stop.get: true
-      rv.admin.stop.see: true
-  rv.admin.stop.get:
-    description: Adds the permission for enable/disable get command of the bags for all players
-    default: op
-  rv.admin.stop.see:
-    description: Adds the permission for enable/disable see command of the bags for all players
-    default: op
-  rv.player:
-    description: Adds all player permissions
+  votereward.bag:
+    description: Allows bag command usage
     default: true
     children:
-      rv.player.bag: true
-  rv.player.bag:
-    description: Adds all bag permissions
-    default: true
-    children:
-      rv.player.bag.see: true
-      rv.player.bag.get: true
-      rv.player.stat: true
-  rv.player.bag.see:
-    description: Adds the permission to see his bag
-    default: true
-  rv.player.bag.get:
-    description: Adds the permission to get his bag
-    default: true
-  rv.player.stat:
-    description: Adds the permission to see the available rewards
-    default: true
+      votereward.bag.get:
+        description: Allows to use /votereward bag get
+        default: true
+      votereward.bag.see:
+        description: Allows to use /votereward bag see
+        default: true

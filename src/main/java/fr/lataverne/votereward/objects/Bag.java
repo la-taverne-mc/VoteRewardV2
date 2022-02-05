@@ -42,7 +42,9 @@ public class Bag {
     public JsonElement toJson() {
         JsonArray jsonRewards = new JsonArray();
 
-        this.bagContent.forEach(reward -> jsonRewards.add(reward.toJson()));
+        if (!this.bagContent.isEmpty()) {
+            this.bagContent.forEach(reward -> jsonRewards.add(reward.toJson()));
+        }
 
         return jsonRewards;
     }

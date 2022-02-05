@@ -1,15 +1,14 @@
 package fr.lataverne.votereward;
 
+import fr.lataverne.votereward.commands.VoteRewardCommand;
 import fr.lataverne.votereward.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.Objects;
 
 @SuppressWarnings ("ClassNamePrefixedWithPackageName")
 public class VoteReward extends JavaPlugin {
@@ -20,6 +19,8 @@ public class VoteReward extends JavaPlugin {
 	private GuiManager guiManager = null;
 
 	private RewardGroupManager rewardGroupManager = null;
+
+	private CommandsManager commandsManager = null;
 
 	public static VoteReward getInstance() {
 		return VoteReward.instance;
@@ -35,6 +36,8 @@ public class VoteReward extends JavaPlugin {
 		this.rewardGroupManager.saveRewardGroups();
 		this.bagManager.saveBags();
 
+		this.commandsManager.unregisterCommands();
+
 		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
 	}
 
@@ -49,9 +52,9 @@ public class VoteReward extends JavaPlugin {
 		this.bagManager = new BagManager(this);
 		this.guiManager = new GuiManager();
 		this.rewardGroupManager = new RewardGroupManager();
+		this.commandsManager = new CommandsManager();
 
-		CommandExecutor commandManager = new CommandManager(this.bagManager, this.guiManager, this.rewardGroupManager);
-		Objects.requireNonNull(this.getCommand("votereward")).setExecutor(commandManager);
+		new VoteRewardCommand();
 
 		Listener eventListener = new EventListener(this);
 		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardGroupManager);
@@ -97,12 +100,17 @@ public class VoteReward extends JavaPlugin {
 		return this.guiManager;
 	}
 
+	public CommandsManager getCommandsManager() {
+		return this.commandsManager;
+	}
+
 	@Override
 	public @NotNull String toString() {
 		return "VoteReward{" +
 				"bagManager=" + this.bagManager +
 				", guiManager=" + this.guiManager +
 				", rewardGroupManager=" + this.rewardGroupManager +
+				", commandsManager=" + this.commandsManager +
 				"}";
 	}
 }

@@ -12,6 +12,7 @@ public class BagCommand extends CompositeCommand {
 
     @Override
     protected void setup() {
+        this.setPermission("votereward.bag");
         this.setOnlyPlayer(true);
 
         new GetBagCommand(this);

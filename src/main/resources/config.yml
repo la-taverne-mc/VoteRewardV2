@@ -45,6 +45,11 @@ messages:
     no-permission: "§cVous n'êtes pas autorisé à exécuter cette commande (§7[permission]§c)."
     use-only-in-game: "§cCette commande est uniquement disponible dans le jeu."
     misuse-command: "§cMauvaise utilisation de la commande."
+  admin:
+    fakevote:
+      one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
+      multiple: "§a[nb-fakevote] votes ont été simulés. Vous avez récupéré [nb-given-rewards] récompenses."
+      must-greater-than-0: "§cLe nombre de vote à simuler doit être supérieur à 0."
 
 # All string used in the different interfaces
 gui:
@@ -65,7 +70,7 @@ commands:
   votereward:
     description: "Commande de base de VoteReward"
     usage: "/vr"
-    parameters: "<bag | admin | stat | stop>"
+    parameters: "<bag | admin | stats >"
     bag:
       description: "Permet de gérer son sac de récompenses"
       usage: "/vr bag"
@@ -76,4 +81,12 @@ commands:
       get:
         description: "Permet de récuperer ses récompenses"
         usage: "/vr bag get"
+        parameters: "[amount]"
+    admin:
+      description: "Permet d'exécuter des commandes admin"
+      usage: "/vr admin"
+      parameters: "<fakevote | bag>"
+      fakevote:
+        description: "Permet de simuler un vote"
+        usage: "/vr admin fakevote"
         parameters: "[amount]"

@@ -27,7 +27,7 @@ public class HelpCommand extends CompositeCommand {
         Collection<CompositeCommand> subCommands = this.parent.getSubCommands();
 
         for (CompositeCommand subCommand : subCommands) {
-            if (subCommand.canExecute(sender)) {
+            if (subCommand.canExecute(sender, false)) {
                 String subCommandUsage = subCommand.getUsage();
                 String subCommandParameters = subCommand.getParameters();
                 String subCommandDescription = subCommand.getDescription();

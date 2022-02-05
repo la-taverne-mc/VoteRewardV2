@@ -86,7 +86,7 @@ public abstract class CompositeCommand extends Command {
         return Objects.requireNonNullElseGet(this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.usageMessage), () -> CompositeCommand.COMMANDS + this.usageMessage);
     }
 
-    protected final String getParameters() {
+    protected final @Nullable String getParameters() {
         return this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.configPath + ".parameters");
     }
 
@@ -104,19 +104,23 @@ public abstract class CompositeCommand extends Command {
     }
 
     protected final boolean call(CommandSender sender, String label, List<String> args) {
-        return this.canExecute(sender) && this.execute(sender, label, args);
+        return this.canExecute(sender, true) && this.execute(sender, label, args);
     }
 
-    protected boolean canExecute(CommandSender sender) {
+    protected boolean canExecute(CommandSender sender, boolean sendMessage) {
         if (this.onlyPlayer && !(sender instanceof Player)) {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.error.use-only-in-game"));
+            if (sendMessage) {
+                sender.sendMessage(this.plugin.getConfig().getString("messages.error.use-only-in-game"));
+            }
             return false;
         }
 
         if (sender.isOp() || this.getPermission() == null || sender.hasPermission(this.getPermission())) {
             return true;
         } else {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.error.no-permission").replace("[permission]", this.getPermission()));
+            if (sendMessage) {
+                sender.sendMessage(this.plugin.getConfig().getString("messages.error.no-permission").replace("[permission]", this.getPermission()));
+            }
             return false;
         }
 
@@ -178,8 +182,10 @@ public abstract class CompositeCommand extends Command {
     }
 
     public void misuseCommand(@NotNull CommandSender sender) {
+        String parameters = this.getParameters();
+
         sender.sendMessage(this.plugin.getConfig().getString("messages.error.misuse-command"));
-        sender.sendMessage(ChatColor.RED + this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.usageMessage));
+        sender.sendMessage(ChatColor.RED + this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.usageMessage + (parameters != null ? " " + parameters : "")));
     }
 
     public boolean showHelp(CommandSender sender) {

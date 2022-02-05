@@ -8,5 +8,6 @@ public class VoteRewardCommand extends CompositeCommand {
     @Override
     protected void setup() {
         new BagCommand(this);
+        new AdminCommand(this);
     }
 }

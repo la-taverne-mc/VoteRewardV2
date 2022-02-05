@@ -104,6 +104,10 @@ public class VoteReward extends JavaPlugin {
 		return this.commandsManager;
 	}
 
+	public RewardGroupManager getRewardGroupManager() {
+		return this.rewardGroupManager;
+	}
+
 	@Override
 	public @NotNull String toString() {
 		return "VoteReward{" +

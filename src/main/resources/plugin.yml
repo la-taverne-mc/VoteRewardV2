@@ -13,7 +13,7 @@ api-version: 1.18
 
 permissions:
   votereward.bag:
-    description: Allows bag command usage
+    description: Allows bag commands usage
     default: true
     children:
       votereward.bag.get:
@@ -22,3 +22,20 @@ permissions:
       votereward.bag.see:
         description: Allows to use /votereward bag see
         default: true
+  votereward.admin:
+    description: Allows admin command usage
+    default: op
+    children:
+      votereward.admin.fakevote:
+        description: Allows to use /votereward fakevote
+        default: op
+      votereward.admin.bag:
+        description: Allows bag admin commands usage
+        default: op
+        children:
+          votereward.admin.bag.get:
+            description: Allows to use /votereward admin bag get
+            default: op
+          votereward.admin.bag.see:
+            description: Allows to use /votereward admin bag see
+            default: op

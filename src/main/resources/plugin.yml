@@ -17,10 +17,10 @@ permissions:
     default: true
     children:
       votereward.bag.get:
-        description: Allows to use /votereward bag get
+        description: Allows using /votereward bag get
         default: true
       votereward.bag.see:
-        description: Allows to use /votereward bag see
+        description: Allows using /votereward bag see
         default: true
   votereward.admin:
     description: Allows admin command usage
@@ -34,8 +34,8 @@ permissions:
         default: op
         children:
           votereward.admin.bag.get:
-            description: Allows to use /votereward admin bag get
+            description: Allows using /votereward admin bag get
             default: op
           votereward.admin.bag.see:
-            description: Allows to use /votereward admin bag see
+            description: Allows using /votereward admin bag see
             default: op

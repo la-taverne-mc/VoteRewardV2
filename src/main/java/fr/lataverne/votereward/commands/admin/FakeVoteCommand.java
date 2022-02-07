@@ -22,7 +22,7 @@ public class FakeVoteCommand extends CompositeCommand {
     }
 
     @Override
-    protected boolean execute(@NotNull CommandSender sender, @NotNull String label, List<String> args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         if (args != null && args.size() > 1) {
             this.misuseCommand(sender);
             return true;

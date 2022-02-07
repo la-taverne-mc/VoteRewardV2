@@ -1,5 +1,6 @@
 package fr.lataverne.votereward.commands;
 
+import fr.lataverne.votereward.commands.admin.BagAdminCommand;
 import fr.lataverne.votereward.commands.admin.FakeVoteCommand;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,5 +14,6 @@ public class AdminCommand extends CompositeCommand {
         this.setPermission("votereward.admin");
 
         new FakeVoteCommand(this);
+        new BagAdminCommand(this);
     }
 }

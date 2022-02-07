@@ -99,7 +99,7 @@ public abstract class CompositeCommand extends Command {
         return command.call(sender, cmdLabel, cmdArgs);
     }
 
-    protected boolean execute(@NotNull CommandSender sender, @NotNull String label, List<String> args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         return this.showHelp(sender);
     }
 

@@ -45,6 +45,7 @@ messages:
     no-permission: "§cVous n'êtes pas autorisé à exécuter cette commande (§7[permission]§c)."
     use-only-in-game: "§cCette commande est uniquement disponible dans le jeu."
     misuse-command: "§cMauvaise utilisation de la commande."
+    unknown-player: "§cLe joueur §7[player]§c n'existe pas ou n'a jamais joué sur le serveur."
   admin:
     fakevote:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
@@ -90,3 +91,15 @@ commands:
         description: "Permet de simuler un vote"
         usage: "/vr admin fakevote"
         parameters: "[amount]"
+      bag:
+        description: "Permet de gérer les bags d'autres joueurs"
+        usage: "/vr admin bag"
+        parameters: "<get | see>"
+        get:
+          description: "Permet de récuperer les récompenses d'un autre joueur"
+          usage: "/vr admin bag get"
+          parameters: "<player> [amount]"
+        see:
+          description: "Permet de voir les récompenses d'un autre joueur"
+          usage: "/vr admin bag see"
+          parameters: "<player>"

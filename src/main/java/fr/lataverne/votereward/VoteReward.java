@@ -18,7 +18,7 @@ public class VoteReward extends JavaPlugin {
 
 	private GuiManager guiManager = null;
 
-	private RewardGroupManager rewardGroupManager = null;
+	private RewardsGroupManager rewardsGroupManager = null;
 
 	private CommandsManager commandsManager = null;
 
@@ -33,7 +33,7 @@ public class VoteReward extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		this.rewardGroupManager.saveRewardGroups();
+		this.rewardsGroupManager.saveRewardGroups();
 		this.bagManager.saveBags();
 
 		this.commandsManager.unregisterCommands();
@@ -51,13 +51,13 @@ public class VoteReward extends JavaPlugin {
 
 		this.bagManager = new BagManager(this);
 		this.guiManager = new GuiManager();
-		this.rewardGroupManager = new RewardGroupManager();
+		this.rewardsGroupManager = new RewardsGroupManager();
 		this.commandsManager = new CommandsManager();
 
 		new VoteRewardCommand();
 
 		Listener eventListener = new EventListener(this);
-		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardGroupManager);
+		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardsGroupManager);
 		Bukkit.getPluginManager().registerEvents(eventListener, this);
 		Bukkit.getPluginManager().registerEvents(votifierManager, this);
 
@@ -86,7 +86,7 @@ public class VoteReward extends JavaPlugin {
 			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
 		}
 
-		this.rewardGroupManager.loadRewardGroups();
+		this.rewardsGroupManager.loadRewardGroups();
 		this.bagManager.loadBags();
 
 		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
@@ -104,8 +104,8 @@ public class VoteReward extends JavaPlugin {
 		return this.commandsManager;
 	}
 
-	public RewardGroupManager getRewardGroupManager() {
-		return this.rewardGroupManager;
+	public RewardsGroupManager getRewardGroupManager() {
+		return this.rewardsGroupManager;
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class VoteReward extends JavaPlugin {
 		return "VoteReward{" +
 				"bagManager=" + this.bagManager +
 				", guiManager=" + this.guiManager +
-				", rewardGroupManager=" + this.rewardGroupManager +
+				", rewardGroupManager=" + this.rewardsGroupManager +
 				", commandsManager=" + this.commandsManager +
 				"}";
 	}

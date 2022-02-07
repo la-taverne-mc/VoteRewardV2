@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RewardGroup {
+public class RewardsGroup {
     private static final double DEFAULT_PERCENTAGE_REWARD = 5;
 
     private final Collection<AchievableReward> achievableRewards;
 
-    public RewardGroup(@NotNull List<AchievableReward> achievableRewards) {
+    public RewardsGroup(@NotNull List<AchievableReward> achievableRewards) {
         this.achievableRewards = new ArrayList<>(achievableRewards);
     }
 
-    public static @Nullable RewardGroup parseJson(@NotNull JsonElement elemRewardGroup) {
+    public static @Nullable RewardsGroup parseJson(@NotNull JsonElement elemRewardGroup) {
         if (elemRewardGroup.isJsonArray()) {
             JsonArray jsonRewardGroup = elemRewardGroup.getAsJsonArray();
 
@@ -34,14 +34,14 @@ public class RewardGroup {
                 }
             });
 
-            return new RewardGroup(achievableRewards);
+            return new RewardsGroup(achievableRewards);
         }
 
         return null;
     }
 
     public void addAchievableReward(ItemStack item) {
-        this.addAchievableReward(item, RewardGroup.DEFAULT_PERCENTAGE_REWARD);
+        this.addAchievableReward(item, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
     }
 
     public void addAchievableReward(ItemStack item, double percentage) {

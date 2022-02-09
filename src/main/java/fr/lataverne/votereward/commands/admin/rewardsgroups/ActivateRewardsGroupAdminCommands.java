@@ -5,6 +5,7 @@ import fr.lataverne.votereward.objects.RewardsGroup;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivateRewardsGroupAdminCommands extends CompositeCommand {
@@ -34,6 +35,13 @@ public class ActivateRewardsGroupAdminCommands extends CompositeCommand {
         sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-activated").replace(ActivateRewardsGroupAdminCommands.REWARDS_GROUP_NAME, rewardsGroupName));
 
         return true;
+    }
+
+    @Override
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return args.isEmpty() || args.size() == 1
+                ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
+                : new ArrayList<>();
     }
 
     @Override

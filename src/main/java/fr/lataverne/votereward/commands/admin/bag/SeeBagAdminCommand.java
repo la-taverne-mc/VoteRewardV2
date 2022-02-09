@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeeBagAdminCommand extends CompositeCommand {
@@ -42,6 +43,13 @@ public class SeeBagAdminCommand extends CompositeCommand {
         senderPlayer.openInventory(bagView.getInventory());
 
         return true;
+    }
+
+    @Override
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return args.isEmpty() || args.size() == 1
+                ? this.plugin.getBagManager().getOwnerNames()
+                : new ArrayList<>();
     }
 
     @Override

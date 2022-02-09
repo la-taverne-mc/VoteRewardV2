@@ -123,7 +123,41 @@ public abstract class CompositeCommand extends Command {
             }
             return false;
         }
+    }
 
+    @Override
+    public final @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
+        List<String> options = new ArrayList<>();
+
+        CompositeCommand command = this.getCommandFromArgs(args);
+        String cmdLabel = (command.level > 0) ? args[command.level - 1] : alias;
+        List<String> cmdArgs = Arrays.asList(args).subList(command.level, args.length);
+
+        if ((!command.onlyPlayer || sender instanceof Player) && command.canExecute(sender, false)) {
+            options.addAll(command.tabComplete(sender, cmdLabel, cmdArgs));
+
+            if (command.hasSubCommands()) {
+                command.getSubCommands()
+                        .stream()
+                        .filter(subCommand -> subCommand.canExecute(sender, false))
+                        .map(Command::getLabel).forEach(options::add);
+            }
+
+            options.remove("help");
+
+            String lastArg = args.length != 0 ? args[args.length - 1] : "";
+
+            return options.stream()
+                    .filter(s -> s != null && s.toLowerCase(Locale.ENGLISH).startsWith(lastArg.toLowerCase(Locale.ENGLISH)))
+                    .sorted()
+                    .toList();
+        } else {
+            return options;
+        }
+    }
+
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return new ArrayList<>();
     }
 
     @Contract (pure = true)

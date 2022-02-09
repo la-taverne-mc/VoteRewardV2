@@ -115,7 +115,7 @@ commands:
           parameters: "<player>"
       rewardsgroups:
         description: "Permets de gérer les groupes de récompenses"
-        usage: "/vr admin rgroups"
+        usage: "/vr admin rewardsgroups"
         parameters: "<create | list | activate>"
         create:
           description: "Permet de créer un nouveau groupe de récompenses"

@@ -13,7 +13,7 @@ import java.util.*;
 
 public abstract class CompositeCommand extends Command {
 
-    private static final String COMMANDS = "commands.";
+    protected static final String COMMANDS = "commands.";
     @SuppressWarnings ("FieldNotUsedInToString")
     protected final @Nullable CompositeCommand parent;
     @SuppressWarnings ("FieldNotUsedInToString")
@@ -100,7 +100,8 @@ public abstract class CompositeCommand extends Command {
     }
 
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return this.showHelp(sender);
+        this.misuseCommand(sender);
+        return true;
     }
 
     protected final boolean call(CommandSender sender, String label, List<String> args) {
@@ -183,24 +184,22 @@ public abstract class CompositeCommand extends Command {
         return this.subCommandAliases.getOrDefault(lowerLabel, null);
     }
 
-    private boolean hasSubCommands() {
-        return !this.subCommands.isEmpty();
+    public boolean hasSubCommands() {
+        return !this.subCommands.keySet()
+                .stream().filter(label -> !"help".equals(label))
+                .toList().isEmpty();
     }
 
     private @NotNull CompositeCommand getCommandFromArgs(String @NotNull [] args) {
         CompositeCommand command = this;
 
         for (String arg : args) {
-            if (command.hasSubCommands()) {
-                CompositeCommand subCommand = command.getSubCommand(arg);
+            CompositeCommand subCommand = command.getSubCommand(arg);
 
-                if (subCommand == null) {
-                    return command;
-                } else {
-                    command = subCommand;
-                }
-            } else {
+            if (subCommand == null) {
                 return command;
+            } else {
+                command = subCommand;
             }
         }
 
@@ -216,15 +215,12 @@ public abstract class CompositeCommand extends Command {
     }
 
     public final void misuseCommand(@NotNull CommandSender sender) {
-        String usagePath = CompositeCommand.COMMANDS + this.usageMessage;
+        String usage = this.getUsage();
         String parameters = this.getParameters();
-
-        String usage = usagePath != null
-                ? this.plugin.getConfig().getString(usagePath)
-                : usagePath;
 
         sender.sendMessage(this.plugin.getConfig().getString("messages.error.misuse-command"));
         sender.sendMessage(ChatColor.RED + usage + (parameters != null ? " " + parameters : ""));
+        sender.sendMessage(ChatColor.RED + this.plugin.getConfig().getString("messages.tips.help-command"));
     }
 
     public boolean showHelp(CommandSender sender) {

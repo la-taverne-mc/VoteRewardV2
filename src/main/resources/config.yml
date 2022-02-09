@@ -41,11 +41,16 @@ message:
       featureDisabled: "§7La fonctionnalité est maintenant désactivée"
 
 messages:
+  tips:
+    help-command: "Astuce: utilise l'argument help à la fin d'une commande pour afficher l'aide."
   error:
     no-permission: "§cVous n'êtes pas autorisé à faire ça (§7[permission]§c)."
     use-only-in-game: "§cCette commande est uniquement disponible dans le jeu."
     misuse-command: "§cMauvaise utilisation de la commande."
     unknown-player: "§cLe joueur §7[player]§c n'existe pas ou n'a jamais joué sur le serveur."
+  help:
+    usage: "§cUtilisation: §e[parent-command-usage]"
+    description: "§cDescription: §e[parent-command-description]"
   admin:
     fakevote:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."

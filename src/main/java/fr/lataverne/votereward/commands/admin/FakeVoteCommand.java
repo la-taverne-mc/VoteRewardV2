@@ -49,7 +49,7 @@ public class FakeVoteCommand extends CompositeCommand {
             int nbGivenRewards = 0;
 
             for (int i = 0; i < amount; i++) {
-                Reward reward = this.plugin.getRewardGroupManager().getRandomReward();
+                Reward reward = this.plugin.getRewardsGroupManager().getRandomReward();
                 if (reward != null) {
                     bag.addReward(reward);
                     nbGivenRewards++;

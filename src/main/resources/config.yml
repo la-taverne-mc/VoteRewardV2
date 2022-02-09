@@ -42,7 +42,7 @@ message:
 
 messages:
   error:
-    no-permission: "§cVous n'êtes pas autorisé à exécuter cette commande (§7[permission]§c)."
+    no-permission: "§cVous n'êtes pas autorisé à faire ça (§7[permission]§c)."
     use-only-in-game: "§cCette commande est uniquement disponible dans le jeu."
     misuse-command: "§cMauvaise utilisation de la commande."
     unknown-player: "§cLe joueur §7[player]§c n'existe pas ou n'a jamais joué sur le serveur."
@@ -51,6 +51,11 @@ messages:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
       multiple: "§a[nb-fakevote] votes ont été simulés. Vous avez récupéré [nb-given-rewards] récompenses."
       must-greater-than-0: "§cLe nombre de vote à simuler doit être supérieur à 0."
+    rewards-group:
+      rewards-group-already-exists: "§cLe groupe de récompenses §4[rewards-group-name]§c existe déjà."
+      rewards-group-created: "§aLe groupe de récompenses §2[rewards-group-name]§a a été créé."
+      unknown-rewards-group: "§cLe groupe de récompenses §4[rewards-group-name]§c n'existe pas."
+      rewards-group-activated: "§aLe groupe de récompenses §2[rewards-group-name]§a est maintenant activé."
 
 # All string used in the different interfaces
 gui:
@@ -62,6 +67,11 @@ gui:
     getRewards: "§r§eRécuperer les récompenses"
   stat:
     title: "Récompenses obtenables"
+  admin:
+    rewards-group-list:
+      title: "Groupes de récompenses"
+      enabled: "§9Activé"
+      help-for-activate: "§7SHIFT + LEFT_CLICK pour activer"
 
 # Commands
 commands:
@@ -86,7 +96,7 @@ commands:
     admin:
       description: "Permet d'exécuter des commandes admin"
       usage: "/vr admin"
-      parameters: "<fakevote | bag>"
+      parameters: "<fakevote | bag | rewardsgroups>"
       fakevote:
         description: "Permet de simuler un vote"
         usage: "/vr admin fakevote"
@@ -103,3 +113,19 @@ commands:
           description: "Permet de voir les récompenses d'un autre joueur"
           usage: "/vr admin bag see"
           parameters: "<player>"
+      rewardsgroups:
+        description: "Permets de gérer les groupes de récompenses"
+        usage: "/vr admin rgroups"
+        parameters: "<create | list | activate>"
+        create:
+          description: "Permet de créer un nouveau groupe de récompenses"
+          usage: "/vr admin rewardsgroups create"
+          parameters: "<name>"
+        list:
+          description: "Permet de voir la liste des groupes de récompenses"
+          usage: "/vr admin rewardsgroups list"
+          parameters: "[page]"
+        activate:
+          description: "Permet de définir le groupe de récompenses actif"
+          usage: "/vr admin rewardsgroups activate"
+          parameters: "<rewards-group-name>"

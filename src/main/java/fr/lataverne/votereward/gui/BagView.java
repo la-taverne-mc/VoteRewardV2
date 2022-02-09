@@ -7,6 +7,7 @@ import fr.lataverne.votereward.managers.BagManager;
 import fr.lataverne.votereward.managers.GuiManager;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -31,24 +32,18 @@ public class BagView extends NavigableGui {
         this.bag = bag;
     }
 
-    private static @NotNull List<Reward> getRewardsToBeDisplayed(Bag bag, int page) {
-        if (bag == null) {
+    private @NotNull List<Reward> getRewardsToBeDisplayed() {
+        if (this.bag == null) {
             return new ArrayList<>();
         }
 
-        List<Reward> bagContent = bag.getBagContent().stream().toList();
+        List<Reward> bagContent = this.bag.getBagContent().stream().toList();
 
-        int firstIndex = page * 45;
-        if (firstIndex > bagContent.size()) {
-            return new ArrayList<>();
-        }
+        Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(bagContent);
 
-        int lastIndex = (page + 1) * 45;
-        if (lastIndex > bagContent.size()) {
-            lastIndex = bagContent.size();
-        }
-
-        return bagContent.subList(firstIndex, lastIndex);
+        return indexes.getLeft().intValue() == -1 || indexes.getRight().intValue() == -1
+                ? new ArrayList<>()
+                : bagContent.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
     }
 
     private static @NotNull ItemStack getRewardView(@NotNull Reward reward) {
@@ -88,7 +83,7 @@ public class BagView extends NavigableGui {
 
     @Override
     protected void setContent() {
-        List<Reward> rewards = BagView.getRewardsToBeDisplayed(this.bag, this.page);
+        List<Reward> rewards = this.getRewardsToBeDisplayed();
 
         int size = rewards.size();
 
@@ -112,7 +107,7 @@ public class BagView extends NavigableGui {
     }
 
     @Override
-    public String getTitle() {
+    public @NotNull String getTitle() {
         return Helper.getStringInConfig("gui.bagSee.title");
     }
 

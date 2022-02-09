@@ -104,7 +104,7 @@ public class VoteReward extends JavaPlugin {
 		return this.commandsManager;
 	}
 
-	public RewardsGroupManager getRewardGroupManager() {
+	public RewardsGroupManager getRewardsGroupManager() {
 		return this.rewardsGroupManager;
 	}
 

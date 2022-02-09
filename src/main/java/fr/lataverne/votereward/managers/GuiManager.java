@@ -3,6 +3,7 @@ package fr.lataverne.votereward.managers;
 import fr.lataverne.votereward.gui.BagView;
 import fr.lataverne.votereward.gui.Gui;
 import fr.lataverne.votereward.gui.RewardGroupStatsView;
+import fr.lataverne.votereward.gui.admin.RewardsGroupListAdminView;
 import fr.lataverne.votereward.objects.Bag;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,18 @@ public class GuiManager {
             BagView bagView = new BagView(bag, 0);
             this.guis.put(player.getUniqueId(), bagView);
             return bagView;
+        }
+    }
+
+    public RewardsGroupListAdminView getRewardsGroupListView(@NotNull Player player, int page) {
+        Gui gui = this.getGui(player.getUniqueId());
+
+        if (gui instanceof RewardsGroupListAdminView view) {
+            return view;
+        } else {
+            RewardsGroupListAdminView view = new RewardsGroupListAdminView(page);
+            this.guis.put(player.getUniqueId(), view);
+            return view;
         }
     }
 

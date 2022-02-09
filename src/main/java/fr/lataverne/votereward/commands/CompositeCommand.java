@@ -181,11 +181,16 @@ public abstract class CompositeCommand extends Command {
         this.onlyPlayer = onlyPlayer;
     }
 
-    public void misuseCommand(@NotNull CommandSender sender) {
+    public final void misuseCommand(@NotNull CommandSender sender) {
+        String usagePath = CompositeCommand.COMMANDS + this.usageMessage;
         String parameters = this.getParameters();
 
+        String usage = usagePath != null
+                ? this.plugin.getConfig().getString(usagePath)
+                : usagePath;
+
         sender.sendMessage(this.plugin.getConfig().getString("messages.error.misuse-command"));
-        sender.sendMessage(ChatColor.RED + this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.usageMessage + (parameters != null ? " " + parameters : "")));
+        sender.sendMessage(ChatColor.RED + usage + (parameters != null ? " " + parameters : ""));
     }
 
     public boolean showHelp(CommandSender sender) {

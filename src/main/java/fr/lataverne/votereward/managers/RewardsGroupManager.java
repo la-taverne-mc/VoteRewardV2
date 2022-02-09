@@ -20,9 +20,9 @@ import java.util.*;
 public class RewardsGroupManager {
     private static final String REWARD_GROUPS_FOLDER = "plugins/VoteReward/RewardGroups/";
 
-    private final Map<String, RewardsGroup> rewardGroups = new HashMap<>();
+    private final Map<String, RewardsGroup> rewardsGroups = new HashMap<>();
 
-    private @Nullable String enabledRewardGroupName = null;
+    private @Nullable String enabledRewardsGroupName = null;
 
     private static void writeRewardGroupOnFile(@NotNull String name, @NotNull RewardsGroup rewardsGroup, boolean enabled) {
         try (FileWriter fileWriter = new FileWriter(RewardsGroupManager.REWARD_GROUPS_FOLDER + "/" + name, StandardCharsets.UTF_8);
@@ -104,16 +104,16 @@ public class RewardsGroupManager {
         if (files != null) {
             VoteReward.sendMessageToConsole(ChatColor.GOLD + "Loading reward groups");
 
-            this.rewardGroups.clear();
-            this.enabledRewardGroupName = null;
+            this.rewardsGroups.clear();
+            this.enabledRewardsGroupName = null;
 
             for (File file : files) {
                 Triple<String, RewardsGroup, Boolean> parsedFile = RewardsGroupManager.parseRewardFile(file);
                 if (parsedFile != null) {
-                    this.rewardGroups.put(parsedFile.getLeft(), parsedFile.getMiddle());
+                    this.rewardsGroups.put(parsedFile.getLeft(), parsedFile.getMiddle());
 
                     if (parsedFile.getRight().booleanValue()) {
-                        this.enabledRewardGroupName = parsedFile.getLeft();
+                        this.enabledRewardsGroupName = parsedFile.getLeft();
                     }
                 }
             }
@@ -123,46 +123,53 @@ public class RewardsGroupManager {
     }
 
     public @Nullable RewardsGroup getRewardGroup(String name) {
-        return this.rewardGroups.getOrDefault(name, null);
+        return this.rewardsGroups.getOrDefault(name, null);
     }
 
     public void saveRewardGroups() {
-        for (Map.Entry<String, RewardsGroup> entry : this.rewardGroups.entrySet()) {
+        for (Map.Entry<String, RewardsGroup> entry : this.rewardsGroups.entrySet()) {
             String name = entry.getKey();
             RewardsGroup rewardsGroup = entry.getValue();
-            boolean enabled = name.equals(this.enabledRewardGroupName);
+            boolean enabled = name.equals(this.enabledRewardsGroupName);
 
             RewardsGroupManager.writeRewardGroupOnFile(name, rewardsGroup, enabled);
         }
     }
 
-    public @Nullable RewardsGroup createNewRewardGroup(String name) {
-        if (this.rewardGroups.containsKey(name)) {
-            return null;
-        }
+    public Map<String, RewardsGroup> getRewardsGroups() {
+        return Collections.unmodifiableMap(this.rewardsGroups);
+    }
 
+    public void createNewRewardsGroup(String name) {
         RewardsGroup rewardsGroup = new RewardsGroup(new ArrayList<>());
-        this.rewardGroups.put(name, rewardsGroup);
-        return rewardsGroup;
+        this.rewardsGroups.put(name, rewardsGroup);
     }
 
     public int getNumberOfAchievableRewards() {
-        RewardsGroup enableRewardsGroup = this.rewardGroups.get(this.enabledRewardGroupName);
+        RewardsGroup enableRewardsGroup = this.rewardsGroups.get(this.enabledRewardsGroupName);
 
         return enableRewardsGroup != null ? enableRewardsGroup.getNumberOfReward() : 0;
     }
 
     public @Nullable Reward getRandomReward() {
-        RewardsGroup enableRewardsGroup = this.rewardGroups.get(this.enabledRewardGroupName);
+        RewardsGroup enableRewardsGroup = this.rewardsGroups.get(this.enabledRewardsGroupName);
 
         return enableRewardsGroup != null ? enableRewardsGroup.getRandomReward() : null;
+    }
+
+    public @Nullable String getEnabledRewardsGroupName() {
+        return this.enabledRewardsGroupName;
+    }
+
+    public void setEnabledRewardsGroupName(@Nullable String rewardsGroupName) {
+        this.enabledRewardsGroupName = rewardsGroupName;
     }
 
     @Override
     public String toString() {
         return "RewardGroupManager{" +
-                "rewardGroups=" + this.rewardGroups +
-                ", enabledRewardGroupName='" + this.enabledRewardGroupName + "'" +
+                "rewardGroups=" + this.rewardsGroups +
+                ", enabledRewardGroupName='" + this.enabledRewardsGroupName + "'" +
                 "}";
     }
 }

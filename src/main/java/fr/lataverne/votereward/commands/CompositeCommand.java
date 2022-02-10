@@ -24,6 +24,7 @@ public abstract class CompositeCommand extends Command {
     private final int level;
     private final String topLabel;
     private boolean onlyPlayer = false;
+    private boolean hidden = false;
 
     protected CompositeCommand(String label, String... aliases) {
         super(label, "", "", Arrays.asList(aliases));
@@ -144,9 +145,7 @@ public abstract class CompositeCommand extends Command {
                         .map(Command::getLabel).forEach(options::add);
             }
 
-            options.remove("help");
-
-            String lastArg = args.length != 0 ? args[args.length - 1] : "";
+            String lastArg = args.length == 0 ? "" : args[args.length - 1];
 
             return options.stream()
                     .filter(s -> s != null && s.toLowerCase(Locale.ENGLISH).startsWith(lastArg.toLowerCase(Locale.ENGLISH)))
@@ -163,7 +162,9 @@ public abstract class CompositeCommand extends Command {
 
     @Contract (pure = true)
     public final @NotNull Collection<CompositeCommand> getSubCommands() {
-        return this.subCommands.values();
+        return this.subCommands.values()
+                .stream().filter(compositeCommand -> !compositeCommand.hidden)
+                .toList();
     }
 
     protected abstract void setup();
@@ -206,8 +207,12 @@ public abstract class CompositeCommand extends Command {
         return command;
     }
 
-    public boolean isOnlyPlayer() {
-        return this.onlyPlayer;
+    public boolean isHidden() {
+        return this.hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     public void setOnlyPlayer(boolean onlyPlayer) {
@@ -244,7 +249,8 @@ public abstract class CompositeCommand extends Command {
                 ", topLabel='" + this.topLabel + "'" +
                 ", description='" + this.description + "'" +
                 ", usageMessage='" + this.usageMessage + "'" +
-                ", onlyPlayer=" + this.onlyPlayer + "'" +
+                ", onlyPlayer=" + this.onlyPlayer +
+                ", hidden=" + this.hidden +
                 "}";
     }
 }

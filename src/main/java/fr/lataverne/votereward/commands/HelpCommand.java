@@ -23,6 +23,10 @@ public class HelpCommand extends CompositeCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        if (this.parent.isHidden()) {
+            return true;
+        }
+
         sender.sendMessage(" ");
         sender.sendMessage(HelpCommand.HELP_HEADER);
 
@@ -74,5 +78,6 @@ public class HelpCommand extends CompositeCommand {
     @Override
     protected void setup() {
         this.inheritPermission();
+        this.setHidden(true);
     }
 }

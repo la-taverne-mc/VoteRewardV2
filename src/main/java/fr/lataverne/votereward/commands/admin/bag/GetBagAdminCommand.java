@@ -24,11 +24,12 @@ public class GetBagAdminCommand extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args.isEmpty() || args.size() > 2) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs.isEmpty() || cmdArgs.size() > 2) {
             this.misuseCommand(sender);
         } else {
             @SuppressWarnings ("deprecation")
-            OfflinePlayer player = Bukkit.getOfflinePlayer(args.get(0));
+            OfflinePlayer player = Bukkit.getOfflinePlayer(cmdArgs.get(0));
 
             if (!player.hasPlayedBefore()) {
                 sender.sendMessage(this.plugin.getConfig().getString("messages.error.unknown-player").replace(GetBagAdminCommand.PLAYER, player.getName()));
@@ -37,9 +38,9 @@ public class GetBagAdminCommand extends CompositeCommand {
 
             int maxNbRewardsRetrieving = Constant.MAX_NB_REWARDS_RETRIEVING;
 
-            if (args.size() == 2) {
-                if (NumberUtils.isDigits(args.get(1))) {
-                    maxNbRewardsRetrieving = NumberUtils.toInt(args.get(1));
+            if (cmdArgs.size() == 2) {
+                if (NumberUtils.isDigits(cmdArgs.get(1))) {
+                    maxNbRewardsRetrieving = NumberUtils.toInt(cmdArgs.get(1));
                 } else {
                     this.misuseCommand(sender);
                     return true;

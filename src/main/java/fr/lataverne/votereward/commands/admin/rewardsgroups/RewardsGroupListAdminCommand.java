@@ -21,16 +21,17 @@ public class RewardsGroupListAdminCommand extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args.size() > 2) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs.size() > 2) {
             this.misuseCommand(sender);
             return true;
         }
 
         int page = 0;
 
-        if (args.size() == 1) {
-            if (NumberUtils.isDigits(args.get(0))) {
-                page = NumberUtils.toInt(args.get(0));
+        if (cmdArgs.size() == 1) {
+            if (NumberUtils.isDigits(cmdArgs.get(0))) {
+                page = NumberUtils.toInt(cmdArgs.get(0));
             } else {
                 this.misuseCommand(sender);
                 return true;

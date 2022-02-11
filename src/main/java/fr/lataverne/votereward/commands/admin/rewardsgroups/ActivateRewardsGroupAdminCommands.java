@@ -18,12 +18,13 @@ public class ActivateRewardsGroupAdminCommands extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args.size() != 1) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs.size() != 1) {
             this.misuseCommand(sender);
             return true;
         }
 
-        String rewardsGroupName = args.get(0);
+        String rewardsGroupName = cmdArgs.get(0);
 
         RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName);
         if (rewardsGroup == null) {

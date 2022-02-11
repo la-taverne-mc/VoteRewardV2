@@ -16,12 +16,13 @@ public class CreateRewardsGroupAdminCommand extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args.size() != 1) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs.size() != 1) {
             this.misuseCommand(sender);
             return true;
         }
 
-        String name = args.get(0);
+        String name = cmdArgs.get(0);
 
         if (this.plugin.getRewardsGroupManager().getRewardsGroups().containsKey(name)) {
             sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-already-exists").replace(CreateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, name));

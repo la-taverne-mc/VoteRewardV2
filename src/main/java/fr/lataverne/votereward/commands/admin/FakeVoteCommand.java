@@ -23,16 +23,17 @@ public class FakeVoteCommand extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args != null && args.size() > 1) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs != null && cmdArgs.size() > 1) {
             this.misuseCommand(sender);
             return true;
         }
 
         int amount = 1;
 
-        if (args != null && args.size() == 1) {
-            if (NumberUtils.isDigits(args.get(0))) {
-                amount = NumberUtils.toInt(args.get(0));
+        if (cmdArgs != null && cmdArgs.size() == 1) {
+            if (NumberUtils.isDigits(cmdArgs.get(0))) {
+                amount = NumberUtils.toInt(cmdArgs.get(0));
             } else {
                 this.misuseCommand(sender);
                 return true;

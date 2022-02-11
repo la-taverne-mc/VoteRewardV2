@@ -17,7 +17,8 @@ public class SeeBagCommand extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args != null && !args.isEmpty()) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs != null && !cmdArgs.isEmpty()) {
             this.misuseCommand(sender);
             return true;
         }

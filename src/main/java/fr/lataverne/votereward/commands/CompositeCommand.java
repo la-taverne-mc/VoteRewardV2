@@ -21,7 +21,7 @@ public abstract class CompositeCommand extends Command {
     private final String configPath;
     private final Map<String, CompositeCommand> subCommands = new LinkedHashMap<>();
     private final Map<String, CompositeCommand> subCommandAliases = new LinkedHashMap<>();
-    private final int level;
+    protected final int level;
     private final String topLabel;
     private boolean onlyPlayer = false;
     private boolean hidden = false;
@@ -95,9 +95,8 @@ public abstract class CompositeCommand extends Command {
     public final boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         CompositeCommand command = this.getCommandFromArgs(args);
         String cmdLabel = (command.level > 0) ? args[command.level - 1] : commandLabel;
-        List<String> cmdArgs = Arrays.asList(args).subList(command.level, args.length);
 
-        return command.call(sender, cmdLabel, cmdArgs);
+        return command.call(sender, cmdLabel, List.of(args));
     }
 
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {

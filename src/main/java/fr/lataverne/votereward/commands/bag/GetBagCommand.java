@@ -19,7 +19,8 @@ public class GetBagCommand extends CompositeCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args != null && args.size() > 2) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs != null && cmdArgs.size() > 2) {
             this.misuseCommand(sender);
             return true;
         }
@@ -28,9 +29,9 @@ public class GetBagCommand extends CompositeCommand {
 
         int maxNbRewardsRetrieving = Constant.MAX_NB_REWARDS_RETRIEVING;
 
-        if (args.size() == 1) {
-            if (NumberUtils.isDigits(args.get(0))) {
-                maxNbRewardsRetrieving = NumberUtils.toInt(args.get(0));
+        if (cmdArgs.size() == 1) {
+            if (NumberUtils.isDigits(cmdArgs.get(0))) {
+                maxNbRewardsRetrieving = NumberUtils.toInt(cmdArgs.get(0));
             } else {
                 this.misuseCommand(sender);
                 return true;

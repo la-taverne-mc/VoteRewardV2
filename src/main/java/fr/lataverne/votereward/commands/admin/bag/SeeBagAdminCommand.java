@@ -22,13 +22,14 @@ public class SeeBagAdminCommand extends CompositeCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args.size() != 1) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs.size() != 1) {
             this.misuseCommand(sender);
             return true;
         }
 
         @SuppressWarnings ("deprecation")
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args.get(0));
+        OfflinePlayer player = Bukkit.getOfflinePlayer(cmdArgs.get(0));
 
         if (!player.hasPlayedBefore()) {
             sender.sendMessage(this.plugin.getConfig().getString("messages.error.unknown-player").replace(SeeBagAdminCommand.PLAYER, player.getName()));

@@ -138,11 +138,13 @@ public abstract class CompositeCommand extends Command {
         if ((!command.onlyPlayer || sender instanceof Player) && command.canExecute(sender, false)) {
             options.addAll(command.tabComplete(sender, cmdLabel, cmdArgs));
 
-            if (command.hasSubCommands()) {
+            if (command.hasSubCommands() && cmdArgs.size() < 2) {
                 command.getSubCommands()
                         .stream()
                         .filter(subCommand -> subCommand.canExecute(sender, false))
-                        .map(Command::getLabel).forEach(options::add);
+                        .filter(subCommand -> !(subCommand instanceof DynamicCommand))
+                        .map(Command::getLabel)
+                        .forEach(options::add);
             }
 
             String lastArg = args.length == 0 ? "" : args[args.length - 1];
@@ -173,16 +175,28 @@ public abstract class CompositeCommand extends Command {
         this.setPermission(this.parent.getPermission());
     }
 
-    protected final @Nullable CompositeCommand getSubCommand(@NotNull String label) {
+    protected @Nullable CompositeCommand getSubCommand(@NotNull String label) {
         String lowerLabel = label.toLowerCase(Locale.ENGLISH);
 
         CompositeCommand subCommand = this.subCommands.getOrDefault(lowerLabel, null);
 
-        if (subCommand != null) {
-            return subCommand;
+        if (subCommand == null) {
+            subCommand = this.subCommandAliases.getOrDefault(lowerLabel, null);
+
+            if (subCommand == null) {
+                Optional<DynamicCommand> dynamicCommand = this.subCommands.values()
+                        .stream().filter(cmd -> cmd instanceof DynamicCommand)
+                        .map(cmd -> (DynamicCommand) cmd)
+                        .filter(cmd -> cmd.isDynamicCommand(lowerLabel))
+                        .findFirst();
+
+                if (dynamicCommand.isPresent()) {
+                    subCommand = (CompositeCommand) dynamicCommand.get();
+                }
+            }
         }
 
-        return this.subCommandAliases.getOrDefault(lowerLabel, null);
+        return subCommand;
     }
 
     public boolean hasSubCommands() {

@@ -61,6 +61,8 @@ messages:
       rewards-group-created: "§aLe groupe de récompenses §2[rewards-group-name]§a a été créé."
       unknown-rewards-group: "§cLe groupe de récompenses §4[rewards-group-name]§c n'existe pas."
       rewards-group-activated: "§aLe groupe de récompenses §2[rewards-group-name]§a est maintenant activé."
+      add-reward:
+        nothing-in-main-hand: "§cVous devez tenir l'item à ajouter dans votre main principal."
 
 # All string used in the different interfaces
 gui:
@@ -121,7 +123,7 @@ commands:
       rewardsgroups:
         description: "Permets de gérer les groupes de récompenses"
         usage: "/vr admin rewardsgroups"
-        parameters: "<create | list | activate>"
+        parameters: "<create | list | activate | <rewards-group-name>>"
         create:
           description: "Permet de créer un nouveau groupe de récompenses"
           usage: "/vr admin rewardsgroups create"
@@ -134,3 +136,11 @@ commands:
           description: "Permet de définir le groupe de récompenses actif"
           usage: "/vr admin rewardsgroups activate"
           parameters: "<rewards-group-name>"
+        <rewards-group-name>:
+          description: "Permet de gérer un groupe de récompenses"
+          usage: "/vr admin rewardsgroups <rewards-group-name>"
+          parameters: "<addReward>"
+          addreward:
+            description: "Permet d'ajouter l'item dans la main du joueur en tant que récompense."
+            usage: "/vr admin <rewards-group-name> addreward"
+            parameters: "[percentage]"

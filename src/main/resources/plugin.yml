@@ -27,7 +27,7 @@ permissions:
     default: op
     children:
       votereward.admin.fakevote:
-        description: Allows to use /votereward fakevote
+        description: Allows using /votereward fakevote
         default: op
       votereward.admin.bag:
         description: Allows bag admin commands usage
@@ -52,3 +52,10 @@ permissions:
           votereward.admin.rewardsgroups.activate:
             description: Allows using /votereward admin rewardsgroups activate
             default: op
+          votereward.admin.rewardsgroups.<rewards-group-name>:
+            description: Allows the commands to manage a rewards group
+            default: op
+            children:
+              votereward.admin.rewardsgroups.<rewards-group-name>.addreward:
+                description: Allows using /votereward admin rewardsgroups <rewards-group-name> addReward
+                default: op

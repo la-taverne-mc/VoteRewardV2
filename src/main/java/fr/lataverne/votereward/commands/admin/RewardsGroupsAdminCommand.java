@@ -25,6 +25,19 @@ public class RewardsGroupsAdminCommand extends CompositeCommand {
     }
 
     @Override
+    protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+
+        if (cmdArgs.size() == 1) {
+            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.unknown-rewards-group"));
+        } else {
+            this.misuseCommand(sender);
+        }
+
+        return true;
+    }
+
+    @Override
     protected void setup() {
         this.setPermission("votereward.admin.rewardsgroups");
 

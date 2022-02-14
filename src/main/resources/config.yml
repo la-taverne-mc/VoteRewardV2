@@ -63,6 +63,7 @@ messages:
       rewards-group-activated: "§aLe groupe de récompenses §2[rewards-group-name]§a est maintenant activé."
       add-reward:
         nothing-in-main-hand: "§cVous devez tenir l'item à ajouter dans votre main principal."
+        successfully-added-reward: "§aNouvelle récompense ajoutée au groupe §2[rewards-group-name]§a avec un pourcentage d'obtention de §2[percentage]."
 
 # All string used in the different interfaces
 gui:

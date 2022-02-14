@@ -92,6 +92,10 @@ public class RewardsGroupManager {
         return rewardGroupsFolder;
     }
 
+    public RewardsGroup getEnabledRewardsGroup() {
+        return this.rewardsGroups.getOrDefault(this.enabledRewardsGroupName, null);
+    }
+
     public void loadRewardGroups() {
         File rewardGroupsFolder = RewardsGroupManager.getRewardGroupsFolder();
 

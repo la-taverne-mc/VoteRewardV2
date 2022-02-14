@@ -9,17 +9,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class RewardsGroup {
     private static final double DEFAULT_PERCENTAGE_REWARD = 5;
 
-    private final Collection<AchievableReward> achievableRewards;
+    private final Map<Integer, AchievableReward> achievableRewards;
 
     public RewardsGroup(@NotNull List<AchievableReward> achievableRewards) {
-        this.achievableRewards = new ArrayList<>(achievableRewards);
+        this.achievableRewards = new HashMap<>();
+        int size = achievableRewards.size();
+        for (int i = 0; i < size; i++) {
+            this.achievableRewards.put(i, achievableRewards.get(i));
+        }
     }
 
     public static @Nullable RewardsGroup parseJson(@NotNull JsonElement elemRewardGroup) {
@@ -40,12 +42,18 @@ public class RewardsGroup {
         return null;
     }
 
-    public void addAchievableReward(ItemStack item) {
-        this.addAchievableReward(item, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
+    public AchievableReward addAchievableReward(ItemStack item) {
+        return this.addAchievableReward(item, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
     }
 
-    public void addAchievableReward(ItemStack item, double percentage) {
-        this.achievableRewards.add(new AchievableReward(item, percentage));
+    public Collection<AchievableReward> getAchievableRewards() {
+        return Collections.unmodifiableCollection(this.achievableRewards.values());
+    }
+
+    public AchievableReward addAchievableReward(ItemStack item, double percentage) {
+        AchievableReward achievableReward = new AchievableReward(item, percentage);
+        this.achievableRewards.put(this.getAvailableId(), achievableReward);
+        return achievableReward;
     }
 
     public int getNumberOfReward() {
@@ -58,7 +66,7 @@ public class RewardsGroup {
         }
 
         RandomCollection<AchievableReward> randomCollection = new RandomCollection<>();
-        for (AchievableReward achievableReward : this.achievableRewards) {
+        for (AchievableReward achievableReward : this.achievableRewards.values()) {
             randomCollection.add(achievableReward.percentage(), achievableReward);
         }
 
@@ -74,9 +82,24 @@ public class RewardsGroup {
     public JsonElement toJson() {
         JsonArray jsonRewardGroup = new JsonArray();
 
-        this.achievableRewards.forEach(achievableReward -> jsonRewardGroup.add(achievableReward.toJson()));
+        this.achievableRewards.forEach((id, achievableReward) -> jsonRewardGroup.add(achievableReward.toJson()));
 
         return jsonRewardGroup;
+    }
+
+    private Integer getAvailableId() {
+        int id = 0;
+        boolean idNotAvailable = true;
+
+        while (idNotAvailable) {
+            if (this.achievableRewards.containsKey(id)) {
+                id++;
+            } else {
+                idNotAvailable = false;
+            }
+        }
+
+        return id;
     }
 
     @Override

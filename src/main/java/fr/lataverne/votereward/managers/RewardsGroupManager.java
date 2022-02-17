@@ -74,6 +74,16 @@ public class RewardsGroupManager {
         return null;
     }
 
+    public @Nullable String getRewardsGroupName(RewardsGroup rewardsGroup) {
+        for (Map.Entry<String, RewardsGroup> entry : this.rewardsGroups.entrySet()) {
+            if (entry.getValue() == rewardsGroup) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
+    }
+
     private static @Nullable File getRewardGroupsFolder() {
         File rewardGroupsFolder = new File(RewardsGroupManager.REWARD_GROUPS_FOLDER);
 
@@ -90,10 +100,6 @@ public class RewardsGroupManager {
         }
 
         return rewardGroupsFolder;
-    }
-
-    public RewardsGroup getEnabledRewardsGroup() {
-        return this.rewardsGroups.getOrDefault(this.enabledRewardsGroupName, null);
     }
 
     public void loadRewardGroups() {
@@ -152,7 +158,7 @@ public class RewardsGroupManager {
     public int getNumberOfAchievableRewards() {
         RewardsGroup enableRewardsGroup = this.rewardsGroups.get(this.enabledRewardsGroupName);
 
-        return enableRewardsGroup != null ? enableRewardsGroup.getNumberOfReward() : 0;
+        return enableRewardsGroup != null ? enableRewardsGroup.getNbRewards() : 0;
     }
 
     public @Nullable Reward getRandomReward() {

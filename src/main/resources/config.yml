@@ -80,6 +80,13 @@ gui:
       title: "Groupes de récompenses"
       enabled: "§9Activé"
       help-for-activate: "§7SHIFT + LEFT_CLICK pour activer"
+    rewards-group-view:
+      title: "[rewards-group-name]"
+      rewards-group-icon:
+        nb-rewards: "§7Nombre de récompenses: [nb-rewards]"
+      reward-view:
+        percentage: "§7Pourcentage: [percentage]%"
+        real-percentage: "§7Pourcentage réel: [real-percentage]%"
 
 # Commands
 commands:
@@ -145,3 +152,7 @@ commands:
             description: "Permet d'ajouter l'item dans la main du joueur en tant que récompense."
             usage: "/vr admin <rewards-group-name> addreward"
             parameters: "[percentage]"
+          see:
+            description: "Permet de visualiser un groupe de récompenses"
+            usage: "/vr admin <rewards-group-name> see"
+            parameters: "[page]"

@@ -59,3 +59,6 @@ permissions:
               votereward.admin.rewardsgroups.<rewards-group-name>.addreward:
                 description: Allows using /votereward admin rewardsgroups <rewards-group-name> addReward
                 default: op
+              votereward.admin.rewardsgroups.<rewards-group-name>.see:
+                description: Allows using /votereward admin rewardsgroups <rewards-group-name> see
+                default: op

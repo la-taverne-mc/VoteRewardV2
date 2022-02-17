@@ -1,6 +1,7 @@
 package fr.lataverne.votereward.commands.admin.rewardsgroups.rewardsgroup;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
+import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.RewardsGroup;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
@@ -47,15 +48,16 @@ public class AddRewardAdminCommand extends CompositeCommand {
             String rewardsGroupName = args.get(this.level - 2);
             RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName);
 
+            AchievableReward achievableReward;
             if (Double.compare(percentage, -1.0) == 0) {
-                rewardsGroup.addAchievableReward(item);
+                achievableReward = rewardsGroup.addAchievableReward(item);
             } else {
-                rewardsGroup.addAchievableReward(item, percentage);
+                achievableReward = rewardsGroup.addAchievableReward(item, percentage);
             }
 
             String message = this.plugin.getConfig().getString("messages.admin.rewards-group.add-reward.successfully-added-reward");
             message = message.replace(AddRewardAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName)
-                    .replace(AddRewardAdminCommand.PERCENTAGE, Double.toString(percentage));
+                    .replace(AddRewardAdminCommand.PERCENTAGE, Double.toString(achievableReward.percentage()));
 
             sender.sendMessage(message);
         }

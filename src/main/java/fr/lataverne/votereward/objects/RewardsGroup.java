@@ -51,12 +51,12 @@ public class RewardsGroup {
     }
 
     public AchievableReward addAchievableReward(ItemStack item, double percentage) {
-        AchievableReward achievableReward = new AchievableReward(item, percentage);
+        AchievableReward achievableReward = new AchievableReward(new ItemStack(item), percentage);
         this.achievableRewards.put(this.getAvailableId(), achievableReward);
         return achievableReward;
     }
 
-    public int getNumberOfReward() {
+    public int getNbRewards() {
         return this.achievableRewards.size();
     }
 
@@ -85,6 +85,16 @@ public class RewardsGroup {
         this.achievableRewards.forEach((id, achievableReward) -> jsonRewardGroup.add(achievableReward.toJson()));
 
         return jsonRewardGroup;
+    }
+
+    public double getRealPercentageOfReward(AchievableReward achievableReward) {
+        if (!this.achievableRewards.containsValue(achievableReward)) {
+            return -1;
+        }
+
+        double total = this.achievableRewards.values().stream().mapToDouble(AchievableReward::percentage).sum();
+
+        return 100.0 * achievableReward.percentage() / total;
     }
 
     private Integer getAvailableId() {

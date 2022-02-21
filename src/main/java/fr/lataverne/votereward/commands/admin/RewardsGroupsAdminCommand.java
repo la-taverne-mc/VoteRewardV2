@@ -1,7 +1,7 @@
 package fr.lataverne.votereward.commands.admin;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
-import fr.lataverne.votereward.commands.admin.rewardsgroups.ActivateRewardsGroupAdminCommands;
+import fr.lataverne.votereward.commands.admin.rewardsgroups.ActivateRewardsGroupAdminCommand;
 import fr.lataverne.votereward.commands.admin.rewardsgroups.CreateRewardsGroupAdminCommand;
 import fr.lataverne.votereward.commands.admin.rewardsgroups.RewardsGroupAdminCommand;
 import fr.lataverne.votereward.commands.admin.rewardsgroups.RewardsGroupListAdminCommand;
@@ -43,7 +43,7 @@ public class RewardsGroupsAdminCommand extends CompositeCommand {
 
         new CreateRewardsGroupAdminCommand(this);
         new RewardsGroupListAdminCommand(this);
-        new ActivateRewardsGroupAdminCommands(this);
+        new ActivateRewardsGroupAdminCommand(this);
         new RewardsGroupAdminCommand(this);
     }
 }

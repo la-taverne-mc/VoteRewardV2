@@ -8,11 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivateRewardsGroupAdminCommands extends CompositeCommand {
+public class ActivateRewardsGroupAdminCommand extends CompositeCommand {
 
     private static final String REWARDS_GROUP_NAME = "[rewards-group-name]";
 
-    public ActivateRewardsGroupAdminCommands(@NotNull CompositeCommand parent) {
+    public ActivateRewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "activate");
     }
 
@@ -28,12 +28,12 @@ public class ActivateRewardsGroupAdminCommands extends CompositeCommand {
 
         RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName);
         if (rewardsGroup == null) {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.unknown-rewards-group").replace(ActivateRewardsGroupAdminCommands.REWARDS_GROUP_NAME, rewardsGroupName));
+            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.unknown-rewards-group").replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));
             return true;
         }
 
         this.plugin.getRewardsGroupManager().setEnabledRewardsGroupName(rewardsGroupName);
-        sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-activated").replace(ActivateRewardsGroupAdminCommands.REWARDS_GROUP_NAME, rewardsGroupName));
+        sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-activated").replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));
 
         return true;
     }

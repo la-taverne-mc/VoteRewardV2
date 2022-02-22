@@ -51,6 +51,10 @@ messages:
   help:
     usage: "§cUtilisation: §e[parent-command-usage]"
     description: "§cDescription: §e[parent-command-description]"
+  confirm-command:
+    confirm: "§6Pour confirmer votre commande, executez la commande §f[confirm-command-usage]§6 dans les 10 prochaines secondes."
+    request-cancelled: "§cDélai de confirmation de la command dépassé."
+    no-command-to-confirm: "§cVous n'avez pas de commande à confirmer."
   admin:
     fakevote:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
@@ -59,6 +63,8 @@ messages:
     rewards-group:
       rewards-group-already-exists: "§cLe groupe de récompenses §4[rewards-group-name]§c existe déjà."
       rewards-group-created: "§aLe groupe de récompenses §2[rewards-group-name]§a a été créé."
+      deleted: "§aLe groupe de récompense §2[rewards-group-name]§a a été supprimé."
+      unable-to-delete: "§cImpossible de supprimer le groupe de récompense §7[rewards-group-name]§c."
       unknown-rewards-group: "§cLe groupe de récompenses §4[rewards-group-name]§c n'existe pas."
       rewards-group-activated: "§aLe groupe de récompenses §2[rewards-group-name]§a est maintenant activé."
       add-reward:
@@ -96,7 +102,10 @@ commands:
   votereward:
     description: "Commande de base de VoteReward"
     usage: "/vr"
-    parameters: "<bag | admin | stats >"
+    parameters: "<bag | admin | stats | confirm >"
+    confirm:
+      description: "Permets de valider l'éxecution d'une commande demandant une confirmation"
+      usage: "/vr confirm"
     bag:
       description: "Permet de gérer son sac de récompenses"
       usage: "/vr bag"
@@ -131,11 +140,15 @@ commands:
       rewardsgroups:
         description: "Permets de gérer les groupes de récompenses"
         usage: "/vr admin rewardsgroups"
-        parameters: "<create | list | activate | <rewards-group-name>>"
+        parameters: "<create | delete | list | activate | <rewards-group-name>>"
         create:
           description: "Permet de créer un nouveau groupe de récompenses"
           usage: "/vr admin rewardsgroups create"
           parameters: "<name>"
+        delete:
+          description: "Permet de supprimer un groupe de récompenses"
+          usage: "/vr admin rewardsgroups delete"
+          parameters: "<rewards-group-name>"
         list:
           description: "Permet de voir la liste des groupes de récompenses"
           usage: "/vr admin rewardsgroups list"

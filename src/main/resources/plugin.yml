@@ -46,6 +46,9 @@ permissions:
           votereward.admin.rewardsgroups.create:
             description: Allows using /votereward admin rewardsgroups create
             default: op
+          votereward.admin.rewardsgroups.delete:
+            description: Allows using /votereward admin rewardsgroups delete
+            default: op
           votereward.admin.rewardsgroups.list:
             description: Allows using /votereward admin rewardsgroups list
             default: op

@@ -82,6 +82,21 @@ public abstract class CompositeCommand extends Command {
         return Objects.requireNonNullElseGet(this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.description), () -> CompositeCommand.COMMANDS + this.description);
     }
 
+    public @Nullable ConfirmCommand getConfirmCommand() {
+        CompositeCommand command = this.getSubCommand("confirm");
+        if (command == null) {
+            if (this.parent != null) {
+                return this.parent.getConfirmCommand();
+            }
+        } else {
+            if (command instanceof ConfirmCommand confirmCommand) {
+                return confirmCommand;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public @NotNull String getUsage() {
         return Objects.requireNonNullElseGet(this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.usageMessage), () -> CompositeCommand.COMMANDS + this.usageMessage);

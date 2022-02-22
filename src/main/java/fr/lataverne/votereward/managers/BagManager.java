@@ -143,7 +143,7 @@ public class BagManager {
     private static boolean inventoryPlayerHasEmptySlot(@NotNull Player player) {
         ItemStack[] inventoryContent = player.getInventory().getContents();
 
-        return IntStream.range(0, Constant.PLAYER_INVENTORY_SIZE).anyMatch(i -> inventoryContent[i] == null) || inventoryContent[Constant.HAND_OFF_SLOT] == null;
+        return IntStream.range(0, Constant.PLAYER_INVENTORY_SIZE).anyMatch(i -> inventoryContent[i] == null);
     }
 
     public Bag getOrCreateBag(UUID uuid) {

@@ -19,5 +19,6 @@ public class VoteRewardCommand extends CompositeCommand {
     protected void setup() {
         new BagCommand(this);
         new AdminCommand(this);
+        new ConfirmCommand(this);
     }
 }

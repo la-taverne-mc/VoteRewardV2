@@ -132,6 +132,19 @@ public class RewardsGroupManager {
         }
     }
 
+    public boolean deleteRewardsGroup(String name) {
+        File file = new File(RewardsGroupManager.REWARD_GROUPS_FOLDER + name);
+        if (file.exists()) {
+            boolean success = file.delete();
+            if (!success) {
+                return false;
+            }
+        }
+
+        this.rewardsGroups.remove(name);
+        return true;
+    }
+
     public @Nullable RewardsGroup getRewardGroup(String name) {
         return this.rewardsGroups.getOrDefault(name, null);
     }

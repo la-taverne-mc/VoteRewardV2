@@ -1,6 +1,7 @@
 package fr.lataverne.votereward.gui;
 
 import fr.lataverne.votereward.Helper;
+import org.jetbrains.annotations.NotNull;
 
 public class RewardGroupStatsView extends NavigableGui {
 
@@ -9,7 +10,7 @@ public class RewardGroupStatsView extends NavigableGui {
     }
 
     @Override
-    public String getTitle() {
+    public @NotNull String getTitle() {
         return Helper.getStringInConfig("gui.stat.title");
     }
 }

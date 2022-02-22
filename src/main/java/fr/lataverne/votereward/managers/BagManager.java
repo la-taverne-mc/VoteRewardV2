@@ -12,7 +12,9 @@ import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.Reward;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BagManager {
@@ -50,6 +53,10 @@ public class BagManager {
         }
     }
 
+    public Map<UUID, Bag> getBags() {
+        return Collections.unmodifiableMap(this.bags);
+    }
+
     private static @Nullable File getBagsFolder() {
         File bagsFolder = new File(BagManager.BAG_FOLDER);
 
@@ -66,6 +73,14 @@ public class BagManager {
         }
 
         return bagsFolder;
+    }
+
+    public List<String> getOwnerNames() {
+        return this.bags.keySet()
+                .stream().map(Bukkit::getOfflinePlayer)
+                .filter(offlinePlayer -> offlinePlayer != null && offlinePlayer.hasPlayedBefore())
+                .map(OfflinePlayer::getName)
+                .collect(Collectors.toList());
     }
 
     private static @Nullable Pair<UUID, Bag> parseBagFile(File file) {
@@ -128,7 +143,7 @@ public class BagManager {
     private static boolean inventoryPlayerHasEmptySlot(@NotNull Player player) {
         ItemStack[] inventoryContent = player.getInventory().getContents();
 
-        return IntStream.range(0, Constant.PLAYER_INVENTORY_SIZE).anyMatch(i -> inventoryContent[i] == null) || inventoryContent[Constant.HAND_OFF_SLOT] == null;
+        return IntStream.range(0, Constant.PLAYER_INVENTORY_SIZE).anyMatch(i -> inventoryContent[i] == null);
     }
 
     public Bag getOrCreateBag(UUID uuid) {

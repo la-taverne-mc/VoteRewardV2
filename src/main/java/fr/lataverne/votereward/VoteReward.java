@@ -1,15 +1,14 @@
 package fr.lataverne.votereward;
 
+import fr.lataverne.votereward.commands.VoteRewardCommand;
 import fr.lataverne.votereward.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.Objects;
 
 @SuppressWarnings ("ClassNamePrefixedWithPackageName")
 public class VoteReward extends JavaPlugin {
@@ -19,7 +18,9 @@ public class VoteReward extends JavaPlugin {
 
 	private GuiManager guiManager = null;
 
-	private RewardGroupManager rewardGroupManager = null;
+	private RewardsGroupManager rewardsGroupManager = null;
+
+	private CommandsManager commandsManager = null;
 
 	public static VoteReward getInstance() {
 		return VoteReward.instance;
@@ -32,8 +33,10 @@ public class VoteReward extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		this.rewardGroupManager.saveRewardGroups();
+		this.rewardsGroupManager.saveRewardGroups();
 		this.bagManager.saveBags();
+
+		this.commandsManager.unregisterCommands();
 
 		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
 	}
@@ -48,13 +51,13 @@ public class VoteReward extends JavaPlugin {
 
 		this.bagManager = new BagManager(this);
 		this.guiManager = new GuiManager();
-		this.rewardGroupManager = new RewardGroupManager();
+		this.rewardsGroupManager = new RewardsGroupManager();
+		this.commandsManager = new CommandsManager();
 
-		CommandExecutor commandManager = new CommandManager(this.bagManager, this.guiManager, this.rewardGroupManager);
-		Objects.requireNonNull(this.getCommand("votereward")).setExecutor(commandManager);
+		new VoteRewardCommand();
 
 		Listener eventListener = new EventListener(this);
-		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardGroupManager);
+		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardsGroupManager);
 		Bukkit.getPluginManager().registerEvents(eventListener, this);
 		Bukkit.getPluginManager().registerEvents(votifierManager, this);
 
@@ -83,7 +86,7 @@ public class VoteReward extends JavaPlugin {
 			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
 		}
 
-		this.rewardGroupManager.loadRewardGroups();
+		this.rewardsGroupManager.loadRewardGroups();
 		this.bagManager.loadBags();
 
 		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
@@ -97,12 +100,21 @@ public class VoteReward extends JavaPlugin {
 		return this.guiManager;
 	}
 
+	public CommandsManager getCommandsManager() {
+		return this.commandsManager;
+	}
+
+	public RewardsGroupManager getRewardsGroupManager() {
+		return this.rewardsGroupManager;
+	}
+
 	@Override
 	public @NotNull String toString() {
 		return "VoteReward{" +
 				"bagManager=" + this.bagManager +
 				", guiManager=" + this.guiManager +
-				", rewardGroupManager=" + this.rewardGroupManager +
+				", rewardGroupManager=" + this.rewardsGroupManager +
+				", commandsManager=" + this.commandsManager +
 				"}";
 	}
 }

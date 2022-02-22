@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-public record VotifierManager(BagManager bagManager, RewardGroupManager rewardGroupManager) implements Listener {
+public record VotifierManager(BagManager bagManager, RewardsGroupManager rewardsGroupManager) implements Listener {
 
 	@EventHandler
 	public void voteListener(@NotNull VotifierEvent e) {
@@ -21,7 +21,7 @@ public record VotifierManager(BagManager bagManager, RewardGroupManager rewardGr
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(username);
 
 		if (offlinePlayer.hasPlayedBefore()) {
-			Reward reward = this.rewardGroupManager.getRandomReward();
+			Reward reward = this.rewardsGroupManager.getRandomReward();
 			if (reward != null) {
 				Bag bag = this.bagManager.getOrCreateBag(offlinePlayer.getUniqueId());
 				bag.addReward(reward);

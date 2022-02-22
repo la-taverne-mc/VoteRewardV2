@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings ("ClassHasNoToStringMethod")
 public class ConfirmCommand extends CompositeCommand {
 
     private final Map<CommandSender, Pair<BukkitTask, Runnable>> toBeConfirmed = new HashMap<>();

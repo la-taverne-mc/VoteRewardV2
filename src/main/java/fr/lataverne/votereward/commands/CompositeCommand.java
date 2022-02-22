@@ -266,7 +266,7 @@ public abstract class CompositeCommand extends Command {
     }
 
     @Override
-    public String toString() {
+    public final @NotNull String toString() {
         return "CompositeCommand{" +
                 "configPath='" + this.configPath + "'" +
                 ", label='" + this.getLabel() + "'" +

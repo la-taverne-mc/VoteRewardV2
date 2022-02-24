@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class Bag {
+
     private final Collection<Reward> bagContent;
 
     public Bag(Collection<Reward> content) {

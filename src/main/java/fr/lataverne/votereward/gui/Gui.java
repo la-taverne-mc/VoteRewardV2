@@ -12,14 +12,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-@SuppressWarnings ("ClassNamePrefixedWithPackageName")
+@SuppressWarnings("ClassNamePrefixedWithPackageName")
 public abstract class Gui {
+
     protected final ItemStack[] content;
 
-    @SuppressWarnings ("FieldNotUsedInToString")
+    @SuppressWarnings("FieldNotUsedInToString")
     protected final VoteReward plugin;
 
-    @SuppressWarnings ("FieldNotUsedInToString")
+    @SuppressWarnings("FieldNotUsedInToString")
     private Inventory inventory = null;
 
     protected Gui(int size) {
@@ -45,13 +46,11 @@ public abstract class Gui {
 
     public abstract @NotNull String getTitle();
 
-    protected abstract void setContent();
+    public abstract EInventoryAction onInventoryClickEvent(@NotNull InventoryClickEvent event);
 
     @Override
     public String toString() {
-        return "GUI{" +
-                "content=" + Arrays.toString(this.content) +
-                "}";
+        return "GUI{" + "content=" + Arrays.toString(this.content) + "}";
     }
 
     protected static @NotNull ItemStack getEmptySpace() {
@@ -66,5 +65,5 @@ public abstract class Gui {
         return emptySpaceItem;
     }
 
-    public abstract EInventoryAction onInventoryClickEvent(@NotNull InventoryClickEvent event);
+    protected abstract void setContent();
 }

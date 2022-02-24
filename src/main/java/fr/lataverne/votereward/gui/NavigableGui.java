@@ -17,10 +17,13 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class NavigableGui extends Gui {
-    @SuppressWarnings ("FieldNotUsedInToString")
-    private final int slotPreviousPage;
-    @SuppressWarnings ("FieldNotUsedInToString")
+
+    @SuppressWarnings("FieldNotUsedInToString")
     private final int slotNextPage;
+
+    @SuppressWarnings("FieldNotUsedInToString")
+    private final int slotPreviousPage;
+
     protected int page;
 
     protected NavigableGui(int size, int page) {
@@ -34,40 +37,6 @@ public abstract class NavigableGui extends Gui {
 
         this.slotPreviousPage = this.content.length - 9;
         this.slotNextPage = this.content.length - 1;
-    }
-
-    private static @NotNull ItemStack getPreviousPageButton(int previousPage) {
-        ItemStack button = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta meta = button.getItemMeta();
-
-        if (meta != null) {
-            meta.setDisplayName(Helper.getStringInConfig("gui.navigationButton.previousPage"));
-
-            List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Page " + previousPage);
-            meta.setLore(lore);
-
-            button.setItemMeta(meta);
-        }
-
-        return button;
-    }
-
-    private static @NotNull ItemStack getNextPageButton(int nextPage) {
-        ItemStack button = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta meta = button.getItemMeta();
-
-        if (meta != null) {
-            meta.setDisplayName(Helper.getStringInConfig("gui.navigationButton.nextPage"));
-
-            List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Page " + nextPage);
-            meta.setLore(lore);
-
-            button.setItemMeta(meta);
-        }
-
-        return button;
     }
 
     @Override
@@ -97,33 +66,15 @@ public abstract class NavigableGui extends Gui {
     }
 
     @Override
-    protected void setContent() {
-        this.setNavigationBar();
-    }
-
-    private void setNavigationBar() {
-        int previousPage = this.page > 0 ? this.page - 1 : -1;
-        int nextPage = this.page + 1;
-
-        ItemStack previousPageButton = previousPage > -1 ? NavigableGui.getPreviousPageButton(previousPage) : Gui.getEmptySpace();
-        ItemStack nextPageButton = NavigableGui.getNextPageButton(nextPage);
-
-        this.content[this.content.length - 9] = previousPageButton;
-        this.content[this.content.length - 8] = Gui.getEmptySpace();
-        this.content[this.content.length - 7] = Gui.getEmptySpace();
-        this.content[this.content.length - 6] = Gui.getEmptySpace();
-        this.content[this.content.length - 5] = Gui.getEmptySpace();
-        this.content[this.content.length - 4] = Gui.getEmptySpace();
-        this.content[this.content.length - 3] = Gui.getEmptySpace();
-        this.content[this.content.length - 2] = Gui.getEmptySpace();
-        this.content[this.content.length - 1] = nextPageButton;
+    public String toString() {
+        return "NavigableGUI{" + "content=" + Arrays.toString(this.content) + ", page=" + this.page + "}";
     }
 
     protected final @NotNull Pair<Integer, Integer> getFirstAndLastIndexes(Collection<?> elements) {
         return this.getFirstAndLastIndexes(elements, 45);
     }
 
-    @Contract ("null, _ -> new")
+    @Contract("null, _ -> new")
     protected final @NotNull Pair<Integer, Integer> getFirstAndLastIndexes(Collection<?> elements, int size) {
         if (elements == null) {
             return new ImmutablePair<>(-1, -1);
@@ -143,10 +94,63 @@ public abstract class NavigableGui extends Gui {
     }
 
     @Override
-    public String toString() {
-        return "NavigableGUI{" +
-                "content=" + Arrays.toString(this.content) +
-                ", page=" + this.page +
-                "}";
+    protected void setContent() {
+        this.setNavigationBar();
+    }
+
+    private static @NotNull ItemStack getNextPageButton(int nextPage) {
+        ItemStack button = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+        ItemMeta meta = button.getItemMeta();
+
+        if (meta != null) {
+            meta.setDisplayName(Helper.getStringInConfig("gui.navigationButton.nextPage"));
+
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Page " + nextPage);
+            meta.setLore(lore);
+
+            button.setItemMeta(meta);
+        }
+
+        return button;
+    }
+
+    private static @NotNull ItemStack getPreviousPageButton(int previousPage) {
+        ItemStack button = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+        ItemMeta meta = button.getItemMeta();
+
+        if (meta != null) {
+            meta.setDisplayName(Helper.getStringInConfig("gui.navigationButton.previousPage"));
+
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Page " + previousPage);
+            meta.setLore(lore);
+
+            button.setItemMeta(meta);
+        }
+
+        return button;
+    }
+
+    private void setNavigationBar() {
+        int previousPage = this.page > 0
+                           ? this.page - 1
+                           : -1;
+        int nextPage = this.page + 1;
+
+        ItemStack previousPageButton = previousPage > -1
+                                       ? NavigableGui.getPreviousPageButton(previousPage)
+                                       : Gui.getEmptySpace();
+        ItemStack nextPageButton = NavigableGui.getNextPageButton(nextPage);
+
+        this.content[this.content.length - 9] = previousPageButton;
+        this.content[this.content.length - 8] = Gui.getEmptySpace();
+        this.content[this.content.length - 7] = Gui.getEmptySpace();
+        this.content[this.content.length - 6] = Gui.getEmptySpace();
+        this.content[this.content.length - 5] = Gui.getEmptySpace();
+        this.content[this.content.length - 4] = Gui.getEmptySpace();
+        this.content[this.content.length - 3] = Gui.getEmptySpace();
+        this.content[this.content.length - 2] = Gui.getEmptySpace();
+        this.content[this.content.length - 1] = nextPageButton;
     }
 }

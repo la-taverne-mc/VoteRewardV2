@@ -12,6 +12,17 @@ import java.util.UUID;
 enum SkullMetaJson {
     ;
 
+    public static void deserialize(final @NotNull SkullMeta skullMeta, final @NotNull JsonElement elemSkullMeta) {
+        if (elemSkullMeta.isJsonObject()) {
+            JsonObject jsonSkullMeta = elemSkullMeta.getAsJsonObject();
+
+            if (jsonSkullMeta.has("owner")) {
+                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(jsonSkullMeta.get("owner")
+                                                                                               .getAsString())));
+            }
+        }
+    }
+
     public static @Nullable JsonObject serialize(final @NotNull SkullMeta skullMeta) {
         if (skullMeta.hasOwner()) {
             JsonObject jsonSkullMeta = new JsonObject();
@@ -19,16 +30,6 @@ enum SkullMetaJson {
             return jsonSkullMeta;
         } else {
             return null;
-        }
-    }
-
-    public static void deserialize(final @NotNull SkullMeta skullMeta, final @NotNull JsonElement elemSkullMeta) {
-        if (elemSkullMeta.isJsonObject()) {
-            JsonObject jsonSkullMeta = elemSkullMeta.getAsJsonObject();
-
-            if (jsonSkullMeta.has("owner")) {
-                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(jsonSkullMeta.get("owner").getAsString())));
-            }
         }
     }
 }

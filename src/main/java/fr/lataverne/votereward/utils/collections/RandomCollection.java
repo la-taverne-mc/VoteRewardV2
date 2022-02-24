@@ -5,9 +5,10 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class RandomCollection<E> {
+
     private final NavigableMap<Double, E> map;
 
-    @SuppressWarnings ("FieldNotUsedInToString")
+    @SuppressWarnings("FieldNotUsedInToString")
     private final SecureRandom random;
 
     private double total = 0;
@@ -33,9 +34,6 @@ public class RandomCollection<E> {
 
     @Override
     public String toString() {
-        return "RandomCollection{" +
-                "map=" + this.map +
-                ", total=" + this.total +
-                "}";
+        return "RandomCollection{" + "map=" + this.map + ", total=" + this.total + "}";
     }
 }

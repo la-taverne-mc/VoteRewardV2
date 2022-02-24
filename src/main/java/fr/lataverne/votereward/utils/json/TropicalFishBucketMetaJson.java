@@ -11,18 +11,6 @@ import org.jetbrains.annotations.Nullable;
 enum TropicalFishBucketMetaJson {
     ;
 
-    public static @Nullable JsonObject serialize(final @NotNull TropicalFishBucketMeta tropicalFishBucketMeta) {
-        if (tropicalFishBucketMeta.hasVariant()) {
-            JsonObject jsonTFBMeta = new JsonObject();
-            jsonTFBMeta.addProperty("bodyColor", tropicalFishBucketMeta.getBodyColor().name());
-            jsonTFBMeta.addProperty("pattern", tropicalFishBucketMeta.getPattern().name());
-            jsonTFBMeta.addProperty("patternColor", tropicalFishBucketMeta.getPatternColor().name());
-            return jsonTFBMeta;
-        } else {
-            return null;
-        }
-    }
-
     public static void deserialize(final @NotNull TropicalFishBucketMeta tropicalFishBucketMeta, final @NotNull JsonElement elemTFBMeta) {
         if (elemTFBMeta.isJsonObject()) {
             JsonObject jsonTFBMeta = elemTFBMeta.getAsJsonObject();
@@ -32,12 +20,25 @@ enum TropicalFishBucketMetaJson {
             }
 
             if (jsonTFBMeta.has("pattern")) {
-                tropicalFishBucketMeta.setPattern(TropicalFish.Pattern.valueOf(jsonTFBMeta.get("pattern").getAsString()));
+                tropicalFishBucketMeta.setPattern(TropicalFish.Pattern.valueOf(jsonTFBMeta.get("pattern")
+                                                                                          .getAsString()));
             }
 
             if (jsonTFBMeta.has("patternColor")) {
                 tropicalFishBucketMeta.setPatternColor(DyeColor.valueOf(jsonTFBMeta.get("patternColor").getAsString()));
             }
+        }
+    }
+
+    public static @Nullable JsonObject serialize(final @NotNull TropicalFishBucketMeta tropicalFishBucketMeta) {
+        if (tropicalFishBucketMeta.hasVariant()) {
+            JsonObject jsonTFBMeta = new JsonObject();
+            jsonTFBMeta.addProperty("bodyColor", tropicalFishBucketMeta.getBodyColor().name());
+            jsonTFBMeta.addProperty("pattern", tropicalFishBucketMeta.getPattern().name());
+            jsonTFBMeta.addProperty("patternColor", tropicalFishBucketMeta.getPatternColor().name());
+            return jsonTFBMeta;
+        } else {
+            return null;
         }
     }
 }

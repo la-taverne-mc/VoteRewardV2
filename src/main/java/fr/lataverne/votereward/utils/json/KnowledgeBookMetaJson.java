@@ -11,6 +11,17 @@ import org.jetbrains.annotations.Nullable;
 enum KnowledgeBookMetaJson {
     ;
 
+    public static void deserialize(final @NotNull KnowledgeBookMeta knowledgeBookMeta, final @NotNull JsonElement elemKnowledgeBookMeta) {
+        if (elemKnowledgeBookMeta.isJsonObject()) {
+            JsonObject jsonKnowledgeBookMeta = elemKnowledgeBookMeta.getAsJsonObject();
+
+            if (jsonKnowledgeBookMeta.has("recipes")) {
+                JsonArray jsonRecipes = jsonKnowledgeBookMeta.getAsJsonArray("recipes");
+                jsonRecipes.forEach(jsonRecipe -> knowledgeBookMeta.addRecipe(NamespacedKey.fromString(jsonRecipe.getAsString())));
+            }
+        }
+    }
+
     public static @Nullable JsonObject serialize(final @NotNull KnowledgeBookMeta knowledgeBookMeta) {
         if (knowledgeBookMeta.hasRecipes()) {
             JsonObject jsonKnowledgeBookMeta = new JsonObject();
@@ -22,17 +33,6 @@ enum KnowledgeBookMetaJson {
             return jsonKnowledgeBookMeta;
         } else {
             return null;
-        }
-    }
-
-    public static void deserialize(final @NotNull KnowledgeBookMeta knowledgeBookMeta, final @NotNull JsonElement elemKnowledgeBookMeta) {
-        if (elemKnowledgeBookMeta.isJsonObject()) {
-            JsonObject jsonKnowledgeBookMeta = elemKnowledgeBookMeta.getAsJsonObject();
-
-            if (jsonKnowledgeBookMeta.has("recipes")) {
-                JsonArray jsonRecipes = jsonKnowledgeBookMeta.getAsJsonArray("recipes");
-                jsonRecipes.forEach(jsonRecipe -> knowledgeBookMeta.addRecipe(NamespacedKey.fromString(jsonRecipe.getAsString())));
-            }
         }
     }
 }

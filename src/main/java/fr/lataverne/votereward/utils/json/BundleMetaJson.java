@@ -11,20 +11,6 @@ import org.jetbrains.annotations.Nullable;
 enum BundleMetaJson {
     ;
 
-    public static @Nullable JsonObject serialize(final @NotNull BundleMeta bundleMeta) {
-        if (bundleMeta.hasItems()) {
-            JsonObject jsonBundleMeta = new JsonObject();
-
-            JsonArray items = new JsonArray();
-            bundleMeta.getItems().forEach(itemStack -> items.add(ItemStackJson.serialize(itemStack)));
-
-            jsonBundleMeta.add("items", items);
-            return jsonBundleMeta;
-        } else {
-            return null;
-        }
-    }
-
     public static void deserialize(final @NotNull BundleMeta bundleMeta, final @NotNull JsonElement elemBundleMeta) {
         if (elemBundleMeta.isJsonObject()) {
             JsonObject jsonBundleMeta = elemBundleMeta.getAsJsonObject();
@@ -39,6 +25,20 @@ enum BundleMetaJson {
                     }
                 });
             }
+        }
+    }
+
+    public static @Nullable JsonObject serialize(final @NotNull BundleMeta bundleMeta) {
+        if (bundleMeta.hasItems()) {
+            JsonObject jsonBundleMeta = new JsonObject();
+
+            JsonArray items = new JsonArray();
+            bundleMeta.getItems().forEach(itemStack -> items.add(ItemStackJson.serialize(itemStack)));
+
+            jsonBundleMeta.add("items", items);
+            return jsonBundleMeta;
+        } else {
+            return null;
         }
     }
 }

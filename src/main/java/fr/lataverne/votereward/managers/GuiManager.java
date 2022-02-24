@@ -16,7 +16,12 @@ import java.util.Map;
 import java.util.UUID;
 
 public class GuiManager {
+
     private final Map<UUID, Gui> guis = new HashMap<>();
+
+    public void addGui(UUID uuid, Gui gui) {
+        this.guis.put(uuid, gui);
+    }
 
     public BagView getBagView(@NotNull Player player, Bag bag) {
         Gui gui = this.getGui(player.getUniqueId());
@@ -27,6 +32,32 @@ public class GuiManager {
             BagView bagView = new BagView(bag, 0);
             this.guis.put(player.getUniqueId(), bagView);
             return bagView;
+        }
+    }
+
+    public @Nullable Gui getGui(UUID uuid) {
+        return this.guis.getOrDefault(uuid, null);
+    }
+
+    public @Nullable UUID getOwnerOfGui(Gui gui) {
+        for (Map.Entry<UUID, Gui> entry : this.guis.entrySet()) {
+            if (entry.getValue() == gui) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
+    }
+
+    public RewardGroupStatsView getRewardGroupStatsView(@NotNull Player player, int page) {
+        Gui gui = this.getGui(player.getUniqueId());
+
+        if (gui instanceof RewardGroupStatsView rewardGroupStatsView) {
+            return rewardGroupStatsView;
+        } else {
+            RewardGroupStatsView rewardGroupStatsView = new RewardGroupStatsView(page);
+            this.guis.put(player.getUniqueId(), rewardGroupStatsView);
+            return rewardGroupStatsView;
         }
     }
 
@@ -54,44 +85,12 @@ public class GuiManager {
         }
     }
 
-    public @Nullable Gui getGui(UUID uuid) {
-        return this.guis.getOrDefault(uuid, null);
-    }
-
-    public @Nullable UUID getOwnerOfGui(Gui gui) {
-        for (Map.Entry<UUID, Gui> entry : this.guis.entrySet()) {
-            if (entry.getValue() == gui) {
-                return entry.getKey();
-            }
-        }
-
-        return null;
-    }
-
     public void removeGui(UUID uuid) {
         this.guis.remove(uuid);
     }
 
-    public RewardGroupStatsView getRewardGroupStatsView(@NotNull Player player, int page) {
-        Gui gui = this.getGui(player.getUniqueId());
-
-        if (gui instanceof RewardGroupStatsView rewardGroupStatsView) {
-            return rewardGroupStatsView;
-        } else {
-            RewardGroupStatsView rewardGroupStatsView = new RewardGroupStatsView(page);
-            this.guis.put(player.getUniqueId(), rewardGroupStatsView);
-            return rewardGroupStatsView;
-        }
-    }
-
     @Override
     public String toString() {
-        return "GuiManager{" +
-                "guis=" + this.guis +
-                "}";
-    }
-
-    public void addGui(UUID uuid, Gui gui) {
-        this.guis.put(uuid, gui);
+        return "GuiManager{" + "guis=" + this.guis + "}";
     }
 }

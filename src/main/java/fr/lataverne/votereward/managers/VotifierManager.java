@@ -12,25 +12,25 @@ import org.jetbrains.annotations.NotNull;
 
 public record VotifierManager(BagManager bagManager, RewardsGroupManager rewardsGroupManager) implements Listener {
 
-	@EventHandler
-	public void voteListener(@NotNull VotifierEvent e) {
-		Vote vote = e.getVote();
-		String username = vote.getUsername();
+    @Override
+    public @NotNull String toString() {
+        return "VotifierManager{}";
+    }
 
-		@SuppressWarnings ("deprecation")
-		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(username);
+    @EventHandler
+    public void voteListener(@NotNull VotifierEvent e) {
+        Vote vote = e.getVote();
+        String username = vote.getUsername();
 
-		if (offlinePlayer.hasPlayedBefore()) {
-			Reward reward = this.rewardsGroupManager.getRandomReward();
-			if (reward != null) {
-				Bag bag = this.bagManager.getOrCreateBag(offlinePlayer.getUniqueId());
-				bag.addReward(reward);
-			}
-		}
-	}
+        @SuppressWarnings("deprecation")
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(username);
 
-	@Override
-	public @NotNull String toString() {
-		return "VotifierManager{}";
-	}
+        if (offlinePlayer.hasPlayedBefore()) {
+            Reward reward = this.rewardsGroupManager.getRandomReward();
+            if (reward != null) {
+                Bag bag = this.bagManager.getOrCreateBag(offlinePlayer.getUniqueId());
+                bag.addReward(reward);
+            }
+        }
+    }
 }

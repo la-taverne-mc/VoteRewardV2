@@ -7,8 +7,15 @@ import fr.lataverne.votereward.commands.admin.rewardsgroups.rewardsgroup.SeeRewa
 import org.jetbrains.annotations.NotNull;
 
 public class RewardsGroupAdminCommand extends CompositeCommand implements DynamicCommand {
+
     public RewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "<rewards-group-name>");
+    }
+
+    @Override
+    public boolean isDynamicCommand(String label) {
+        return this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream()
+                          .anyMatch(subCmdLabel -> subCmdLabel.equalsIgnoreCase(label));
     }
 
     @Override
@@ -17,12 +24,5 @@ public class RewardsGroupAdminCommand extends CompositeCommand implements Dynami
 
         new AddRewardAdminCommand(this);
         new SeeRewardsGroupAdminCommand(this);
-    }
-
-    @Override
-    public boolean isDynamicCommand(String label) {
-        return this.plugin.getRewardsGroupManager().getRewardsGroups().keySet()
-                .stream()
-                .anyMatch(subCmdLabel -> subCmdLabel.equalsIgnoreCase(label));
     }
 }

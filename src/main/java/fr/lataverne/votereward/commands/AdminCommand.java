@@ -6,6 +6,7 @@ import fr.lataverne.votereward.commands.admin.RewardsGroupsAdminCommand;
 import org.jetbrains.annotations.NotNull;
 
 public class AdminCommand extends CompositeCommand {
+
     public AdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "admin");
     }

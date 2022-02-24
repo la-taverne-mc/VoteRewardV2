@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SeeRewardsGroupAdminCommand extends CompositeCommand {
+    
     public SeeRewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "see");
     }

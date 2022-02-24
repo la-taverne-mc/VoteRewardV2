@@ -26,7 +26,7 @@ public abstract class ConfirmableCommand extends CompositeCommand {
             confirmCommand.addCommandToBeConfirmed(this, sender, label, args);
 
             String message = this.plugin.getConfig().getString("messages.confirm-command.confirm")
-                    .replace(ConfirmableCommand.CONFIRM_COMMAND_USAGE, confirmCommand.getUsage());
+                                        .replace(ConfirmableCommand.CONFIRM_COMMAND_USAGE, confirmCommand.getUsage());
 
             sender.sendMessage(message);
             return true;

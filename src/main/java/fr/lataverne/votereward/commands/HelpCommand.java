@@ -9,13 +9,14 @@ import java.util.List;
 
 public class HelpCommand extends CompositeCommand {
 
-    private static final String PARENT_COMMAND_USAGE = "[parent-command-usage]";
+    private static final String HELP_FOOTER = ChatColor.GREEN + "===================================";
+
+    private static final String HELP_HEADER =
+            ChatColor.GREEN + "============ " + ChatColor.DARK_GREEN + "VoteReward" + ChatColor.GREEN + " ============";
 
     private static final String PARENT_COMMAND_DESCRIPTION = "[parent-command-description]";
 
-    private static final String HELP_HEADER = ChatColor.GREEN + "============ " + ChatColor.DARK_GREEN + "VoteReward" + ChatColor.GREEN + " ============";
-
-    private static final String HELP_FOOTER = ChatColor.GREEN + "===================================";
+    private static final String PARENT_COMMAND_USAGE = "[parent-command-usage]";
 
     public HelpCommand(@NotNull CompositeCommand parent) {
         super(parent, "help");
@@ -40,9 +41,12 @@ public class HelpCommand extends CompositeCommand {
                     String subCommandDescription = subCommand.getDescription();
 
                     if (subCommandParameters != null && !subCommandParameters.isEmpty()) {
-                        sender.sendMessage(ChatColor.RED + subCommandUsage + " " + ChatColor.YELLOW + subCommandParameters + ChatColor.WHITE + " : " + ChatColor.GRAY + subCommandDescription);
+                        sender.sendMessage(
+                                ChatColor.RED + subCommandUsage + " " + ChatColor.YELLOW + subCommandParameters +
+                                ChatColor.WHITE + " : " + ChatColor.GRAY + subCommandDescription);
                     } else {
-                        sender.sendMessage(ChatColor.RED + subCommandUsage + ChatColor.WHITE + " : " + ChatColor.GRAY + subCommandDescription);
+                        sender.sendMessage(ChatColor.RED + subCommandUsage + ChatColor.WHITE + " : " + ChatColor.GRAY +
+                                           subCommandDescription);
                     }
                 }
             }
@@ -52,7 +56,8 @@ public class HelpCommand extends CompositeCommand {
             String commandDescription = this.getDescription();
 
             String usage = this.plugin.getConfig().getString("messages.help.usage");
-            String descriptionMessage = this.plugin.getConfig().getString("messages.help.description").replace(HelpCommand.PARENT_COMMAND_DESCRIPTION, commandDescription);
+            String descriptionMessage = this.plugin.getConfig().getString("messages.help.description")
+                                                   .replace(HelpCommand.PARENT_COMMAND_DESCRIPTION, commandDescription);
 
             if (commandParameters == null || commandParameters.isEmpty()) {
                 usage = usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage);

@@ -15,13 +15,6 @@ public class RewardsGroupsAdminCommand extends CompositeCommand {
     }
 
     @Override
-    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
-                ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
-                : new ArrayList<>();
-    }
-
-    @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         List<String> cmdArgs = args.subList(this.level, args.size());
 
@@ -43,5 +36,12 @@ public class RewardsGroupsAdminCommand extends CompositeCommand {
         new RewardsGroupListAdminCommand(this);
         new ActivateRewardsGroupAdminCommand(this);
         new RewardsGroupAdminCommand(this);
+    }
+
+    @Override
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return args.isEmpty() || args.size() == 1
+               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
+               : new ArrayList<>();
     }
 }

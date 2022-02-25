@@ -1,0 +1,14 @@
+version: 1.0
+linter: jetbrains/qodana-jvm:2021.3-eap
+profile:
+  path: .idea/inspectionProfiles/Project_Default.xml
+exclude:
+  - name: All
+    paths:
+      - .github
+      - .idea
+  - name: ParameterNameDiffersFromOverriddenParameter
+  - name: SpellCheckingInspection
+    paths:
+      - src
+      - pom.xml

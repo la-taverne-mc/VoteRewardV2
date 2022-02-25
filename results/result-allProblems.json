@@ -1,0 +1,617 @@
+{"version":"3","listProblem":[{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Method returns the same value",
+  "severity": "High",
+  "comment": "All implementations of this method always return `true`",
+  "detailsInfo": "Reports methods and method hierarchies in which the return value always appears to be the same constant.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 36,
+      "offset": 32,
+      "length": 12,
+      "code": {
+        "startLine": 34,
+        "length": 12,
+        "offset": 38,
+        "surroundingCode": "    }\n\n    protected abstract boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);\n\n    protected abstract boolean validate(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SameReturnValue"
+  },
+  "hash": "613a744815009ae03371af2b43fdb2fa3661dc86e6156c9f8745484152e653e0"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Utility class without 'private' constructor",
+  "severity": "High",
+  "comment": "Class `InternalPermission` has only 'static' members, and lacks a 'private' constructor",
+  "detailsInfo": "Reports utility classes without `private` constructors.\n\nUtility classes have all fields and methods declared as `static`. Creating `private`\nconstructors in utility classes prevents them from being accidentally instantiated.\n\n\nUse the **Ignore if annotated by** option to specify special annotations. The inspection ignores classes marked with one of\nthese annotations.\n\n\nUse the **Ignore classes with only a main method** option to ignore classes with no methods other than the main one.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 13,
+      "offset": 14,
+      "length": 18,
+      "code": {
+        "startLine": 11,
+        "length": 18,
+        "offset": 36,
+        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UtilityClassWithoutPrivateConstructor"
+  },
+  "hash": "4c8762b3d5e5b70e77ba9fffd346304a8894277826be51bfbeeb935079e0db23"
+},{
+  "tool": "Code Inspection",
+  "category": "Embedded",
+  "type": "Interface with a single direct inheritor",
+  "severity": "High",
+  "comment": "Interface `DynamicCommand` has only one direct inheritor",
+  "detailsInfo": "Reports interfaces that have precisely one direct inheritor. While such interfaces may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the interface with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/DynamicCommand.java",
+      "language": "JAVA",
+      "line": 4,
+      "offset": 18,
+      "length": 14,
+      "code": {
+        "startLine": 2,
+        "length": 14,
+        "offset": 39,
+        "surroundingCode": "\n@FunctionalInterface\npublic interface DynamicCommand {\n\n    boolean isDynamicCommand(String label);"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "InterfaceWithOnlyOneDirectInheritor"
+  },
+  "hash": "91fe2af58d01350f28dc8130a0f3045f45dd981cadca3ff405dd4b18af047cd6"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Utility class",
+  "severity": "High",
+  "comment": "Class `InternalPermission` has only 'static' members, indicating procedural construction",
+  "detailsInfo": "Reports utility classes.\n\nUtility classes have all fields and methods declared as `static` and their\npresence may indicate a lack of object-oriented design.\n\n\nUse the **Ignore if annotated by** option to specify special annotations. The inspection ignores classes annotated with one of\nthese annotations.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 13,
+      "offset": 14,
+      "length": 18,
+      "code": {
+        "startLine": 11,
+        "length": 18,
+        "offset": 36,
+        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UtilityClass"
+  },
+  "hash": "aacab28502a47b4cfdc687878899385174038860144858e275ce7f3dcbcd8f45"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused library",
+  "severity": "High",
+  "comment": "Unused library 'Maven: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'",
+  "detailsInfo": "Reports libraries attached to the specified inspection scope that are not used directly in code.",
+  "sources": [
+    {
+      "type": "module",
+      "path": "",
+      "language": "",
+      "line": 0,
+      "offset": 0,
+      "length": 0,
+      "code": {
+        "startLine": 0,
+        "length": 0,
+        "offset": 0,
+        "surroundingCode": ""
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnusedLibrary"
+  },
+  "hash": "79ebd945528280edb65635043a3b5f4413eec3ffa6fc2b64b5e504f63f25b21e"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused library",
+  "severity": "High",
+  "comment": "Unused library 'Maven: com.google.code.findbugs:jsr305:3.0.2'",
+  "detailsInfo": "Reports libraries attached to the specified inspection scope that are not used directly in code.",
+  "sources": [
+    {
+      "type": "module",
+      "path": "",
+      "language": "",
+      "line": 0,
+      "offset": 0,
+      "length": 0,
+      "code": {
+        "startLine": 0,
+        "length": 0,
+        "offset": 0,
+        "surroundingCode": ""
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnusedLibrary"
+  },
+  "hash": "d7c30756b5a53de784896d4c5f8fa050b32c0e6aa84b1e7f9e03c0c243a633a7"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Actual method parameter is the same constant",
+  "severity": "High",
+  "comment": "Actual value of parameter 'label' is always 'delete'",
+  "detailsInfo": "Reports methods in which a parameter appears to always be the same constant.\n\nExample:\n\n\n      static void printPoint(int x, int y) { // x is always 0\n        System.out.println(x + \", \" + y);\n      }\n\n      public static void main(String[] args) {\n        printPoint(0, 1);\n        printPoint(0, 2);\n      }\n\nThe quick-fix inlines the constant value. This may simplify the method implementation.\n\n\nUse the **Ignore when inline parameter initializer would not succeed** option to suppress the inspections when:\n\n* the parameter is modified inside the method.\n* the parameter value that is being passed is a reference to an inaccessible field (only in Java).\n* the parameter is a vararg (only in Java).\n\n\nUse the **Maximal reported method visibility** option to control the maximum visibility of methods to be reported.\n\n\nUse the **Minimal reported method usage count** field to specify the minimal number of method usages with the same parameter value.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 12,
+      "offset": 75,
+      "length": 5,
+      "code": {
+        "startLine": 10,
+        "length": 5,
+        "offset": 158,
+        "surroundingCode": "    private static final String CONFIRM_COMMAND_USAGE = \"[confirm-command-usage]\";\n\n    protected ConfirmableCommand(@NotNull CompositeCommand parent, String label, String... aliases) {\n        super(parent, label, aliases);\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SameParameterValue"
+  },
+  "hash": "36cac9d51afdd86a599a33882ae3a873d68828d49e6ed7e39d949cc74a9a6a52"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Actual method parameter is the same constant",
+  "severity": "High",
+  "comment": "Actual value of parameter 'size' is always '54'",
+  "detailsInfo": "Reports methods in which a parameter appears to always be the same constant.\n\nExample:\n\n\n      static void printPoint(int x, int y) { // x is always 0\n        System.out.println(x + \", \" + y);\n      }\n\n      public static void main(String[] args) {\n        printPoint(0, 1);\n        printPoint(0, 2);\n      }\n\nThe quick-fix inlines the constant value. This may simplify the method implementation.\n\n\nUse the **Ignore when inline parameter initializer would not succeed** option to suppress the inspections when:\n\n* the parameter is modified inside the method.\n* the parameter value that is being passed is a reference to an inaccessible field (only in Java).\n* the parameter is a vararg (only in Java).\n\n\nUse the **Maximal reported method visibility** option to control the maximum visibility of methods to be reported.\n\n\nUse the **Minimal reported method usage count** field to specify the minimal number of method usages with the same parameter value.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/gui/NavigableGui.java",
+      "language": "JAVA",
+      "line": 29,
+      "offset": 32,
+      "length": 4,
+      "code": {
+        "startLine": 27,
+        "length": 4,
+        "offset": 56,
+        "surroundingCode": "    protected int page;\n\n    protected NavigableGui(int size, int page) {\n        super(size);\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SameParameterValue"
+  },
+  "hash": "86e7e7f94716ef720c2d6b94492270b00a9be3c10404dc47e96564ee93c794ba"
+},{
+  "tool": "Code Inspection",
+  "category": "Abstraction issues",
+  "type": "'public' method with 'boolean' parameter",
+  "severity": "High",
+  "comment": "'public' method `setInternalPermission()` with 'boolean' parameter",
+  "detailsInfo": "Reports public methods that accept a `boolean` parameter.\n\nIt's almost always bad practice to add a `boolean` parameter to a public method (part of an API) if that method is not a setter.\nWhen reading code using such a method, it can be difficult to decipher what the `boolean` stands for without looking at\nthe source or documentation.\n\nThis problem is also known as [the boolean trap](https://ariya.io/2011/08/hall-of-api-shame-boolean-trap).\nThe `boolean` parameter can often be replaced with an `enum`.\n\nExample:\n\n\n      // Warning: it's hard to understand what the\n      // boolean parameters mean when looking at\n      // a call to this method\n      public boolean setPermission(File f,\n                                   int access,\n                                   boolean enable,\n                                   boolean ownerOnly) {\n        // ...\n      }\n\n\nUse the **Only report methods with multiple boolean parameters** option to warn only when a method contains more than one boolean parameter.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 42,
+      "offset": 27,
+      "length": 21,
+      "code": {
+        "startLine": 40,
+        "length": 21,
+        "offset": 33,
+        "surroundingCode": "    }\n\n    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {\n        String pathPermission = InternalPermission.path + permission.replace(\".\", \"-\");\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "BooleanParameter"
+  },
+  "hash": "fbb6aa862fec5047034bd5caabe72132a16ef6952febefb723ce4b7c2888812a"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Utility class can be 'enum'",
+  "severity": "High",
+  "comment": "Utility class `InternalPermission` can be 'enum'",
+  "detailsInfo": "Reports utility classes that can be converted to enums.\n\nSome coding style guidelines declare to implement utility classes as enums\nto avoid code coverage issues in `private` constructors.\n\n**Example:**\n\n\n      class StringUtils {\n        public static final String EMPTY = \"\";\n      }\n\nAfter the quick-fix is applied:\n\n\n      enum StringUtils {\n        ;\n        public static final String EMPTY = \"\";\n      }\n",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 13,
+      "offset": 14,
+      "length": 18,
+      "code": {
+        "startLine": 11,
+        "length": 18,
+        "offset": 36,
+        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UtilityClassCanBeEnum"
+  },
+  "hash": "b54ed5b5195ff5d45d9922a82b1634561e30a522735d4d2f9e4d11a674d7cc23"
+},{
+  "tool": "Code Inspection",
+  "category": "Embedded",
+  "type": "Abstract class with a single direct inheritor",
+  "severity": "High",
+  "comment": "Abstract class `Gui` has only one direct inheritor",
+  "detailsInfo": "Reports abstract classes that have precisely one direct inheritor. While such classes may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the abstract class with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.\n\n**Example:**\n\n\n      abstract class Base {} // will be reported\n\n      class Inheritor extends Base {}\n",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/gui/Gui.java",
+      "language": "JAVA",
+      "line": 16,
+      "offset": 23,
+      "length": 3,
+      "code": {
+        "startLine": 14,
+        "length": 3,
+        "offset": 77,
+        "surroundingCode": "\n@SuppressWarnings(\"ClassNamePrefixedWithPackageName\")\npublic abstract class Gui {\n\n    protected final ItemStack[] content;"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "AbstractClassWithOnlyOneDirectInheritor"
+  },
+  "hash": "01d2fedadfc3d7651dc61d0fe6f62dc133962eb1cb64d8a3a04cc98ce549b01e"
+},{
+  "tool": "Code Inspection",
+  "category": "Embedded",
+  "type": "Abstract class with a single direct inheritor",
+  "severity": "High",
+  "comment": "Abstract class `ConfirmableCommand` has only one direct inheritor",
+  "detailsInfo": "Reports abstract classes that have precisely one direct inheritor. While such classes may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the abstract class with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.\n\n**Example:**\n\n\n      abstract class Base {} // will be reported\n\n      class Inheritor extends Base {}\n",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 8,
+      "offset": 23,
+      "length": 18,
+      "code": {
+        "startLine": 6,
+        "length": 18,
+        "offset": 46,
+        "surroundingCode": "import java.util.List;\n\npublic abstract class ConfirmableCommand extends CompositeCommand {\n\n    private static final String CONFIRM_COMMAND_USAGE = \"[confirm-command-usage]\";"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "AbstractClassWithOnlyOneDirectInheritor"
+  },
+  "hash": "fc7cde9d4179496ea8ae65926676ece85380db44cb06de38956d6df514dc6f7a"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Utility class is not 'final'",
+  "severity": "High",
+  "comment": "Utility class `InternalPermission` is not 'final'",
+  "detailsInfo": "Reports utility classes that aren't `final`.\n\nUtility classes have all fields and methods declared as `static`.\nMaking them `final` prevents them from being accidentally subclassed.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 13,
+      "offset": 14,
+      "length": 18,
+      "code": {
+        "startLine": 11,
+        "length": 18,
+        "offset": 36,
+        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "NonFinalUtilityClass"
+  },
+  "hash": "0b289a2e03a226efe84a2d28aee240cc06c7062d440853967eaf9ec0ad8b534f"
+},{
+  "tool": "Code Inspection",
+  "category": "Memory",
+  "type": "Static collection",
+  "severity": "High",
+  "comment": "Static collection `internalPermissions`",
+  "detailsInfo": "Reports static fields of a `Collection` type. While it's not necessarily a problem, static collections often cause memory leaks and are therefore prohibited by some coding standards.\n\n**Example:**\n\n\n      public class Example {\n        static List<String> list = new ArrayList<>();\n\n      }\n\n\nConfigure the inspection:\n\n* Use the **Ignore weak static collections or maps** option to ignore the fields of the `java.util.WeakHashMap` type.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 15,
+      "offset": 47,
+      "length": 19,
+      "code": {
+        "startLine": 13,
+        "length": 19,
+        "offset": 81,
+        "surroundingCode": "public class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();\n\n    private static final @NonNls String path = \"system.internalPermission\";"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "StaticCollection"
+  },
+  "hash": "cb2fb1e9bcec631145660a2a42eeed175a7ab8ac56c932588e6ea715d6108d11"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Parameter `sender` is not used in either this method or any of its derived methods",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
+      "language": "JAVA",
+      "line": 273,
+      "offset": 72,
+      "length": 6,
+      "code": {
+        "startLine": 271,
+        "length": 6,
+        "offset": 109,
+        "surroundingCode": "    protected abstract void setup();\n\n    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {\n        return new ArrayList<>();\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "edbc37801c0735b26f01fe64d18f7606e6cc9db8b2fe0f882f2afac6b8a70eea"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Parameter `label` is not used in either this method or any of its derived methods",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
+      "language": "JAVA",
+      "line": 273,
+      "offset": 96,
+      "length": 5,
+      "code": {
+        "startLine": 271,
+        "length": 5,
+        "offset": 133,
+        "surroundingCode": "    protected abstract void setup();\n\n    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {\n        return new ArrayList<>();\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "016f8f4910fce155868f6e6469a7827e78ba166845a25d84320903d53a267009"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Parameter `label` is not used in any implementation",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 36,
+      "offset": 92,
+      "length": 5,
+      "code": {
+        "startLine": 34,
+        "length": 5,
+        "offset": 98,
+        "surroundingCode": "    }\n\n    protected abstract boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);\n\n    protected abstract boolean validate(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "c8b73570d865dc38c4f2c6f6a6da4b920335bb2cae4a777ee8cd5130f50b5f22"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Parameter `label` is not used in any implementation",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 38,
+      "offset": 88,
+      "length": 5,
+      "code": {
+        "startLine": 36,
+        "length": 5,
+        "offset": 215,
+        "surroundingCode": "    protected abstract boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);\n\n    protected abstract boolean validate(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);\n}\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "b810ec2de65a5a68a42332b691cc3f247ec4860810698a2bd2d20fe6aca0c16d"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "* Method owner class is never instantiated OR\n* An instantiation is not reachable from entry points.",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/gui/RewardGroupStatsView.java",
+      "language": "",
+      "line": 13,
+      "offset": 28,
+      "length": 8,
+      "code": {
+        "startLine": 11,
+        "length": 8,
+        "offset": 42,
+        "surroundingCode": "\n    @Override\n    public @NotNull String getTitle() {\n        return Helper.getStringInConfig(\"gui.stat.title\");\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "76f2c0bad5e2c728ec7a90a1c72c0046d281566cbff32fedfa611a70f11af613"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Method is never used.",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/GuiManager.java",
+      "language": "",
+      "line": 52,
+      "offset": 33,
+      "length": 23,
+      "code": {
+        "startLine": 50,
+        "length": 23,
+        "offset": 39,
+        "surroundingCode": "    }\n\n    public RewardGroupStatsView getRewardGroupStatsView(@NotNull Player player, int page) {\n        Gui gui = this.getGui(player.getUniqueId());\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "45a4078811dd5b004bbacc546d7d7c78d859368d19f31dcc2b98cc8ac0334163"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Method is never used.",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "",
+      "line": 19,
+      "offset": 27,
+      "length": 10,
+      "code": {
+        "startLine": 17,
+        "length": 10,
+        "offset": 103,
+        "surroundingCode": "    private static final @NonNls String path = \"system.internalPermission\";\n\n    public static boolean isActivate(final String permission) {\n        return InternalPermission.internalPermissions.getOrDefault(permission, true).booleanValue();\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "17d491ce25e8a27bc811506353fd2788bad34aeb4edd7db42a750d2176d16b3c"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Method is never used.",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "",
+      "line": 42,
+      "offset": 27,
+      "length": 21,
+      "code": {
+        "startLine": 40,
+        "length": 21,
+        "offset": 33,
+        "surroundingCode": "    }\n\n    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {\n        String pathPermission = InternalPermission.path + permission.replace(\".\", \"-\");\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "ce9b45605110456d22a803cf799c2b8864c9de84345d4d36843bb371e77651ca"
+}]}

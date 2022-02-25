@@ -1,0 +1,8 @@
+{
+  "modules": [
+    {
+      "name": "VoteReward",
+      "languageLevel": 17
+    }
+  ]
+}

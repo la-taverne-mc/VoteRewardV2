@@ -4,6 +4,13 @@
     "Code Inspection": 22
   },
   "attributes": {
+    "vcs": {
+      "sarifIdea": {
+        "repositoryUri": "https://github.com/la-taverne-mc/VoteRewardV2",
+        "revisionId": "23c44a3f8a99ab7c1334b2a557f11308543d91cf",
+        "branch": "issue-24"
+      }
+    },
     "deviceId": "200820300000000-cd90-47de-e5de-f27a9dc88e06"
   }
 }

@@ -1,4 +1,4 @@
-package fr.lataverne.votereward.commands.admin.rewardsgroups.rewardsgroup;
+package fr.lataverne.votereward.commands.admin.rewardsgroup;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
 import fr.lataverne.votereward.gui.admin.RewardsGroupView;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SeeRewardsGroupAdminCommand extends CompositeCommand {
-    
+
     public SeeRewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "see");
     }
@@ -47,7 +47,7 @@ public class SeeRewardsGroupAdminCommand extends CompositeCommand {
 
     @Override
     protected void setup() {
-        this.setPermission("votereward.admin.rewardsgroups.<rewards-group-name>.see");
+        this.setPermission("votereward.admin.rewardsgroup.<rewards-group-name>.see");
         this.setOnlyPlayer(true);
     }
 }

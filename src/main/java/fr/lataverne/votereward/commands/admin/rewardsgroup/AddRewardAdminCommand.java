@@ -1,4 +1,4 @@
-package fr.lataverne.votereward.commands.admin.rewardsgroups.rewardsgroup;
+package fr.lataverne.votereward.commands.admin.rewardsgroup;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
 import fr.lataverne.votereward.objects.AchievableReward;
@@ -70,7 +70,7 @@ public class AddRewardAdminCommand extends CompositeCommand {
 
     @Override
     protected void setup() {
-        this.setPermission("votereward.admin.rewardsgroups.<rewards-group-name>.addreward");
+        this.setPermission("votereward.admin.rewardsgroup.<rewards-group-name>.addreward");
         this.setOnlyPlayer(true);
     }
 }

@@ -1,14 +1,14 @@
-package fr.lataverne.votereward.commands.admin.rewardsgroups;
+package fr.lataverne.votereward.commands.admin;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
 import fr.lataverne.votereward.commands.DynamicCommand;
-import fr.lataverne.votereward.commands.admin.rewardsgroups.rewardsgroup.AddRewardAdminCommand;
-import fr.lataverne.votereward.commands.admin.rewardsgroups.rewardsgroup.SeeRewardsGroupAdminCommand;
+import fr.lataverne.votereward.commands.admin.rewardsgroup.AddRewardAdminCommand;
+import fr.lataverne.votereward.commands.admin.rewardsgroup.SeeRewardsGroupAdminCommand;
 import org.jetbrains.annotations.NotNull;
 
-public class RewardsGroupAdminCommand extends CompositeCommand implements DynamicCommand {
+public class DynRewardsGroupAdminCommand extends CompositeCommand implements DynamicCommand {
 
-    public RewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
+    public DynRewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "<rewards-group-name>");
     }
 
@@ -20,7 +20,7 @@ public class RewardsGroupAdminCommand extends CompositeCommand implements Dynami
 
     @Override
     protected void setup() {
-        this.setPermission("votereward.admin.rewardsgroups.<rewards-group-name>");
+        this.setPermission("votereward.admin.rewardsgroup");
 
         new AddRewardAdminCommand(this);
         new SeeRewardsGroupAdminCommand(this);

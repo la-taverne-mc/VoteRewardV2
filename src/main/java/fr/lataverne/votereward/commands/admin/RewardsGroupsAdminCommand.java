@@ -1,11 +1,13 @@
 package fr.lataverne.votereward.commands.admin;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
-import fr.lataverne.votereward.commands.admin.rewardsgroups.*;
+import fr.lataverne.votereward.commands.admin.rewardsgroups.ActivateRewardsGroupAdminCommand;
+import fr.lataverne.votereward.commands.admin.rewardsgroups.CreateRewardsGroupAdminCommand;
+import fr.lataverne.votereward.commands.admin.rewardsgroups.DeleteRewardsGroupAdminCommand;
+import fr.lataverne.votereward.commands.admin.rewardsgroups.RewardsGroupListAdminCommand;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RewardsGroupsAdminCommand extends CompositeCommand {
@@ -35,13 +37,5 @@ public class RewardsGroupsAdminCommand extends CompositeCommand {
         new DeleteRewardsGroupAdminCommand(this);
         new RewardsGroupListAdminCommand(this);
         new ActivateRewardsGroupAdminCommand(this);
-        new RewardsGroupAdminCommand(this);
-    }
-
-    @Override
-    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
-               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
-               : new ArrayList<>();
     }
 }

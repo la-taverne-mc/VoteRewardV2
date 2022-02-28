@@ -140,7 +140,7 @@ commands:
       rewardsgroups:
         description: "Permets de gérer les groupes de récompenses"
         usage: "/vr admin rewardsgroups"
-        parameters: "<create | delete | list | activate | <rewards-group-name>>"
+        parameters: "<create | delete | list | activate>"
         create:
           description: "Permet de créer un nouveau groupe de récompenses"
           usage: "/vr admin rewardsgroups create"
@@ -157,10 +157,14 @@ commands:
           description: "Permet de définir le groupe de récompenses actif"
           usage: "/vr admin rewardsgroups activate"
           parameters: "<rewards-group-name>"
+      rewardsgroup:
+        description: "Permet de gérer un groupe de récompenses"
+        usage: "/vr admin rewardsgroup"
+        parameters: "<rewards-group-name>"
         <rewards-group-name>:
           description: "Permet de gérer un groupe de récompenses"
           usage: "/vr admin rewardsgroups <rewards-group-name>"
-          parameters: "<addReward>"
+          parameters: "<addReward | see>"
           addreward:
             description: "Permet d'ajouter l'item dans la main du joueur en tant que récompense."
             usage: "/vr admin <rewards-group-name> addreward"

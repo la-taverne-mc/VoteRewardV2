@@ -40,7 +40,7 @@ permissions:
             description: Allows using /votereward admin bag see
             default: op
       votereward.admin.rewardsgroups:
-        description: Allows admin commands for the rewards groups
+        description: Allows admin commands to manage the rewards groups
         default: op
         children:
           votereward.admin.rewardsgroups.create:
@@ -55,13 +55,17 @@ permissions:
           votereward.admin.rewardsgroups.activate:
             description: Allows using /votereward admin rewardsgroups activate
             default: op
-          votereward.admin.rewardsgroups.<rewards-group-name>:
+      votereward.admin.rewardsgroup:
+        description: Allows admin command to manage a rewards group
+        default: op
+        children:
+          votereward.admin.rewardsgroup.<rewards-group-name>:
             description: Allows the commands to manage a rewards group
             default: op
             children:
-              votereward.admin.rewardsgroups.<rewards-group-name>.addreward:
+              votereward.admin.rewardsgroup.<rewards-group-name>.addreward:
                 description: Allows using /votereward admin rewardsgroups <rewards-group-name> addReward
                 default: op
-              votereward.admin.rewardsgroups.<rewards-group-name>.see:
+              votereward.admin.rewardsgroup.<rewards-group-name>.see:
                 description: Allows using /votereward admin rewardsgroups <rewards-group-name> see
                 default: op

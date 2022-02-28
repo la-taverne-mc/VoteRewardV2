@@ -12,33 +12,6 @@ import org.jetbrains.annotations.Nullable;
 enum FireworkEffectJson {
     ;
 
-    public static @NotNull JsonObject serialize(final @NotNull FireworkEffect fireworkEffect) {
-        JsonObject jsonFireworkEffect = new JsonObject();
-        jsonFireworkEffect.addProperty("type", fireworkEffect.getType().name());
-
-        if (fireworkEffect.hasFlicker()) {
-            jsonFireworkEffect.addProperty("flicker", true);
-        }
-
-        if (fireworkEffect.hasTrail()) {
-            jsonFireworkEffect.addProperty("trail", true);
-        }
-
-        if (!fireworkEffect.getColors().isEmpty()) {
-            JsonArray colors = new JsonArray();
-            fireworkEffect.getColors().forEach(color -> colors.add(new JsonPrimitive(color.asRGB())));
-            jsonFireworkEffect.add("colors", colors);
-        }
-
-        if (!fireworkEffect.getFadeColors().isEmpty()) {
-            JsonArray fadeColors = new JsonArray();
-            fireworkEffect.getFadeColors().forEach(color -> fadeColors.add(new JsonPrimitive(color.asRGB())));
-            jsonFireworkEffect.add("fadeColors", fadeColors);
-        }
-
-        return jsonFireworkEffect;
-    }
-
     public static @Nullable FireworkEffect deserialize(final @NotNull JsonElement elemFireworkEffect) {
         if (elemFireworkEffect.isJsonObject()) {
             JsonObject jsonFireworkEffect = elemFireworkEffect.getAsJsonObject();
@@ -75,5 +48,32 @@ enum FireworkEffectJson {
         } else {
             return null;
         }
+    }
+
+    public static @NotNull JsonObject serialize(final @NotNull FireworkEffect fireworkEffect) {
+        JsonObject jsonFireworkEffect = new JsonObject();
+        jsonFireworkEffect.addProperty("type", fireworkEffect.getType().name());
+
+        if (fireworkEffect.hasFlicker()) {
+            jsonFireworkEffect.addProperty("flicker", true);
+        }
+
+        if (fireworkEffect.hasTrail()) {
+            jsonFireworkEffect.addProperty("trail", true);
+        }
+
+        if (!fireworkEffect.getColors().isEmpty()) {
+            JsonArray colors = new JsonArray();
+            fireworkEffect.getColors().forEach(color -> colors.add(new JsonPrimitive(color.asRGB())));
+            jsonFireworkEffect.add("colors", colors);
+        }
+
+        if (!fireworkEffect.getFadeColors().isEmpty()) {
+            JsonArray fadeColors = new JsonArray();
+            fireworkEffect.getFadeColors().forEach(color -> fadeColors.add(new JsonPrimitive(color.asRGB())));
+            jsonFireworkEffect.add("fadeColors", fadeColors);
+        }
+
+        return jsonFireworkEffect;
     }
 }

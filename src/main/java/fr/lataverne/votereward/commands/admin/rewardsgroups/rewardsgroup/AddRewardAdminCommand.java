@@ -12,9 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class AddRewardAdminCommand extends CompositeCommand {
-    private static final String REWARDS_GROUP_NAME = "[rewards-group-name]";
 
     private static final String PERCENTAGE = "[percentage]";
+
+    private static final String REWARDS_GROUP_NAME = "[rewards-group-name]";
 
     public AddRewardAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "addreward", "add");
@@ -43,7 +44,8 @@ public class AddRewardAdminCommand extends CompositeCommand {
         }
 
         if (item == null || item.getType().isAir()) {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.add-reward.nothing-in-main-hand"));
+            sender.sendMessage(this.plugin.getConfig()
+                                          .getString("messages.admin.rewards-group.add-reward.nothing-in-main-hand"));
         } else {
             String rewardsGroupName = args.get(this.level - 2);
             RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName);
@@ -55,9 +57,10 @@ public class AddRewardAdminCommand extends CompositeCommand {
                 achievableReward = rewardsGroup.addAchievableReward(item, percentage);
             }
 
-            String message = this.plugin.getConfig().getString("messages.admin.rewards-group.add-reward.successfully-added-reward");
+            String message = this.plugin.getConfig()
+                                        .getString("messages.admin.rewards-group.add-reward.successfully-added-reward");
             message = message.replace(AddRewardAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName)
-                    .replace(AddRewardAdminCommand.PERCENTAGE, Double.toString(achievableReward.percentage()));
+                             .replace(AddRewardAdminCommand.PERCENTAGE, Double.toString(achievableReward.percentage()));
 
             sender.sendMessage(message);
         }

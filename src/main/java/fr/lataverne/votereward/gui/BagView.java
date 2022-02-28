@@ -32,39 +32,9 @@ public class BagView extends NavigableGui {
         this.bag = bag;
     }
 
-    private @NotNull List<Reward> getRewardsToBeDisplayed() {
-        if (this.bag == null) {
-            return new ArrayList<>();
-        }
-
-        List<Reward> bagContent = this.bag.getBagContent().stream().toList();
-
-        Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(bagContent);
-
-        return indexes.getLeft().intValue() == -1 || indexes.getRight().intValue() == -1
-                ? new ArrayList<>()
-                : bagContent.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
-    }
-
-    private static @NotNull ItemStack getRewardView(@NotNull Reward reward) {
-        ItemStack item = new ItemStack(reward.itemStack());
-        ItemMeta meta = item.getItemMeta();
-
-        if (meta != null) {
-            List<String> lore = meta.getLore();
-
-            if (lore == null) {
-                lore = new ArrayList<>();
-            }
-
-            lore.add("");
-            lore.add(ChatColor.BLUE + "Expire le " + reward.expirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-        }
-
-        return item;
+    @Override
+    public @NotNull String getTitle() {
+        return Helper.getStringInConfig("gui.bagSee.title");
     }
 
     @Override
@@ -82,6 +52,12 @@ public class BagView extends NavigableGui {
     }
 
     @Override
+    public String toString() {
+        return "BagView{" + "bag=" + this.bag + ", content=" + Arrays.toString(this.content) + ", page=" + this.page +
+               "}";
+    }
+
+    @Override
     protected void setContent() {
         List<Reward> rewards = this.getRewardsToBeDisplayed();
 
@@ -89,8 +65,8 @@ public class BagView extends NavigableGui {
 
         for (int i = 0; i < 45; i++) {
             this.content[i] = i < size
-                    ? BagView.getRewardView(rewards.get(i))
-                    : new ItemStack(Material.AIR);
+                              ? BagView.getRewardView(rewards.get(i))
+                              : new ItemStack(Material.AIR);
         }
 
         super.setContent();
@@ -106,17 +82,39 @@ public class BagView extends NavigableGui {
         this.content[49] = getRewardsItem;
     }
 
-    @Override
-    public @NotNull String getTitle() {
-        return Helper.getStringInConfig("gui.bagSee.title");
+    private static @NotNull ItemStack getRewardView(@NotNull Reward reward) {
+        ItemStack item = new ItemStack(reward.itemStack());
+        ItemMeta meta = item.getItemMeta();
+
+        if (meta != null) {
+            List<String> lore = meta.getLore();
+
+            if (lore == null) {
+                lore = new ArrayList<>();
+            }
+
+            lore.add("");
+            lore.add(ChatColor.BLUE + "Expire le " +
+                     reward.expirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        }
+
+        return item;
     }
 
-    @Override
-    public String toString() {
-        return "BagView{" +
-                "bag=" + this.bag +
-                ", content=" + Arrays.toString(this.content) +
-                ", page=" + this.page +
-                "}";
+    private @NotNull List<Reward> getRewardsToBeDisplayed() {
+        if (this.bag == null) {
+            return new ArrayList<>();
+        }
+
+        List<Reward> bagContent = this.bag.getBagContent().stream().toList();
+
+        Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(bagContent);
+
+        return indexes.getLeft().intValue() == -1 || indexes.getRight().intValue() == -1
+               ? new ArrayList<>()
+               : bagContent.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
     }
 }

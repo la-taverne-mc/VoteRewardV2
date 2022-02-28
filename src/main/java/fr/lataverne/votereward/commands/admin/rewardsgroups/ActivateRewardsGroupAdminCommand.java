@@ -28,25 +28,27 @@ public class ActivateRewardsGroupAdminCommand extends CompositeCommand {
 
         RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName);
         if (rewardsGroup == null) {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.unknown-rewards-group").replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));
+            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.unknown-rewards-group")
+                                          .replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));
             return true;
         }
 
         this.plugin.getRewardsGroupManager().setEnabledRewardsGroupName(rewardsGroupName);
-        sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-activated").replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));
+        sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-activated")
+                                      .replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));
 
         return true;
     }
 
     @Override
-    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
-                ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
-                : new ArrayList<>();
+    protected void setup() {
+        this.setPermission("votereward.admin.rewardsgroups.activate");
     }
 
     @Override
-    protected void setup() {
-        this.setPermission("votereward.admin.rewardsgroups.activate");
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return args.isEmpty() || args.size() == 1
+               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
+               : new ArrayList<>();
     }
 }

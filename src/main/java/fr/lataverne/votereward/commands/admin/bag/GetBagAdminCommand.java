@@ -28,11 +28,12 @@ public class GetBagAdminCommand extends CompositeCommand {
         if (cmdArgs.isEmpty() || cmdArgs.size() > 2) {
             this.misuseCommand(sender);
         } else {
-            @SuppressWarnings ("deprecation")
+            @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(cmdArgs.get(0));
 
             if (!player.hasPlayedBefore()) {
-                sender.sendMessage(this.plugin.getConfig().getString("messages.error.unknown-player").replace(GetBagAdminCommand.PLAYER, player.getName()));
+                sender.sendMessage(this.plugin.getConfig().getString("messages.error.unknown-player")
+                                              .replace(GetBagAdminCommand.PLAYER, player.getName()));
                 return true;
             }
 
@@ -55,14 +56,14 @@ public class GetBagAdminCommand extends CompositeCommand {
     }
 
     @Override
-    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
-                ? this.plugin.getBagManager().getOwnerNames()
-                : new ArrayList<>();
+    protected void setup() {
+        this.setPermission("votereward.admin.bag.get");
     }
 
     @Override
-    protected void setup() {
-        this.setPermission("votereward.admin.bag.get");
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return args.isEmpty() || args.size() == 1
+               ? this.plugin.getBagManager().getOwnerNames()
+               : new ArrayList<>();
     }
 }

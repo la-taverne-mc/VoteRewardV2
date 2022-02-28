@@ -14,57 +14,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings ("OverlyComplexClass")
+@SuppressWarnings("OverlyComplexClass")
 enum ItemMetaJson {
     ;
 
-    public static @NotNull JsonObject serialize(final @NotNull ItemMeta itemMeta) {
-        JsonObject jsonItemMeta = new JsonObject();
-
-        if (itemMeta.hasDisplayName()) {
-            jsonItemMeta.addProperty("displayName", itemMeta.getDisplayName());
-        }
-
-        if (itemMeta.hasLore()) {
-            JsonArray lore = new JsonArray();
-            itemMeta.getLore().forEach(str -> lore.add(new JsonPrimitive(str)));
-            jsonItemMeta.add("lore", lore);
-        }
-
-        if (itemMeta.hasEnchants()) {
-            JsonArray enchants = new JsonArray();
-            itemMeta.getEnchants().forEach(((enchantment, level) -> {
-                JsonObject jsonEnchantment = new JsonObject();
-                jsonEnchantment.addProperty("key", enchantment.getKey().toString());
-                jsonEnchantment.addProperty("level", level);
-                enchants.add(jsonEnchantment);
-            }));
-            jsonItemMeta.add("enchants", enchants);
-        }
-
-        if (!itemMeta.getItemFlags().isEmpty()) {
-            JsonArray flags = new JsonArray();
-            itemMeta.getItemFlags().stream().map(ItemFlag::name).forEach(flag -> flags.add(new JsonPrimitive(flag)));
-            jsonItemMeta.add("flags", flags);
-        }
-
-        if (itemMeta.isUnbreakable()) {
-            jsonItemMeta.addProperty("unbreakable", true);
-        }
-
-        if (itemMeta.hasCustomModelData()) {
-            jsonItemMeta.addProperty("customModelData", itemMeta.getCustomModelData());
-        }
-
-        JsonObject extraMeta = ItemMetaJson.serializeExtraMeta(itemMeta);
-        if (extraMeta != null && extraMeta.size() > 0) {
-            jsonItemMeta.add("extra", extraMeta);
-        }
-
-        return jsonItemMeta;
-    }
-
-    @SuppressWarnings ("OverlyComplexMethod")
+    @SuppressWarnings("OverlyComplexMethod")
     public static @Nullable ItemMeta deserialize(@NotNull final ItemMeta itemMeta, final @NotNull JsonElement element) {
         if (element.isJsonObject()) {
             JsonObject jsonMeta = element.getAsJsonObject();
@@ -120,12 +74,61 @@ enum ItemMetaJson {
         }
     }
 
+    public static @NotNull JsonObject serialize(final @NotNull ItemMeta itemMeta) {
+        JsonObject jsonItemMeta = new JsonObject();
+
+        if (itemMeta.hasDisplayName()) {
+            jsonItemMeta.addProperty("displayName", itemMeta.getDisplayName());
+        }
+
+        if (itemMeta.hasLore()) {
+            JsonArray lore = new JsonArray();
+            itemMeta.getLore().forEach(str -> lore.add(new JsonPrimitive(str)));
+            jsonItemMeta.add("lore", lore);
+        }
+
+        if (itemMeta.hasEnchants()) {
+            JsonArray enchants = new JsonArray();
+            itemMeta.getEnchants().forEach(((enchantment, level) -> {
+                JsonObject jsonEnchantment = new JsonObject();
+                jsonEnchantment.addProperty("key", enchantment.getKey().toString());
+                jsonEnchantment.addProperty("level", level);
+                enchants.add(jsonEnchantment);
+            }));
+            jsonItemMeta.add("enchants", enchants);
+        }
+
+        if (!itemMeta.getItemFlags().isEmpty()) {
+            JsonArray flags = new JsonArray();
+            itemMeta.getItemFlags().stream().map(ItemFlag::name).forEach(flag -> flags.add(new JsonPrimitive(flag)));
+            jsonItemMeta.add("flags", flags);
+        }
+
+        if (itemMeta.isUnbreakable()) {
+            jsonItemMeta.addProperty("unbreakable", true);
+        }
+
+        if (itemMeta.hasCustomModelData()) {
+            jsonItemMeta.addProperty("customModelData", itemMeta.getCustomModelData());
+        }
+
+        JsonObject extraMeta = ItemMetaJson.serializeExtraMeta(itemMeta);
+        if (extraMeta != null && extraMeta.size() > 0) {
+            jsonItemMeta.add("extra", extraMeta);
+        }
+
+        return jsonItemMeta;
+    }
+
     private static void addJsonEnchantmentToItemMeta(final @NotNull ItemMeta itemMeta, final @NotNull JsonElement elemEnchant) {
         if (elemEnchant.isJsonObject()) {
             JsonObject jsonEnchant = elemEnchant.getAsJsonObject();
             if (jsonEnchant.has("key")) {
-                Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString(jsonEnchant.get("key").getAsString()));
-                int level = jsonEnchant.has("level") ? jsonEnchant.get("level").getAsInt() : 1;
+                Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString(jsonEnchant.get("key")
+                                                                                                   .getAsString()));
+                int level = jsonEnchant.has("level")
+                            ? jsonEnchant.get("level").getAsInt()
+                            : 1;
                 if (enchantment != null && level > 0) {
                     itemMeta.addEnchant(enchantment, level, true);
                 }
@@ -133,7 +136,7 @@ enum ItemMetaJson {
         }
     }
 
-    @SuppressWarnings ({ "OverlyComplexMethod", "OverlyLongMethod" })
+    @SuppressWarnings({ "OverlyComplexMethod", "OverlyLongMethod" })
     private static void deserializeExtraMeta(final @NotNull ItemMeta itemMeta, final @NotNull JsonElement elemExtraMeta) {
         if (elemExtraMeta.isJsonObject()) {
             JsonObject jsonExtraMeta = elemExtraMeta.getAsJsonObject();
@@ -208,7 +211,7 @@ enum ItemMetaJson {
         }
     }
 
-    @SuppressWarnings ({ "MethodWithMoreThanThreeNegations", "OverlyComplexMethod", "OverlyLongMethod" })
+    @SuppressWarnings({ "MethodWithMoreThanThreeNegations", "OverlyComplexMethod", "OverlyLongMethod" })
     private static @NotNull JsonObject serializeExtraMeta(final @NotNull ItemMeta itemMeta) {
         JsonObject extraMeta = new JsonObject();
 

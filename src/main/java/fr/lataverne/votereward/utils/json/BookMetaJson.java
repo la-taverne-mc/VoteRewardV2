@@ -11,26 +11,6 @@ import org.jetbrains.annotations.Nullable;
 enum BookMetaJson {
     ;
 
-    public static @Nullable JsonObject serialize(final @NotNull BookMeta bookMeta) {
-        JsonObject jsonBookMeta = new JsonObject();
-
-        if (bookMeta.hasTitle()) {
-            jsonBookMeta.addProperty("title", bookMeta.getTitle());
-        }
-
-        if (bookMeta.hasAuthor()) {
-            jsonBookMeta.addProperty("author", bookMeta.getAuthor());
-        }
-
-        if (bookMeta.hasPages()) {
-            JsonArray pages = new JsonArray();
-            bookMeta.getPages().forEach(str -> pages.add(new JsonPrimitive(str)));
-            jsonBookMeta.add("pages", pages);
-        }
-
-        return jsonBookMeta.size() > 0 ? jsonBookMeta : null;
-    }
-
     public static void deserialize(final @NotNull BookMeta bookMeta, final @NotNull JsonElement elemBookMeta) {
         if (elemBookMeta.isJsonObject()) {
             JsonObject jsonBookMeta = elemBookMeta.getAsJsonObject();
@@ -53,5 +33,27 @@ enum BookMetaJson {
                 });
             }
         }
+    }
+
+    public static @Nullable JsonObject serialize(final @NotNull BookMeta bookMeta) {
+        JsonObject jsonBookMeta = new JsonObject();
+
+        if (bookMeta.hasTitle()) {
+            jsonBookMeta.addProperty("title", bookMeta.getTitle());
+        }
+
+        if (bookMeta.hasAuthor()) {
+            jsonBookMeta.addProperty("author", bookMeta.getAuthor());
+        }
+
+        if (bookMeta.hasPages()) {
+            JsonArray pages = new JsonArray();
+            bookMeta.getPages().forEach(str -> pages.add(new JsonPrimitive(str)));
+            jsonBookMeta.add("pages", pages);
+        }
+
+        return jsonBookMeta.size() > 0
+               ? jsonBookMeta
+               : null;
     }
 }

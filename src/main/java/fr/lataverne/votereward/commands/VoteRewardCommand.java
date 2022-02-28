@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class VoteRewardCommand extends CompositeCommand {
+
     public VoteRewardCommand() {
         super("votereward", "vr");
     }

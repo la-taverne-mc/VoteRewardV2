@@ -12,6 +12,17 @@ import org.jetbrains.annotations.Nullable;
 enum EnchantmentStorageMetaJson {
     ;
 
+    public static void deserialize(final @NotNull EnchantmentStorageMeta esMeta, final @NotNull JsonElement elemESMeta) {
+        if (elemESMeta.isJsonObject()) {
+            JsonObject jsonESMeta = elemESMeta.getAsJsonObject();
+
+            if (jsonESMeta.has("storedEnchants")) {
+                JsonArray jsonStoredEnchants = jsonESMeta.getAsJsonArray("storedEnchants");
+                jsonStoredEnchants.forEach(elemStoredEnchant -> EnchantmentStorageMetaJson.addJsonEnchantmentToEnchantmentStorageMeta(esMeta, elemStoredEnchant));
+            }
+        }
+    }
+
     public static @Nullable JsonObject serialize(final @NotNull EnchantmentStorageMeta esMeta) {
         if (esMeta.hasStoredEnchants()) {
             JsonObject jsonESMeta = new JsonObject();
@@ -28,17 +39,6 @@ enum EnchantmentStorageMetaJson {
             return jsonESMeta;
         } else {
             return null;
-        }
-    }
-
-    public static void deserialize(final @NotNull EnchantmentStorageMeta esMeta, final @NotNull JsonElement elemESMeta) {
-        if (elemESMeta.isJsonObject()) {
-            JsonObject jsonESMeta = elemESMeta.getAsJsonObject();
-
-            if (jsonESMeta.has("storedEnchants")) {
-                JsonArray jsonStoredEnchants = jsonESMeta.getAsJsonArray("storedEnchants");
-                jsonStoredEnchants.forEach(elemStoredEnchant -> EnchantmentStorageMetaJson.addJsonEnchantmentToEnchantmentStorageMeta(esMeta, elemStoredEnchant));
-            }
         }
     }
 

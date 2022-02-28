@@ -11,44 +11,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InternalPermission {
-	private static final Map<String, Boolean> internalPermissions = new HashMap<>();
 
-	private static final @NonNls String path = "system.internalPermission";
+    private static final Map<String, Boolean> internalPermissions = new HashMap<>();
 
-	public static boolean isActivate(final String permission) {
-		return InternalPermission.internalPermissions.getOrDefault(permission, true).booleanValue();
-	}
+    private static final @NonNls String path = "system.internalPermission";
 
-	public static void loadingInternalPermissions() {
-		VoteReward.sendMessageToConsole(Helper.getMessageOnConfig("system.internalPermLoading"));
+    public static boolean isActivate(final String permission) {
+        return InternalPermission.internalPermissions.getOrDefault(permission, true).booleanValue();
+    }
 
-		ConfigurationSection internalPermList = VoteReward.getInstance().getConfig().getConfigurationSection(InternalPermission.path);
+    public static void loadingInternalPermissions() {
+        VoteReward.sendMessageToConsole(Helper.getMessageOnConfig("system.internalPermLoading"));
 
-		if (internalPermList != null) {
-			String message = Helper.getMessageOnConfig("system.internalPermView");
+        ConfigurationSection internalPermList = VoteReward.getInstance().getConfig()
+                                                          .getConfigurationSection(InternalPermission.path);
 
-			for (final String key : internalPermList.getKeys(false)) {
-				String permission = key.replace("-", ".");
-				boolean value = VoteReward.getInstance().getConfig().getBoolean(InternalPermission.path + "." + key);
+        if (internalPermList != null) {
+            String message = Helper.getMessageOnConfig("system.internalPermView");
 
-				InternalPermission.internalPermissions.put(permission, value);
-				VoteReward.sendMessageToConsole(Helper.replaceValueInString(message, permission, Boolean.toString(value)));
-			}
-		}
-	}
+            for (final String key : internalPermList.getKeys(false)) {
+                String permission = key.replace("-", ".");
+                boolean value = VoteReward.getInstance().getConfig().getBoolean(InternalPermission.path + "." + key);
 
-	public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {
-		String pathPermission = InternalPermission.path + permission.replace(".", "-");
+                InternalPermission.internalPermissions.put(permission, value);
+                VoteReward.sendMessageToConsole(Helper.replaceValueInString(message, permission, Boolean.toString(value)));
+            }
+        }
+    }
 
-		InternalPermission.internalPermissions.put(permission, value);
-		VoteReward.getInstance().getConfig().set(pathPermission, value);
+    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {
+        String pathPermission = InternalPermission.path + permission.replace(".", "-");
 
-		try {
-			VoteReward.getInstance().getConfig().save("plugins\\VoteReward\\config.yml");
-		} catch (final IOException e) {
-			return false;
-		}
+        InternalPermission.internalPermissions.put(permission, value);
+        VoteReward.getInstance().getConfig().set(pathPermission, value);
 
-		return true;
-	}
+        try {
+            VoteReward.getInstance().getConfig().save("plugins\\VoteReward\\config.yml");
+        } catch (final IOException e) {
+            return false;
+        }
+
+        return true;
+    }
 }

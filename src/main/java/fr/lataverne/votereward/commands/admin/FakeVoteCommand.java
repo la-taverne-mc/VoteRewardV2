@@ -59,10 +59,13 @@ public class FakeVoteCommand extends CompositeCommand {
 
             String message;
             if (amount > 1) {
-                message = Objects.requireNonNullElse(this.plugin.getConfig().getString("messages.admin.fakevote.multiple"), "messages.admin.fakevote.multiple");
-                message = message.replace(FakeVoteCommand.NB_FAKEVOTE, Integer.toString(amount)).replace(FakeVoteCommand.NB_GIVEN_REWARDS, Integer.toString(nbGivenRewards));
+                message = Objects.requireNonNullElse(this.plugin.getConfig()
+                                                                .getString("messages.admin.fakevote.multiple"), "messages.admin.fakevote.multiple");
+                message = message.replace(FakeVoteCommand.NB_FAKEVOTE, Integer.toString(amount))
+                                 .replace(FakeVoteCommand.NB_GIVEN_REWARDS, Integer.toString(nbGivenRewards));
             } else {
-                message = Objects.requireNonNullElse(this.plugin.getConfig().getString("messages.admin.fakevote.one"), "messages.admin.fakevote.one");
+                message = Objects.requireNonNullElse(this.plugin.getConfig()
+                                                                .getString("messages.admin.fakevote.one"), "messages.admin.fakevote.one");
                 message = message.replace(FakeVoteCommand.NB_GIVEN_REWARDS, Integer.toString(nbGivenRewards));
             }
 

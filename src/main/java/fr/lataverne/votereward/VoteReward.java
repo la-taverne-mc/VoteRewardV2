@@ -10,111 +10,108 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-@SuppressWarnings ("ClassNamePrefixedWithPackageName")
+@SuppressWarnings("ClassNamePrefixedWithPackageName")
 public class VoteReward extends JavaPlugin {
-	private static VoteReward instance = null;
 
-	private BagManager bagManager = null;
+    private static VoteReward instance = null;
 
-	private GuiManager guiManager = null;
+    private BagManager bagManager = null;
 
-	private RewardsGroupManager rewardsGroupManager = null;
+    private CommandsManager commandsManager = null;
 
-	private CommandsManager commandsManager = null;
+    private GuiManager guiManager = null;
 
-	public static VoteReward getInstance() {
-		return VoteReward.instance;
-	}
+    private RewardsGroupManager rewardsGroupManager = null;
 
-	public static void sendMessageToConsole(String message) {
-		String str = VoteReward.instance.getConfig().getString("message.consoleSuffix") + " " + ChatColor.RESET + message;
-		Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
-	}
+    public static VoteReward getInstance() {
+        return VoteReward.instance;
+    }
 
-	@Override
-	public void onDisable() {
-		this.rewardsGroupManager.saveRewardGroups();
-		this.bagManager.saveBags();
+    public static void sendMessageToConsole(String message) {
+        String str = VoteReward.instance.getConfig().getString("message.consoleSuffix");
+        str += " " + ChatColor.RESET + message;
+        Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
+    }
 
-		this.commandsManager.unregisterCommands();
+    public BagManager getBagManager() {
+        return this.bagManager;
+    }
 
-		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
-	}
+    public CommandsManager getCommandsManager() {
+        return this.commandsManager;
+    }
 
-	/**
-	 * Called when the plugin is enabled.
-	 */
-	@Override
-	public void onEnable() {
-		//noinspection AssignmentToStaticFieldFromInstanceMethod
-		VoteReward.instance = this;
+    public GuiManager getGuiManager() {
+        return this.guiManager;
+    }
 
-		this.bagManager = new BagManager(this);
-		this.guiManager = new GuiManager();
-		this.rewardsGroupManager = new RewardsGroupManager();
-		this.commandsManager = new CommandsManager();
+    public RewardsGroupManager getRewardsGroupManager() {
+        return this.rewardsGroupManager;
+    }
 
-		new VoteRewardCommand();
+    @Override
+    public void onDisable() {
+        this.rewardsGroupManager.saveRewardGroups();
+        this.bagManager.saveBags();
 
-		Listener eventListener = new EventListener(this);
-		Listener votifierManager = new VotifierManager(this.bagManager, this.rewardsGroupManager);
-		Bukkit.getPluginManager().registerEvents(eventListener, this);
-		Bukkit.getPluginManager().registerEvents(votifierManager, this);
+        this.commandsManager.unregisterCommands();
 
-		InternalPermission.loadingInternalPermissions();
+        VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
+    }
 
-		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.startMessage"));
-	}
+    /**
+     * Called when the plugin is enabled.
+     */
+    @Override
+    public void onEnable() {
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
+        VoteReward.instance = this;
 
-	/**
-	 * Method for reload the plugin's config.
-	 * If the config don't exist then we save the default config.
-	 */
-	@Override
-	public void reloadConfig() {
-		boolean configExist = true;
-		if (!new File("plugins/VoteReward/config.yml").exists()) {
-			this.saveDefaultConfig();
-			configExist = false;
-		}
+        this.bagManager = new BagManager(this);
+        this.guiManager = new GuiManager();
+        this.rewardsGroupManager = new RewardsGroupManager();
+        this.commandsManager = new CommandsManager();
 
-		super.reloadConfig();
+        new VoteRewardCommand();
 
-		if (configExist) {
-			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.existingConfig"));
-		} else {
-			VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
-		}
+        Listener eventListener = new EventListener(this);
+        Listener votifierManager = new VotifierManager(this.bagManager, this.rewardsGroupManager);
+        Bukkit.getPluginManager().registerEvents(eventListener, this);
+        Bukkit.getPluginManager().registerEvents(votifierManager, this);
 
-		this.rewardsGroupManager.loadRewardGroups();
-		this.bagManager.loadBags();
+        InternalPermission.loadingInternalPermissions();
 
-		VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
-	}
+        VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.startMessage"));
+    }
 
-	public BagManager getBagManager() {
-		return this.bagManager;
-	}
+    /**
+     * Method for reload the plugin's config. If the config don't exist then we save the default config.
+     */
+    @Override
+    public void reloadConfig() {
+        boolean configExist = true;
+        if (!new File("plugins/VoteReward/config.yml").exists()) {
+            this.saveDefaultConfig();
+            configExist = false;
+        }
 
-	public GuiManager getGuiManager() {
-		return this.guiManager;
-	}
+        super.reloadConfig();
 
-	public CommandsManager getCommandsManager() {
-		return this.commandsManager;
-	}
+        if (configExist) {
+            VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.existingConfig"));
+        } else {
+            VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
+        }
 
-	public RewardsGroupManager getRewardsGroupManager() {
-		return this.rewardsGroupManager;
-	}
+        this.rewardsGroupManager.loadRewardGroups();
+        this.bagManager.loadBags();
 
-	@Override
-	public @NotNull String toString() {
-		return "VoteReward{" +
-				"bagManager=" + this.bagManager +
-				", guiManager=" + this.guiManager +
-				", rewardGroupManager=" + this.rewardsGroupManager +
-				", commandsManager=" + this.commandsManager +
-				"}";
-	}
+        VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
+    }
+
+    @Override
+    public @NotNull String toString() {
+        return "VoteReward{" + "bagManager=" + this.bagManager + ", guiManager=" + this.guiManager +
+               ", rewardGroupManager=" + this.rewardsGroupManager + ", commandsManager=" + this.commandsManager + "}";
+    }
 }

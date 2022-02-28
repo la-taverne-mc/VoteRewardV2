@@ -19,6 +19,19 @@ public class ConfirmCommand extends CompositeCommand {
         super(parent, "confirm");
     }
 
+    public void addCommandToBeConfirmed(ConfirmableCommand command, CommandSender sender, String label, List<String> args) {
+        if (this.toBeConfirmed.containsKey(sender)) {
+            this.toBeConfirmed.get(sender).getLeft().cancel();
+        }
+
+        BukkitTask task = Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
+            sender.sendMessage(this.plugin.getConfig().getString("messages.confirm-command.request-cancelled"));
+            this.toBeConfirmed.remove(sender);
+        }, 200);
+
+        this.toBeConfirmed.put(sender, new ImmutablePair<>(task, () -> command.toBeExecuted(sender, label, args)));
+    }
+
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         List<String> cmdArgs = args.subList(this.level, args.size());
@@ -37,19 +50,6 @@ public class ConfirmCommand extends CompositeCommand {
         this.toBeConfirmed.remove(sender);
 
         return true;
-    }
-
-    public void addCommandToBeConfirmed(ConfirmableCommand command, CommandSender sender, String label, List<String> args) {
-        if (this.toBeConfirmed.containsKey(sender)) {
-            this.toBeConfirmed.get(sender).getLeft().cancel();
-        }
-
-        BukkitTask task = Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.confirm-command.request-cancelled"));
-            this.toBeConfirmed.remove(sender);
-        }, 200);
-
-        this.toBeConfirmed.put(sender, new ImmutablePair<>(task, () -> command.toBeExecuted(sender, label, args)));
     }
 
     @Override

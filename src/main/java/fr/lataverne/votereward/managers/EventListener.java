@@ -13,10 +13,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class EventListener implements Listener {
 
-    @SuppressWarnings ("FieldNotUsedInToString")
+    @SuppressWarnings("FieldNotUsedInToString")
     private final BagManager bagManager;
 
-    @SuppressWarnings ("FieldNotUsedInToString")
+    @SuppressWarnings("FieldNotUsedInToString")
     private final GuiManager guiManager;
 
     public EventListener(@NotNull VoteReward plugin) {
@@ -24,7 +24,7 @@ public class EventListener implements Listener {
         this.guiManager = plugin.getGuiManager();
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClickEvent(@NotNull InventoryClickEvent event) {
         Gui gui = this.guiManager.getGui(event.getWhoClicked().getUniqueId());
         if (gui != null) {
@@ -39,12 +39,12 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryCloseEvent(@NotNull InventoryCloseEvent event) {
         this.guiManager.removeGui(event.getPlayer().getUniqueId());
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuitEvent(@NotNull PlayerQuitEvent event) {
         this.bagManager.saveBag(event.getPlayer().getUniqueId());
     }

@@ -25,12 +25,15 @@ public class CreateRewardsGroupAdminCommand extends CompositeCommand {
         String name = cmdArgs.get(0);
 
         if (this.plugin.getRewardsGroupManager().getRewardsGroups().containsKey(name)) {
-            sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-already-exists").replace(CreateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, name));
+            sender.sendMessage(this.plugin.getConfig()
+                                          .getString("messages.admin.rewards-group.rewards-group-already-exists")
+                                          .replace(CreateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, name));
             return true;
         }
 
         this.plugin.getRewardsGroupManager().createNewRewardsGroup(name);
-        sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-created").replace(CreateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, name));
+        sender.sendMessage(this.plugin.getConfig().getString("messages.admin.rewards-group.rewards-group-created")
+                                      .replace(CreateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, name));
 
         return true;
     }

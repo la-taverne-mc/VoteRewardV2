@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.time.LocalDate;
 
 public record Reward(ItemStack itemStack, LocalDate expirationDate) {
+
     public static @Nullable Reward parseJson(@NotNull JsonElement elemReward) {
         if (elemReward.isJsonObject()) {
             JsonObject jsonReward = elemReward.getAsJsonObject();
@@ -20,8 +21,8 @@ public record Reward(ItemStack itemStack, LocalDate expirationDate) {
                 if (item != null) {
 
                     LocalDate expirationDate = jsonReward.has("expirationDate")
-                            ? LocalDate.parse(jsonReward.get("expirationDate").getAsString())
-                            : LocalDate.now().plusDays(Constant.EXPIRATION_TIME);
+                                               ? LocalDate.parse(jsonReward.get("expirationDate").getAsString())
+                                               : LocalDate.now().plusDays(Constant.EXPIRATION_TIME);
 
                     return new Reward(item, expirationDate);
                 }

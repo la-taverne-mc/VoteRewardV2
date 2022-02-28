@@ -30,26 +30,6 @@ public class RewardsGroupListAdminView extends NavigableGui {
     }
 
     @Override
-    protected void setContent() {
-        List<Map.Entry<String, RewardsGroup>> filteredRewardsGroups = this.getRewardsGroupsToBeDisplayed();
-
-        int size = filteredRewardsGroups.size();
-
-        String enabledRewardsGroup = this.plugin.getRewardsGroupManager().getEnabledRewardsGroupName();
-
-        for (int i = 0; i < 45; i++) {
-            if (i < size) {
-                String name = filteredRewardsGroups.get(i).getKey();
-                this.content[i] = this.getRewardsGroupView(name, name.equals(enabledRewardsGroup));
-            } else {
-                this.content[i] = new ItemStack(Material.AIR);
-            }
-        }
-
-        super.setContent();
-    }
-
-    @Override
     public @NotNull String getTitle() {
         return this.plugin.getConfig().getString("gui.admin.rewards-group-list.title");
     }
@@ -73,7 +53,8 @@ public class RewardsGroupListAdminView extends NavigableGui {
                         return EInventoryAction.Reopen;
                     }
                 } else {
-                    player.sendMessage(this.plugin.getConfig().getString("messages.error.no-permission").replace("[permission]", "votereward.admin.rewardsgroups.activate"));
+                    player.sendMessage(this.plugin.getConfig().getString("messages.error.no-permission")
+                                                  .replace("[permission]", "votereward.admin.rewardsgroups.activate"));
                 }
             }
 
@@ -81,6 +62,31 @@ public class RewardsGroupListAdminView extends NavigableGui {
         } else {
             return super.onInventoryClickEvent(event);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "RewardsGroupListView{" + "page=" + this.page + ", rewardsGroups=" + this.rewardsGroups + "}";
+    }
+
+    @Override
+    protected void setContent() {
+        List<Map.Entry<String, RewardsGroup>> filteredRewardsGroups = this.getRewardsGroupsToBeDisplayed();
+
+        int size = filteredRewardsGroups.size();
+
+        String enabledRewardsGroup = this.plugin.getRewardsGroupManager().getEnabledRewardsGroupName();
+
+        for (int i = 0; i < 45; i++) {
+            if (i < size) {
+                String name = filteredRewardsGroups.get(i).getKey();
+                this.content[i] = this.getRewardsGroupView(name, name.equals(enabledRewardsGroup));
+            } else {
+                this.content[i] = new ItemStack(Material.AIR);
+            }
+        }
+
+        super.setContent();
     }
 
     private @NotNull ItemStack getRewardsGroupView(String name, boolean enabled) {
@@ -129,15 +135,7 @@ public class RewardsGroupListAdminView extends NavigableGui {
         Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(rewardsGroupsList);
 
         return indexes.getLeft().intValue() == -1 || indexes.getRight().intValue() == -1
-                ? new ArrayList<>()
-                : rewardsGroupsList.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
-    }
-
-    @Override
-    public String toString() {
-        return "RewardsGroupListView{" +
-                "page=" + this.page +
-                ", rewardsGroups=" + this.rewardsGroups +
-                "}";
+               ? new ArrayList<>()
+               : rewardsGroupsList.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
     }
 }

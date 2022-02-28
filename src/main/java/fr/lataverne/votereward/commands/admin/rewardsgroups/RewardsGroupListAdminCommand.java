@@ -13,7 +13,8 @@ import java.util.Set;
 
 public class RewardsGroupListAdminCommand extends CompositeCommand {
 
-    public static final String HEADER_LIST = ChatColor.GREEN + "========== " + ChatColor.DARK_GREEN + "REWARDS GROUPS" + ChatColor.GREEN + " ==========";
+    public static final String HEADER_LIST =
+            ChatColor.GREEN + "========== " + ChatColor.DARK_GREEN + "REWARDS GROUPS" + ChatColor.GREEN + " ==========";
 
     public RewardsGroupListAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "list");

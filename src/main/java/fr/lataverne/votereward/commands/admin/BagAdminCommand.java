@@ -6,6 +6,7 @@ import fr.lataverne.votereward.commands.admin.bag.SeeBagAdminCommand;
 import org.jetbrains.annotations.NotNull;
 
 public class BagAdminCommand extends CompositeCommand {
+
     public BagAdminCommand(@NotNull CompositeCommand parent) {
         super(parent, "bag");
     }

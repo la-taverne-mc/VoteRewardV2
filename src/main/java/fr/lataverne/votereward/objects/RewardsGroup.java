@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class RewardsGroup {
+
     private static final double DEFAULT_PERCENTAGE_REWARD = 5;
 
     private final Map<Integer, AchievableReward> achievableRewards;
@@ -46,14 +47,14 @@ public class RewardsGroup {
         return this.addAchievableReward(item, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
     }
 
-    public Collection<AchievableReward> getAchievableRewards() {
-        return Collections.unmodifiableCollection(this.achievableRewards.values());
-    }
-
     public AchievableReward addAchievableReward(ItemStack item, double percentage) {
         AchievableReward achievableReward = new AchievableReward(new ItemStack(item), percentage);
         this.achievableRewards.put(this.getAvailableId(), achievableReward);
         return achievableReward;
+    }
+
+    public Collection<AchievableReward> getAchievableRewards() {
+        return Collections.unmodifiableCollection(this.achievableRewards.values());
     }
 
     public int getNbRewards() {
@@ -79,14 +80,6 @@ public class RewardsGroup {
         }
     }
 
-    public JsonElement toJson() {
-        JsonArray jsonRewardGroup = new JsonArray();
-
-        this.achievableRewards.forEach((id, achievableReward) -> jsonRewardGroup.add(achievableReward.toJson()));
-
-        return jsonRewardGroup;
-    }
-
     public double getRealPercentageOfReward(AchievableReward achievableReward) {
         if (!this.achievableRewards.containsValue(achievableReward)) {
             return -1;
@@ -95,6 +88,19 @@ public class RewardsGroup {
         double total = this.achievableRewards.values().stream().mapToDouble(AchievableReward::percentage).sum();
 
         return 100.0 * achievableReward.percentage() / total;
+    }
+
+    public JsonElement toJson() {
+        JsonArray jsonRewardGroup = new JsonArray();
+
+        this.achievableRewards.forEach((id, achievableReward) -> jsonRewardGroup.add(achievableReward.toJson()));
+
+        return jsonRewardGroup;
+    }
+
+    @Override
+    public String toString() {
+        return "RewardGroup{" + "achievableRewards=" + this.achievableRewards + "}";
     }
 
     private Integer getAvailableId() {
@@ -110,12 +116,5 @@ public class RewardsGroup {
         }
 
         return id;
-    }
-
-    @Override
-    public String toString() {
-        return "RewardGroup{" +
-                "achievableRewards=" + this.achievableRewards +
-                "}";
     }
 }

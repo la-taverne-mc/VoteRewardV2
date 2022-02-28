@@ -11,20 +11,6 @@ import org.jetbrains.annotations.Nullable;
 enum CrossbowMetaJson {
     ;
 
-    public static @Nullable JsonObject serialize(final @NotNull CrossbowMeta crossbowMeta) {
-        if (crossbowMeta.hasChargedProjectiles()) {
-            JsonObject jsonCrossbowMeta = new JsonObject();
-
-            JsonArray chargedProjectiles = new JsonArray();
-            crossbowMeta.getChargedProjectiles().forEach(itemStack -> chargedProjectiles.add(ItemStackJson.serialize(itemStack)));
-
-            jsonCrossbowMeta.add("chargedProjectiles", chargedProjectiles);
-            return jsonCrossbowMeta;
-        } else {
-            return null;
-        }
-    }
-
     public static void deserialize(final @NotNull CrossbowMeta crossbowMeta, final @NotNull JsonElement elemCrossbowMeta) {
         if (elemCrossbowMeta.isJsonObject()) {
             JsonObject jsonCrossbowMeta = elemCrossbowMeta.getAsJsonObject();
@@ -38,6 +24,21 @@ enum CrossbowMetaJson {
                     }
                 });
             }
+        }
+    }
+
+    public static @Nullable JsonObject serialize(final @NotNull CrossbowMeta crossbowMeta) {
+        if (crossbowMeta.hasChargedProjectiles()) {
+            JsonObject jsonCrossbowMeta = new JsonObject();
+
+            JsonArray chargedProjectiles = new JsonArray();
+            crossbowMeta.getChargedProjectiles()
+                        .forEach(itemStack -> chargedProjectiles.add(ItemStackJson.serialize(itemStack)));
+
+            jsonCrossbowMeta.add("chargedProjectiles", chargedProjectiles);
+            return jsonCrossbowMeta;
+        } else {
+            return null;
         }
     }
 }

@@ -13,25 +13,6 @@ import org.jetbrains.annotations.Nullable;
 enum BannerMetaJson {
     ;
 
-    public static @Nullable JsonObject serialize(final @NotNull BannerMeta bannerMeta) {
-        if (bannerMeta.numberOfPatterns() > 0) {
-            JsonObject jsonBannerMeta = new JsonObject();
-
-            JsonArray patterns = new JsonArray();
-            bannerMeta.getPatterns().forEach(pattern -> {
-                JsonObject jsonPattern = new JsonObject();
-                jsonPattern.addProperty("patternType", pattern.getPattern().getIdentifier());
-                jsonPattern.addProperty("color", pattern.getColor().name());
-                patterns.add(jsonPattern);
-            });
-
-            jsonBannerMeta.add("patterns", patterns);
-            return jsonBannerMeta;
-        } else {
-            return null;
-        }
-    }
-
     public static void deserialize(final @NotNull BannerMeta bannerMeta, final @NotNull JsonElement elemBannerMeta) {
         if (elemBannerMeta.isJsonObject()) {
             JsonObject jsonBannerMeta = elemBannerMeta.getAsJsonObject();
@@ -50,6 +31,25 @@ enum BannerMetaJson {
                     });
                 }
             }
+        }
+    }
+
+    public static @Nullable JsonObject serialize(final @NotNull BannerMeta bannerMeta) {
+        if (bannerMeta.numberOfPatterns() > 0) {
+            JsonObject jsonBannerMeta = new JsonObject();
+
+            JsonArray patterns = new JsonArray();
+            bannerMeta.getPatterns().forEach(pattern -> {
+                JsonObject jsonPattern = new JsonObject();
+                jsonPattern.addProperty("patternType", pattern.getPattern().getIdentifier());
+                jsonPattern.addProperty("color", pattern.getColor().name());
+                patterns.add(jsonPattern);
+            });
+
+            jsonBannerMeta.add("patterns", patterns);
+            return jsonBannerMeta;
+        } else {
+            return null;
         }
     }
 

@@ -10,6 +10,17 @@ import org.jetbrains.annotations.Nullable;
 enum FireworkEffectMetaJson {
     ;
 
+    public static void deserialize(final @NotNull FireworkEffectMeta fireworkEffectMeta, final @NotNull JsonElement elemFireworkEffectMeta) {
+        if (elemFireworkEffectMeta.isJsonObject()) {
+            JsonObject jsonFireworkEffectMeta = elemFireworkEffectMeta.getAsJsonObject();
+
+            if (jsonFireworkEffectMeta.has("effect")) {
+                JsonObject jsonEffect = jsonFireworkEffectMeta.getAsJsonObject("effect");
+                fireworkEffectMeta.setEffect(FireworkEffectJson.deserialize(jsonEffect));
+            }
+        }
+    }
+
     public static @Nullable JsonObject serialize(final @NotNull FireworkEffectMeta fireworkEffectMeta) {
         if (fireworkEffectMeta.hasEffect()) {
             JsonObject jsonFireworkEffectMeta = new JsonObject();
@@ -20,17 +31,6 @@ enum FireworkEffectMetaJson {
             return jsonFireworkEffectMeta;
         } else {
             return null;
-        }
-    }
-
-    public static void deserialize(final @NotNull FireworkEffectMeta fireworkEffectMeta, final @NotNull JsonElement elemFireworkEffectMeta) {
-        if (elemFireworkEffectMeta.isJsonObject()) {
-            JsonObject jsonFireworkEffectMeta = elemFireworkEffectMeta.getAsJsonObject();
-
-            if (jsonFireworkEffectMeta.has("effect")) {
-                JsonObject jsonEffect = jsonFireworkEffectMeta.getAsJsonObject("effect");
-                fireworkEffectMeta.setEffect(FireworkEffectJson.deserialize(jsonEffect));
-            }
         }
     }
 }

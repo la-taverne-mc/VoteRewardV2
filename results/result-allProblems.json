@@ -84,34 +84,6 @@
   "hash": "91fe2af58d01350f28dc8130a0f3045f45dd981cadca3ff405dd4b18af047cd6"
 },{
   "tool": "Code Inspection",
-  "category": "Class structure",
-  "type": "Utility class",
-  "severity": "High",
-  "comment": "Class `InternalPermission` has only 'static' members, indicating procedural construction",
-  "detailsInfo": "Reports utility classes.\n\nUtility classes have all fields and methods declared as `static` and their\npresence may indicate a lack of object-oriented design.\n\n\nUse the **Ignore if annotated by** option to specify special annotations. The inspection ignores classes annotated with one of\nthese annotations.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "JAVA",
-      "line": 13,
-      "offset": 14,
-      "length": 18,
-      "code": {
-        "startLine": 11,
-        "length": 18,
-        "offset": 36,
-        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UtilityClass"
-  },
-  "hash": "aacab28502a47b4cfdc687878899385174038860144858e275ce7f3dcbcd8f45"
-},{
-  "tool": "Code Inspection",
   "category": "Declaration redundancy",
   "type": "Unused library",
   "severity": "High",
@@ -166,6 +138,34 @@
     "inspectionName": "UnusedLibrary"
   },
   "hash": "d7c30756b5a53de784896d4c5f8fa050b32c0e6aa84b1e7f9e03c0c243a633a7"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Utility class",
+  "severity": "High",
+  "comment": "Class `InternalPermission` has only 'static' members, indicating procedural construction",
+  "detailsInfo": "Reports utility classes.\n\nUtility classes have all fields and methods declared as `static` and their\npresence may indicate a lack of object-oriented design.\n\n\nUse the **Ignore if annotated by** option to specify special annotations. The inspection ignores classes annotated with one of\nthese annotations.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "language": "JAVA",
+      "line": 13,
+      "offset": 14,
+      "length": 18,
+      "code": {
+        "startLine": 11,
+        "length": 18,
+        "offset": 36,
+        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UtilityClass"
+  },
+  "hash": "aacab28502a47b4cfdc687878899385174038860144858e275ce7f3dcbcd8f45"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -614,4 +614,228 @@
     "inspectionName": "unused"
   },
   "hash": "ce9b45605110456d22a803cf799c2b8864c9de84345d4d36843bb371e77651ca"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/objects/Bag.java",
+      "language": "JAVA",
+      "line": 32,
+      "offset": 9,
+      "length": 2,
+      "code": {
+        "startLine": 30,
+        "length": 2,
+        "offset": 57,
+        "surroundingCode": "\n    public @Nullable Reward getRandomReward() {\n        if (this.bagContent.isEmpty()) {\n            return null;\n        } else {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "9736292a5c3150e7e2a61d50ab34f6b769c6968f6519e72f30e206c40224116e"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/objects/RewardsGroup.java",
+      "language": "JAVA",
+      "line": 76,
+      "offset": 9,
+      "length": 2,
+      "code": {
+        "startLine": 74,
+        "length": 2,
+        "offset": 78,
+        "surroundingCode": "        AchievableReward achievableReward = randomCollection.next();\n\n        if (achievableReward != null) {\n            return new Reward(achievableReward.reward(), LocalDate.now().plusDays(Constant.EXPIRATION_TIME));\n        } else {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "d1c72af90cc631ae375708c2fc5b10116ab70ebab15616664a6c52d1d45a3640"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroup/AddRewardAdminCommand.java",
+      "language": "JAVA",
+      "line": 54,
+      "offset": 13,
+      "length": 2,
+      "code": {
+        "startLine": 52,
+        "length": 2,
+        "offset": 60,
+        "surroundingCode": "\n            AchievableReward achievableReward;\n            if (Double.compare(percentage, -1.0) == 0) {\n                achievableReward = rewardsGroup.addAchievableReward(item);\n            } else {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "9de9851907c281bd80fc4b1259f2e790e055dc99e332628d6c73e3c2d0bc64e1"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroups/RewardsGroupListAdminCommand.java",
+      "language": "JAVA",
+      "line": 55,
+      "offset": 17,
+      "length": 2,
+      "code": {
+        "startLine": 53,
+        "length": 2,
+        "offset": 94,
+        "surroundingCode": "                StringBuilder message = new StringBuilder(rewardsGroupName);\n\n                if (rewardsGroupName.equals(enabledRewardsGroup)) {\n                    message.insert(0, ChatColor.RED + \"\" + ChatColor.BOLD + \"> \");\n                } else {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "e9d60614498cfca252000e7121bcc5a2c9dcfe897396bdef2a7a530532a7f410"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/HelpCommand.java",
+      "language": "JAVA",
+      "line": 43,
+      "offset": 21,
+      "length": 2,
+      "code": {
+        "startLine": 41,
+        "length": 2,
+        "offset": 101,
+        "surroundingCode": "                    String subCommandDescription = subCommand.getDescription();\n\n                    if (subCommandParameters != null && !subCommandParameters.isEmpty()) {\n                        sender.sendMessage(\n                                ChatColor.RED + subCommandUsage + \" \" + ChatColor.YELLOW + subCommandParameters +"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "30bfdf9acc4b5232e3cb3a64ee5a7a9de107a3acc8d7824606116566f2caf74e"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/HelpCommand.java",
+      "language": "JAVA",
+      "line": 62,
+      "offset": 13,
+      "length": 2,
+      "code": {
+        "startLine": 60,
+        "length": 2,
+        "offset": 134,
+        "surroundingCode": "                                                   .replace(HelpCommand.PARENT_COMMAND_DESCRIPTION, commandDescription);\n\n            if (commandParameters == null || commandParameters.isEmpty()) {\n                usage = usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage);\n            } else {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "5a507e094e437c75234ba40bee8f73280d3c7aea51fe7d4d8fe8f8d3517632c2"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '\\&\\&'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
+      "language": "JAVA",
+      "line": 168,
+      "offset": 9,
+      "length": 2,
+      "code": {
+        "startLine": 166,
+        "length": 2,
+        "offset": 127,
+        "surroundingCode": "    public boolean showHelp(CommandSender sender) {\n        CompositeCommand helpCommand = this.getSubCommand(\"help\");\n        if (helpCommand != null) {\n            return helpCommand.call(sender, \"help\", new ArrayList<>());\n        } else {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "19b2600362b2aeecd91daee2cc9f160fec95fe2da2a63a3fc3d0d19a1f3e4980"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "'if' statement can be replaced with conditional or boolean expression",
+  "severity": "High",
+  "comment": "If statement can be replaced with '?:'",
+  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/CommandsManager.java",
+      "language": "JAVA",
+      "line": 31,
+      "offset": 13,
+      "length": 2,
+      "code": {
+        "startLine": 29,
+        "length": 2,
+        "offset": 103,
+        "surroundingCode": "            this.commandMap = (SimpleCommandMap) commandMapField.get(Bukkit.getServer());\n\n            if (this.commandMap.register(\"votereward\", command)) {\n                VoteReward.sendMessageToConsole(\n                        ChatColor.GREEN + \"Registering the command \\\"\" + command.getLabel() + \"\\\" successful\");"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "SimplifiableIfStatement"
+  },
+  "hash": "4437f29af6de046af0a160a58d8ab8a01c99cb731267d7ce443c6faebfe3473a"
 }]}

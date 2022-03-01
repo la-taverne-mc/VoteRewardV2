@@ -501,7 +501,7 @@
         <value />
       </option>
     </inspection_tool>
-    <inspection_tool class="BadExceptionDeclared" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="BadExceptionDeclared" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="exceptionsString" value="" />
       <option name="exceptions">
         <value />
@@ -509,7 +509,7 @@
       <option name="ignoreTestCases" value="false" />
       <option name="ignoreLibraryOverrides" value="false" />
     </inspection_tool>
-    <inspection_tool class="BadExceptionThrown" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="BadExceptionThrown" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="exceptionsString" value="" />
       <option name="exceptions">
         <value />
@@ -1033,7 +1033,7 @@
     <inspection_tool class="ErrorRethrown" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="Eslint" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ExceptionCaughtLocallyJS" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="ExceptionFromCatchWhichDoesntWrap" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="ExceptionFromCatchWhichDoesntWrap" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="ignoreGetMessage" value="false" />
       <option name="ignoreCantWrap" value="false" />
     </inspection_tool>
@@ -2578,7 +2578,9 @@
     <inspection_tool class="SimplifiableCallChain" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="SimplifiableConditionalExpression" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SimplifiableEqualsExpression" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="SimplifiableIfStatement" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="SimplifiableIfStatement" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="DONT_WARN_ON_TERNARY" value="false" />
+    </inspection_tool>
     <inspection_tool class="SimplifyAssertNotNull" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="SimplifyBooleanWithConstants" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="SimplifyCollector" enabled="true" level="WARNING" enabled_by_default="true" />

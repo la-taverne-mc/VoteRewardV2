@@ -32,13 +32,6 @@ public class BagManager {
 
     private final HashMap<UUID, Bag> bags = new HashMap<>();
 
-    @SuppressWarnings("FieldNotUsedInToString")
-    private final VoteReward plugin;
-
-    public BagManager(VoteReward plugin) {
-        this.plugin = plugin;
-    }
-
     public static void giveBag(@NotNull Bag bag, Player player, int maxNbRewardsRetrieving) {
         if (bag.getBagContent().isEmpty()) {
             Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.noRewardToBeRetrieved"));
@@ -94,34 +87,71 @@ public class BagManager {
         File[] files = bagsFolder.listFiles();
 
         if (files != null) {
-            VoteReward.sendMessageToConsole(this.plugin.getConfig().getString("message.system.bagsLoading"));
+            VoteReward.sendMessageToConsole(ChatColor.GOLD + "Bags loading");
+
+            int count = 0;
 
             this.bags.clear();
 
             for (File file : files) {
-                Pair<UUID, Bag> ownerAndBag = BagManager.parseBagFile(file);
-                if (ownerAndBag != null) {
-                    this.bags.put(ownerAndBag.getKey(), ownerAndBag.getValue());
+                try {
+                    Pair<UUID, Bag> ownerAndBag = BagManager.parseBagFile(file);
+                    if (ownerAndBag != null) {
+                        this.bags.put(ownerAndBag.getKey(), ownerAndBag.getValue());
+                        VoteReward.sendMessageToConsole(
+                                "[BAG] " + ownerAndBag.getKey() + ": " + ChatColor.GREEN + "loaded");
+                        count++;
+                    }
+                } catch (Exception e) {
+                    VoteReward.sendMessageToConsole("[BAG] " + file.getName() + ": " + ChatColor.RED + "not loaded");
+                    VoteReward.sendMessageToConsole(ChatColor.RED + "error: " + e.getMessage());
                 }
             }
+
+            ChatColor color = count == files.length
+                              ? ChatColor.GREEN
+                              : ChatColor.GOLD;
+
+            VoteReward.sendMessageToConsole(
+                    color + Integer.toString(count) + " out of " + files.length + " bags loaded");
         }
     }
 
-    public void saveBag(UUID uuid) {
+    public boolean saveBag(UUID uuid) {
         Bag bag = this.bags.get(uuid);
 
         if (bag != null) {
-            BagManager.writeBagOnFile(uuid, bag);
+            try {
+                BagManager.writeBagOnFile(uuid, bag);
+                VoteReward.sendMessageToConsole("[BAG] " + uuid + ": " + ChatColor.GREEN + "saved");
+                return true;
+            } catch (Exception e) {
+                VoteReward.sendMessageToConsole("[BAG] " + uuid + ": " + ChatColor.RED + "not saved");
+                VoteReward.sendMessageToConsole(ChatColor.RED + "error: " + e.getMessage());
+                return false;
+            }
         }
+
+        return false;
     }
 
     public void saveBags() {
-        for (Map.Entry<UUID, Bag> entry : this.bags.entrySet()) {
-            UUID uuid = entry.getKey();
-            Bag bag = entry.getValue();
+        VoteReward.sendMessageToConsole(ChatColor.GOLD + "Saving bags");
 
-            BagManager.writeBagOnFile(uuid, bag);
+        int count = 0;
+
+        for (Map.Entry<UUID, Bag> entry : this.bags.entrySet()) {
+            if (this.saveBag(entry.getKey())) {
+                count++;
+            }
         }
+
+        ChatColor color = count == this.bags.size()
+                          ? ChatColor.GREEN
+                          : ChatColor.GOLD;
+
+        VoteReward.sendMessageToConsole(
+                color + Integer.toString(count) + " out of " + this.bags.size() + " bags saved");
     }
 
     @Override
@@ -153,8 +183,8 @@ public class BagManager {
         return IntStream.range(0, Constant.PLAYER_INVENTORY_SIZE).anyMatch(i -> inventoryContent[i] == null);
     }
 
-    private static @Nullable Pair<UUID, Bag> parseBagFile(File file) {
-        if (file == null || !file.exists()) {
+    private static @Nullable Pair<UUID, Bag> parseBagFile(File file) throws Exception {
+        if (file == null) {
             return null;
         }
 
@@ -179,25 +209,25 @@ public class BagManager {
 
             reader.close();
         } catch (FileNotFoundException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "The \"" + file.getPath() + "\" file wasn't found");
-        } catch (IOException | IllegalArgumentException | NoSuchElementException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "Error : " + e.getMessage());
+            throw new Exception("The \"" + file.getName() + "\" file wasn't found");
+        } catch (IllegalStateException | NoSuchElementException e) {
+            throw new Exception("The json is invalid in the \"" + file.getName() + "\" file");
+        } catch (IOException e) {
+            throw new Exception("Unable to open the \"" + file.getName() + "\" file");
         }
 
         return null;
     }
 
-    private static void writeBagOnFile(@NotNull UUID uuid, @NotNull Bag bag) {
+    private static void writeBagOnFile(@NotNull UUID uuid, @NotNull Bag bag) throws Exception {
         try (FileWriter fileWriter = new FileWriter(BagManager.BAG_FOLDER + "/" +
                                                     uuid, StandardCharsets.UTF_8); JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
             jsonWriter.beginObject();
             jsonWriter.name("owner").value(uuid.toString());
             jsonWriter.name("bag").jsonValue(bag.toJson().toString());
             jsonWriter.endObject();
-        } catch (IOException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "Unable to create a " + uuid + " file");
-        } catch (SecurityException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "SecurityException: " + e.getMessage());
+        } catch (IOException | SecurityException ignored) {
+            throw new Exception("Unable to create a " + uuid + " file");
         }
     }
 }

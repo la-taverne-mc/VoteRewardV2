@@ -67,7 +67,7 @@ public class VoteReward extends JavaPlugin {
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         VoteReward.instance = this;
 
-        this.bagManager = new BagManager(this);
+        this.bagManager = new BagManager();
         this.guiManager = new GuiManager();
         this.rewardsGroupManager = new RewardsGroupManager();
         this.commandsManager = new CommandsManager();
@@ -97,11 +97,9 @@ public class VoteReward extends JavaPlugin {
 
         super.reloadConfig();
 
-        if (configExist) {
-            VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.existingConfig"));
-        } else {
-            VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.nonExistingConfig"));
-        }
+        VoteReward.sendMessageToConsole(configExist
+                                        ? this.getConfig().getString("message.system.existingConfig")
+                                        : this.getConfig().getString("message.system.nonExistingConfig"));
 
         this.rewardsGroupManager.loadRewardGroups();
         this.bagManager.loadBags();

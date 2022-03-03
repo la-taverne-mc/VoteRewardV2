@@ -11,6 +11,9 @@ version: 2.0.0
 
 api-version: 1.18
 
+softdepend:
+  - Votifier
+
 permissions:
   votereward.bag:
     description: Allows bag commands usage

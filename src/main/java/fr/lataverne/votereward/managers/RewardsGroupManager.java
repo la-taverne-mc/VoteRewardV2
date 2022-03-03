@@ -78,6 +78,8 @@ public class RewardsGroupManager {
     }
 
     public void loadRewardGroups() {
+        VoteReward.sendMessageToConsole(ChatColor.GOLD + "Loading rewards groups");
+
         File rewardGroupsFolder = RewardsGroupManager.getRewardGroupsFolder();
 
         if (rewardGroupsFolder == null) {
@@ -86,35 +88,90 @@ public class RewardsGroupManager {
 
         File[] files = rewardGroupsFolder.listFiles();
 
-        if (files != null) {
-            VoteReward.sendMessageToConsole(ChatColor.GOLD + "Loading reward groups");
+        if (files == null) {
+            VoteReward.sendMessageToConsole(ChatColor.RED + "Unable to retrieve the rewards groups files");
+            return;
+        }
 
-            this.rewardsGroups.clear();
-            this.enabledRewardsGroupName = null;
+        int count = 0;
 
-            for (File file : files) {
+        this.rewardsGroups.clear();
+        this.enabledRewardsGroupName = null;
+
+        for (File file : files) {
+            try {
                 Triple<String, RewardsGroup, Boolean> parsedFile = RewardsGroupManager.parseRewardFile(file);
                 if (parsedFile != null) {
-                    this.rewardsGroups.put(parsedFile.getLeft(), parsedFile.getMiddle());
+                    String name = parsedFile.getLeft();
+                    RewardsGroup rewardsGroup = parsedFile.getMiddle();
+                    boolean enabled = parsedFile.getRight().booleanValue();
 
-                    if (parsedFile.getRight().booleanValue()) {
+                    StringBuilder message = new StringBuilder(
+                            "[REWARDS GROUP] " + name + ": " + ChatColor.GREEN + "loaded");
+
+                    this.rewardsGroups.put(name, rewardsGroup);
+
+                    if (enabled) {
                         this.enabledRewardsGroupName = parsedFile.getLeft();
+                        message.append(ChatColor.RESET).append(" and ").append(ChatColor.GREEN).append("Enabled");
                     }
-                }
-            }
 
-            VoteReward.sendMessageToConsole(ChatColor.GREEN + "Completed loading reward groups");
+                    VoteReward.sendMessageToConsole(message.toString());
+
+                    count++;
+                }
+            } catch (Exception e) {
+                VoteReward.sendMessageToConsole(
+                        "[REWARDS GROUP] " + file.getName() + ": " + ChatColor.RED + "not loaded");
+                VoteReward.sendMessageToConsole(ChatColor.RED + "error: " + e.getMessage());
+            }
         }
+
+        ChatColor color = count == files.length
+                          ? ChatColor.GREEN
+                          : ChatColor.GOLD;
+
+        VoteReward.sendMessageToConsole(
+                color + Integer.toString(count) + " out of " + files.length + " rewards groups loaded");
     }
 
     public void saveRewardGroups() {
+        VoteReward.sendMessageToConsole(ChatColor.GOLD + "Saving rewards groups");
+
+        int count = 0;
+
         for (Map.Entry<String, RewardsGroup> entry : this.rewardsGroups.entrySet()) {
-            String name = entry.getKey();
-            RewardsGroup rewardsGroup = entry.getValue();
+            if (this.saveRewardsGroup(entry.getKey())) {
+                count++;
+            }
+        }
+
+        ChatColor color = count == this.rewardsGroups.size()
+                          ? ChatColor.GREEN
+                          : ChatColor.GOLD;
+
+        VoteReward.sendMessageToConsole(
+                color + Integer.toString(count) + " out of " + this.rewardsGroups.size() + " rewards groups saved");
+    }
+
+    public boolean saveRewardsGroup(String name) {
+        RewardsGroup rewardsGroup = this.rewardsGroups.get(name);
+
+        if (rewardsGroup != null) {
             boolean enabled = name.equals(this.enabledRewardsGroupName);
 
-            RewardsGroupManager.writeRewardGroupOnFile(name, rewardsGroup, enabled);
+            try {
+                RewardsGroupManager.writeRewardGroupOnFile(name, rewardsGroup, enabled);
+                VoteReward.sendMessageToConsole("[REWARDS GROUP] " + name + ": " + ChatColor.GREEN + "saved");
+                return true;
+            } catch (Exception e) {
+                VoteReward.sendMessageToConsole("[REWARDS GROUP] " + name + ": " + ChatColor.RED + "not saved");
+                VoteReward.sendMessageToConsole(ChatColor.RED + "error: " + e.getMessage());
+                return false;
+            }
         }
+
+        return false;
     }
 
     @Override
@@ -141,7 +198,7 @@ public class RewardsGroupManager {
         return rewardGroupsFolder;
     }
 
-    private static @Nullable Triple<String, RewardsGroup, Boolean> parseRewardFile(File file) {
+    private static @Nullable Triple<String, RewardsGroup, Boolean> parseRewardFile(File file) throws Exception {
         if (file == null || !file.exists()) {
             return null;
         }
@@ -163,15 +220,17 @@ public class RewardsGroupManager {
 
             reader.close();
         } catch (FileNotFoundException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "The \"" + file.getPath() + "\" file wasn't found");
-        } catch (IOException | IllegalArgumentException | NoSuchElementException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "Error : " + e.getMessage());
+            throw new Exception("The \"" + file.getName() + "\" file wasn't found");
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            throw new Exception("The json is invalid in the \"" + file.getName() + "\" file");
+        } catch (IOException e) {
+            throw new Exception("Unable to open the \"" + file.getName() + "\" file");
         }
 
         return null;
     }
 
-    private static void writeRewardGroupOnFile(@NotNull String name, @NotNull RewardsGroup rewardsGroup, boolean enabled) {
+    private static void writeRewardGroupOnFile(@NotNull String name, @NotNull RewardsGroup rewardsGroup, boolean enabled) throws Exception {
         try (FileWriter fileWriter = new FileWriter(RewardsGroupManager.REWARD_GROUPS_FOLDER + "/" +
                                                     name, StandardCharsets.UTF_8); JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
             jsonWriter.beginObject();
@@ -183,10 +242,8 @@ public class RewardsGroupManager {
             }
 
             jsonWriter.endObject();
-        } catch (IOException e) {
-            VoteReward.sendMessageToConsole("Unable to create the " + name + " file");
-        } catch (SecurityException e) {
-            VoteReward.sendMessageToConsole(ChatColor.RED + "SecurityException: " + e.getMessage());
+        } catch (IOException | SecurityException ignored) {
+            throw new Exception("Unable to create the " + name + " file");
         }
     }
 }

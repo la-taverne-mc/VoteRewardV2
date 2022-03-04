@@ -53,7 +53,7 @@
     "module": "VoteReward",
     "inspectionName": "UtilityClassWithoutPrivateConstructor"
   },
-  "hash": "4c8762b3d5e5b70e77ba9fffd346304a8894277826be51bfbeeb935079e0db23"
+  "hash": "74e010179e5176515e3569dc8bf6114b420ab73ed7dd2a551694f62356502aac"
 },{
   "tool": "Code Inspection",
   "category": "Embedded",
@@ -165,7 +165,7 @@
     "module": "VoteReward",
     "inspectionName": "UtilityClass"
   },
-  "hash": "aacab28502a47b4cfdc687878899385174038860144858e275ce7f3dcbcd8f45"
+  "hash": "9409930635877b813ede930342264a819914b855cea97ea260ebe11fd1b33aa2"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -234,11 +234,11 @@
       "type": "file",
       "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
       "language": "JAVA",
-      "line": 42,
+      "line": 48,
       "offset": 27,
       "length": 21,
       "code": {
-        "startLine": 40,
+        "startLine": 46,
         "length": 21,
         "offset": 33,
         "surroundingCode": "    }\n\n    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {\n        String pathPermission = InternalPermission.path + permission.replace(\".\", \"-\");\n"
@@ -249,7 +249,7 @@
     "module": "VoteReward",
     "inspectionName": "BooleanParameter"
   },
-  "hash": "fbb6aa862fec5047034bd5caabe72132a16ef6952febefb723ce4b7c2888812a"
+  "hash": "6f8fde6921f81ace39d3de3def5f8a104234c066d4220825cd0362684b79cc64"
 },{
   "tool": "Code Inspection",
   "category": "Class structure",
@@ -277,7 +277,7 @@
     "module": "VoteReward",
     "inspectionName": "UtilityClassCanBeEnum"
   },
-  "hash": "b54ed5b5195ff5d45d9922a82b1634561e30a522735d4d2f9e4d11a674d7cc23"
+  "hash": "d06f368c018ad90c5a4119b70b169dc5be2b5afe1df86a0589664ae06d3fba85"
 },{
   "tool": "Code Inspection",
   "category": "Embedded",
@@ -361,7 +361,7 @@
     "module": "VoteReward",
     "inspectionName": "NonFinalUtilityClass"
   },
-  "hash": "0b289a2e03a226efe84a2d28aee240cc06c7062d440853967eaf9ec0ad8b534f"
+  "hash": "5be2352f45df0bd3d153142829dc51fa94675fe3f8bd8b7362b35eeacd17dbf7"
 },{
   "tool": "Code Inspection",
   "category": "Memory",
@@ -389,7 +389,63 @@
     "module": "VoteReward",
     "inspectionName": "StaticCollection"
   },
-  "hash": "cb2fb1e9bcec631145660a2a42eeed175a7ab8ac56c932588e6ea715d6108d11"
+  "hash": "450cd734d4bcdec0d2253a02743b43b9f3cfeba1aaff7eb0b38f8e6bd2cefe2c"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Method is never used.",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/Helper.java",
+      "language": "",
+      "line": 91,
+      "offset": 26,
+      "length": 18,
+      "code": {
+        "startLine": 89,
+        "length": 18,
+        "offset": 32,
+        "surroundingCode": "    }\n\n    public static String getMessageOnConfig(final String path) {\n        String entirePath = path;\n        if (!entirePath.startsWith(\"message.\")) {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "f8b9e4d9c440fddb1619d28ef18c1d2728231cec8f318934111fd7e59ddafc34"
+},{
+  "tool": "Code Inspection",
+  "category": "Declaration redundancy",
+  "type": "Unused declaration",
+  "severity": "High",
+  "comment": "Method is never used.",
+  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/Helper.java",
+      "language": "",
+      "line": 105,
+      "offset": 26,
+      "length": 20,
+      "code": {
+        "startLine": 103,
+        "length": 20,
+        "offset": 53,
+        "surroundingCode": "\n    @Contract(pure = true)\n    public static String replaceValueInString(final String str, final String @NotNull ... args) {\n        String output = str;\n        int nbArg = args.length;"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "unused"
+  },
+  "hash": "27bb87ef3c5f89e7673827e0bcdab83bf4963a0271ae24fd3224a1ca6b420563"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -585,7 +641,7 @@
     "module": "VoteReward",
     "inspectionName": "unused"
   },
-  "hash": "17d491ce25e8a27bc811506353fd2788bad34aeb4edd7db42a750d2176d16b3c"
+  "hash": "476cd76437d7e4487ef6b659137e029e477eff35eab06ee0b901dce813dcb14b"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -598,11 +654,11 @@
       "type": "file",
       "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
       "language": "",
-      "line": 42,
+      "line": 48,
       "offset": 27,
       "length": 21,
       "code": {
-        "startLine": 40,
+        "startLine": 46,
         "length": 21,
         "offset": 33,
         "surroundingCode": "    }\n\n    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {\n        String pathPermission = InternalPermission.path + permission.replace(\".\", \"-\");\n"
@@ -613,7 +669,7 @@
     "module": "VoteReward",
     "inspectionName": "unused"
   },
-  "hash": "ce9b45605110456d22a803cf799c2b8864c9de84345d4d36843bb371e77651ca"
+  "hash": "c89528d8653319f0eaef3d828fb1f87ae7232f84ac21d13414342c9615b2c5ab"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",
@@ -726,62 +782,6 @@
     "inspectionName": "SimplifiableIfStatement"
   },
   "hash": "e9d60614498cfca252000e7121bcc5a2c9dcfe897396bdef2a7a530532a7f410"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "'if' statement can be replaced with conditional or boolean expression",
-  "severity": "High",
-  "comment": "If statement can be replaced with '?:'",
-  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/HelpCommand.java",
-      "language": "JAVA",
-      "line": 43,
-      "offset": 21,
-      "length": 2,
-      "code": {
-        "startLine": 41,
-        "length": 2,
-        "offset": 101,
-        "surroundingCode": "                    String subCommandDescription = subCommand.getDescription();\n\n                    if (subCommandParameters != null && !subCommandParameters.isEmpty()) {\n                        sender.sendMessage(\n                                ChatColor.RED + subCommandUsage + \" \" + ChatColor.YELLOW + subCommandParameters +"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SimplifiableIfStatement"
-  },
-  "hash": "30bfdf9acc4b5232e3cb3a64ee5a7a9de107a3acc8d7824606116566f2caf74e"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "'if' statement can be replaced with conditional or boolean expression",
-  "severity": "High",
-  "comment": "If statement can be replaced with '?:'",
-  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/HelpCommand.java",
-      "language": "JAVA",
-      "line": 62,
-      "offset": 13,
-      "length": 2,
-      "code": {
-        "startLine": 60,
-        "length": 2,
-        "offset": 134,
-        "surroundingCode": "                                                   .replace(HelpCommand.PARENT_COMMAND_DESCRIPTION, commandDescription);\n\n            if (commandParameters == null || commandParameters.isEmpty()) {\n                usage = usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage);\n            } else {"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SimplifiableIfStatement"
-  },
-  "hash": "5a507e094e437c75234ba40bee8f73280d3c7aea51fe7d4d8fe8f8d3517632c2"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",

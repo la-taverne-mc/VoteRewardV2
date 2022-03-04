@@ -28,32 +28,60 @@
   "hash": "613a744815009ae03371af2b43fdb2fa3661dc86e6156c9f8745484152e653e0"
 },{
   "tool": "Code Inspection",
-  "category": "Class structure",
-  "type": "Utility class without 'private' constructor",
+  "category": "Embedded",
+  "type": "Abstract class with a single direct inheritor",
   "severity": "High",
-  "comment": "Class `InternalPermission` has only 'static' members, and lacks a 'private' constructor",
-  "detailsInfo": "Reports utility classes without `private` constructors.\n\nUtility classes have all fields and methods declared as `static`. Creating `private`\nconstructors in utility classes prevents them from being accidentally instantiated.\n\n\nUse the **Ignore if annotated by** option to specify special annotations. The inspection ignores classes marked with one of\nthese annotations.\n\n\nUse the **Ignore classes with only a main method** option to ignore classes with no methods other than the main one.",
+  "comment": "Abstract class `Gui` has only one direct inheritor",
+  "detailsInfo": "Reports abstract classes that have precisely one direct inheritor. While such classes may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the abstract class with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.\n\n**Example:**\n\n\n      abstract class Base {} // will be reported\n\n      class Inheritor extends Base {}\n",
   "sources": [
     {
       "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
+      "path": "src/main/java/fr/lataverne/votereward/gui/Gui.java",
       "language": "JAVA",
-      "line": 13,
-      "offset": 14,
-      "length": 18,
+      "line": 16,
+      "offset": 23,
+      "length": 3,
       "code": {
-        "startLine": 11,
-        "length": 18,
-        "offset": 36,
-        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
+        "startLine": 14,
+        "length": 3,
+        "offset": 77,
+        "surroundingCode": "\n@SuppressWarnings(\"ClassNamePrefixedWithPackageName\")\npublic abstract class Gui {\n\n    protected final ItemStack[] content;"
       }
     }
   ],
   "attributes": {
     "module": "VoteReward",
-    "inspectionName": "UtilityClassWithoutPrivateConstructor"
+    "inspectionName": "AbstractClassWithOnlyOneDirectInheritor"
   },
-  "hash": "74e010179e5176515e3569dc8bf6114b420ab73ed7dd2a551694f62356502aac"
+  "hash": "01d2fedadfc3d7651dc61d0fe6f62dc133962eb1cb64d8a3a04cc98ce549b01e"
+},{
+  "tool": "Code Inspection",
+  "category": "Embedded",
+  "type": "Abstract class with a single direct inheritor",
+  "severity": "High",
+  "comment": "Abstract class `ConfirmableCommand` has only one direct inheritor",
+  "detailsInfo": "Reports abstract classes that have precisely one direct inheritor. While such classes may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the abstract class with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.\n\n**Example:**\n\n\n      abstract class Base {} // will be reported\n\n      class Inheritor extends Base {}\n",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 8,
+      "offset": 23,
+      "length": 18,
+      "code": {
+        "startLine": 6,
+        "length": 18,
+        "offset": 46,
+        "surroundingCode": "import java.util.List;\n\npublic abstract class ConfirmableCommand extends CompositeCommand {\n\n    private static final String CONFIRM_COMMAND_USAGE = \"[confirm-command-usage]\";"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "AbstractClassWithOnlyOneDirectInheritor"
+  },
+  "hash": "fc7cde9d4179496ea8ae65926676ece85380db44cb06de38956d6df514dc6f7a"
 },{
   "tool": "Code Inspection",
   "category": "Embedded",
@@ -138,258 +166,6 @@
     "inspectionName": "UnusedLibrary"
   },
   "hash": "d7c30756b5a53de784896d4c5f8fa050b32c0e6aa84b1e7f9e03c0c243a633a7"
-},{
-  "tool": "Code Inspection",
-  "category": "Class structure",
-  "type": "Utility class",
-  "severity": "High",
-  "comment": "Class `InternalPermission` has only 'static' members, indicating procedural construction",
-  "detailsInfo": "Reports utility classes.\n\nUtility classes have all fields and methods declared as `static` and their\npresence may indicate a lack of object-oriented design.\n\n\nUse the **Ignore if annotated by** option to specify special annotations. The inspection ignores classes annotated with one of\nthese annotations.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "JAVA",
-      "line": 13,
-      "offset": 14,
-      "length": 18,
-      "code": {
-        "startLine": 11,
-        "length": 18,
-        "offset": 36,
-        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UtilityClass"
-  },
-  "hash": "9409930635877b813ede930342264a819914b855cea97ea260ebe11fd1b33aa2"
-},{
-  "tool": "Code Inspection",
-  "category": "Declaration redundancy",
-  "type": "Actual method parameter is the same constant",
-  "severity": "High",
-  "comment": "Actual value of parameter 'label' is always 'delete'",
-  "detailsInfo": "Reports methods in which a parameter appears to always be the same constant.\n\nExample:\n\n\n      static void printPoint(int x, int y) { // x is always 0\n        System.out.println(x + \", \" + y);\n      }\n\n      public static void main(String[] args) {\n        printPoint(0, 1);\n        printPoint(0, 2);\n      }\n\nThe quick-fix inlines the constant value. This may simplify the method implementation.\n\n\nUse the **Ignore when inline parameter initializer would not succeed** option to suppress the inspections when:\n\n* the parameter is modified inside the method.\n* the parameter value that is being passed is a reference to an inaccessible field (only in Java).\n* the parameter is a vararg (only in Java).\n\n\nUse the **Maximal reported method visibility** option to control the maximum visibility of methods to be reported.\n\n\nUse the **Minimal reported method usage count** field to specify the minimal number of method usages with the same parameter value.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
-      "language": "JAVA",
-      "line": 12,
-      "offset": 75,
-      "length": 5,
-      "code": {
-        "startLine": 10,
-        "length": 5,
-        "offset": 158,
-        "surroundingCode": "    private static final String CONFIRM_COMMAND_USAGE = \"[confirm-command-usage]\";\n\n    protected ConfirmableCommand(@NotNull CompositeCommand parent, String label, String... aliases) {\n        super(parent, label, aliases);\n    }"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SameParameterValue"
-  },
-  "hash": "36cac9d51afdd86a599a33882ae3a873d68828d49e6ed7e39d949cc74a9a6a52"
-},{
-  "tool": "Code Inspection",
-  "category": "Declaration redundancy",
-  "type": "Actual method parameter is the same constant",
-  "severity": "High",
-  "comment": "Actual value of parameter 'size' is always '54'",
-  "detailsInfo": "Reports methods in which a parameter appears to always be the same constant.\n\nExample:\n\n\n      static void printPoint(int x, int y) { // x is always 0\n        System.out.println(x + \", \" + y);\n      }\n\n      public static void main(String[] args) {\n        printPoint(0, 1);\n        printPoint(0, 2);\n      }\n\nThe quick-fix inlines the constant value. This may simplify the method implementation.\n\n\nUse the **Ignore when inline parameter initializer would not succeed** option to suppress the inspections when:\n\n* the parameter is modified inside the method.\n* the parameter value that is being passed is a reference to an inaccessible field (only in Java).\n* the parameter is a vararg (only in Java).\n\n\nUse the **Maximal reported method visibility** option to control the maximum visibility of methods to be reported.\n\n\nUse the **Minimal reported method usage count** field to specify the minimal number of method usages with the same parameter value.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/gui/NavigableGui.java",
-      "language": "JAVA",
-      "line": 29,
-      "offset": 32,
-      "length": 4,
-      "code": {
-        "startLine": 27,
-        "length": 4,
-        "offset": 56,
-        "surroundingCode": "    protected int page;\n\n    protected NavigableGui(int size, int page) {\n        super(size);\n"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SameParameterValue"
-  },
-  "hash": "86e7e7f94716ef720c2d6b94492270b00a9be3c10404dc47e96564ee93c794ba"
-},{
-  "tool": "Code Inspection",
-  "category": "Abstraction issues",
-  "type": "'public' method with 'boolean' parameter",
-  "severity": "High",
-  "comment": "'public' method `setInternalPermission()` with 'boolean' parameter",
-  "detailsInfo": "Reports public methods that accept a `boolean` parameter.\n\nIt's almost always bad practice to add a `boolean` parameter to a public method (part of an API) if that method is not a setter.\nWhen reading code using such a method, it can be difficult to decipher what the `boolean` stands for without looking at\nthe source or documentation.\n\nThis problem is also known as [the boolean trap](https://ariya.io/2011/08/hall-of-api-shame-boolean-trap).\nThe `boolean` parameter can often be replaced with an `enum`.\n\nExample:\n\n\n      // Warning: it's hard to understand what the\n      // boolean parameters mean when looking at\n      // a call to this method\n      public boolean setPermission(File f,\n                                   int access,\n                                   boolean enable,\n                                   boolean ownerOnly) {\n        // ...\n      }\n\n\nUse the **Only report methods with multiple boolean parameters** option to warn only when a method contains more than one boolean parameter.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "JAVA",
-      "line": 48,
-      "offset": 27,
-      "length": 21,
-      "code": {
-        "startLine": 46,
-        "length": 21,
-        "offset": 33,
-        "surroundingCode": "    }\n\n    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {\n        String pathPermission = InternalPermission.path + permission.replace(\".\", \"-\");\n"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "BooleanParameter"
-  },
-  "hash": "6f8fde6921f81ace39d3de3def5f8a104234c066d4220825cd0362684b79cc64"
-},{
-  "tool": "Code Inspection",
-  "category": "Class structure",
-  "type": "Utility class can be 'enum'",
-  "severity": "High",
-  "comment": "Utility class `InternalPermission` can be 'enum'",
-  "detailsInfo": "Reports utility classes that can be converted to enums.\n\nSome coding style guidelines declare to implement utility classes as enums\nto avoid code coverage issues in `private` constructors.\n\n**Example:**\n\n\n      class StringUtils {\n        public static final String EMPTY = \"\";\n      }\n\nAfter the quick-fix is applied:\n\n\n      enum StringUtils {\n        ;\n        public static final String EMPTY = \"\";\n      }\n",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "JAVA",
-      "line": 13,
-      "offset": 14,
-      "length": 18,
-      "code": {
-        "startLine": 11,
-        "length": 18,
-        "offset": 36,
-        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UtilityClassCanBeEnum"
-  },
-  "hash": "d06f368c018ad90c5a4119b70b169dc5be2b5afe1df86a0589664ae06d3fba85"
-},{
-  "tool": "Code Inspection",
-  "category": "Embedded",
-  "type": "Abstract class with a single direct inheritor",
-  "severity": "High",
-  "comment": "Abstract class `Gui` has only one direct inheritor",
-  "detailsInfo": "Reports abstract classes that have precisely one direct inheritor. While such classes may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the abstract class with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.\n\n**Example:**\n\n\n      abstract class Base {} // will be reported\n\n      class Inheritor extends Base {}\n",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/gui/Gui.java",
-      "language": "JAVA",
-      "line": 16,
-      "offset": 23,
-      "length": 3,
-      "code": {
-        "startLine": 14,
-        "length": 3,
-        "offset": 77,
-        "surroundingCode": "\n@SuppressWarnings(\"ClassNamePrefixedWithPackageName\")\npublic abstract class Gui {\n\n    protected final ItemStack[] content;"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "AbstractClassWithOnlyOneDirectInheritor"
-  },
-  "hash": "01d2fedadfc3d7651dc61d0fe6f62dc133962eb1cb64d8a3a04cc98ce549b01e"
-},{
-  "tool": "Code Inspection",
-  "category": "Embedded",
-  "type": "Abstract class with a single direct inheritor",
-  "severity": "High",
-  "comment": "Abstract class `ConfirmableCommand` has only one direct inheritor",
-  "detailsInfo": "Reports abstract classes that have precisely one direct inheritor. While such classes may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the abstract class with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.\n\n**Example:**\n\n\n      abstract class Base {} // will be reported\n\n      class Inheritor extends Base {}\n",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
-      "language": "JAVA",
-      "line": 8,
-      "offset": 23,
-      "length": 18,
-      "code": {
-        "startLine": 6,
-        "length": 18,
-        "offset": 46,
-        "surroundingCode": "import java.util.List;\n\npublic abstract class ConfirmableCommand extends CompositeCommand {\n\n    private static final String CONFIRM_COMMAND_USAGE = \"[confirm-command-usage]\";"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "AbstractClassWithOnlyOneDirectInheritor"
-  },
-  "hash": "fc7cde9d4179496ea8ae65926676ece85380db44cb06de38956d6df514dc6f7a"
-},{
-  "tool": "Code Inspection",
-  "category": "Class structure",
-  "type": "Utility class is not 'final'",
-  "severity": "High",
-  "comment": "Utility class `InternalPermission` is not 'final'",
-  "detailsInfo": "Reports utility classes that aren't `final`.\n\nUtility classes have all fields and methods declared as `static`.\nMaking them `final` prevents them from being accidentally subclassed.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "JAVA",
-      "line": 13,
-      "offset": 14,
-      "length": 18,
-      "code": {
-        "startLine": 11,
-        "length": 18,
-        "offset": 36,
-        "surroundingCode": "import java.util.Map;\n\npublic class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "NonFinalUtilityClass"
-  },
-  "hash": "5be2352f45df0bd3d153142829dc51fa94675fe3f8bd8b7362b35eeacd17dbf7"
-},{
-  "tool": "Code Inspection",
-  "category": "Memory",
-  "type": "Static collection",
-  "severity": "High",
-  "comment": "Static collection `internalPermissions`",
-  "detailsInfo": "Reports static fields of a `Collection` type. While it's not necessarily a problem, static collections often cause memory leaks and are therefore prohibited by some coding standards.\n\n**Example:**\n\n\n      public class Example {\n        static List<String> list = new ArrayList<>();\n\n      }\n\n\nConfigure the inspection:\n\n* Use the **Ignore weak static collections or maps** option to ignore the fields of the `java.util.WeakHashMap` type.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "JAVA",
-      "line": 15,
-      "offset": 47,
-      "length": 19,
-      "code": {
-        "startLine": 13,
-        "length": 19,
-        "offset": 81,
-        "surroundingCode": "public class InternalPermission {\n\n    private static final Map<String, Boolean> internalPermissions = new HashMap<>();\n\n    private static final @NonNls String path = \"system.internalPermission\";"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "StaticCollection"
-  },
-  "hash": "450cd734d4bcdec0d2253a02743b43b9f3cfeba1aaff7eb0b38f8e6bd2cefe2c"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -617,59 +393,59 @@
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
-  "type": "Unused declaration",
+  "type": "Actual method parameter is the same constant",
   "severity": "High",
-  "comment": "Method is never used.",
-  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "comment": "Actual value of parameter 'label' is always 'delete'",
+  "detailsInfo": "Reports methods in which a parameter appears to always be the same constant.\n\nExample:\n\n\n      static void printPoint(int x, int y) { // x is always 0\n        System.out.println(x + \", \" + y);\n      }\n\n      public static void main(String[] args) {\n        printPoint(0, 1);\n        printPoint(0, 2);\n      }\n\nThe quick-fix inlines the constant value. This may simplify the method implementation.\n\n\nUse the **Ignore when inline parameter initializer would not succeed** option to suppress the inspections when:\n\n* the parameter is modified inside the method.\n* the parameter value that is being passed is a reference to an inaccessible field (only in Java).\n* the parameter is a vararg (only in Java).\n\n\nUse the **Maximal reported method visibility** option to control the maximum visibility of methods to be reported.\n\n\nUse the **Minimal reported method usage count** field to specify the minimal number of method usages with the same parameter value.",
   "sources": [
     {
       "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "",
-      "line": 19,
-      "offset": 27,
-      "length": 10,
+      "path": "src/main/java/fr/lataverne/votereward/commands/ConfirmableCommand.java",
+      "language": "JAVA",
+      "line": 12,
+      "offset": 75,
+      "length": 5,
       "code": {
-        "startLine": 17,
-        "length": 10,
-        "offset": 103,
-        "surroundingCode": "    private static final @NonNls String path = \"system.internalPermission\";\n\n    public static boolean isActivate(final String permission) {\n        return InternalPermission.internalPermissions.getOrDefault(permission, true).booleanValue();\n    }"
+        "startLine": 10,
+        "length": 5,
+        "offset": 158,
+        "surroundingCode": "    private static final String CONFIRM_COMMAND_USAGE = \"[confirm-command-usage]\";\n\n    protected ConfirmableCommand(@NotNull CompositeCommand parent, String label, String... aliases) {\n        super(parent, label, aliases);\n    }"
       }
     }
   ],
   "attributes": {
     "module": "VoteReward",
-    "inspectionName": "unused"
+    "inspectionName": "SameParameterValue"
   },
-  "hash": "476cd76437d7e4487ef6b659137e029e477eff35eab06ee0b901dce813dcb14b"
+  "hash": "36cac9d51afdd86a599a33882ae3a873d68828d49e6ed7e39d949cc74a9a6a52"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
-  "type": "Unused declaration",
+  "type": "Actual method parameter is the same constant",
   "severity": "High",
-  "comment": "Method is never used.",
-  "detailsInfo": "Reports classes, methods, or fields in the specified inspection scope that are not used or unreachable from entry points.\n\nAn entry point can be the main method, tests, classes mentioned outside the specified scope, classes accessible from\n`module-info.java`, and so on. You can also configure custom entry points by using name patterns or annotations.\n\n**Example:**\n\n\n      public class Department {\n        private Organization myOrganization;\n      }\n\nIn this example, `Department` explicitly references `Organization` but if `Department` class itself is unused, then inspection will report both classes.\n\n\nThe inspection also reports parameters that are not used by their methods and all method implementations and overriders, as well as local\nvariables that are declared but not used.\n\n\n**Note:** Some unused members may not be reported during in-editor code highlighting. For performance reasons, a non-private member is\nchecked only when its name rarely occurs in the project.\nTo see all results, run the inspection by selecting **Code \\| Inspect Code** or **Code \\| Analyze Code \\| Run Inspection by Name** from the main menu.\n\nUse the visibility settings below to configure members to be reported. For example, configuring report `private` methods only means\nthat `public` methods of `private` inner class will be reported but `protected` methods of top level class\nwill be ignored.\n\n\nUse the **entry points** tab to configure entry points to be considered during the inspection run.\n\nYou can add entry points manually when inspection results are ready.\n\nIf your code uses unsupported frameworks, there are several options:\n\n* If the framework relies on annotations, use the **Annotations...** button to configure the framework's annotations.\n* If the framework doesn't rely on annotations, try to configure class name patterns that are expected by the framework.\n\nThis way the annotated code accessible by the framework internals will be treated as used.",
+  "comment": "Actual value of parameter 'size' is always '54'",
+  "detailsInfo": "Reports methods in which a parameter appears to always be the same constant.\n\nExample:\n\n\n      static void printPoint(int x, int y) { // x is always 0\n        System.out.println(x + \", \" + y);\n      }\n\n      public static void main(String[] args) {\n        printPoint(0, 1);\n        printPoint(0, 2);\n      }\n\nThe quick-fix inlines the constant value. This may simplify the method implementation.\n\n\nUse the **Ignore when inline parameter initializer would not succeed** option to suppress the inspections when:\n\n* the parameter is modified inside the method.\n* the parameter value that is being passed is a reference to an inaccessible field (only in Java).\n* the parameter is a vararg (only in Java).\n\n\nUse the **Maximal reported method visibility** option to control the maximum visibility of methods to be reported.\n\n\nUse the **Minimal reported method usage count** field to specify the minimal number of method usages with the same parameter value.",
   "sources": [
     {
       "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/InternalPermission.java",
-      "language": "",
-      "line": 48,
-      "offset": 27,
-      "length": 21,
+      "path": "src/main/java/fr/lataverne/votereward/gui/NavigableGui.java",
+      "language": "JAVA",
+      "line": 29,
+      "offset": 32,
+      "length": 4,
       "code": {
-        "startLine": 46,
-        "length": 21,
-        "offset": 33,
-        "surroundingCode": "    }\n\n    public static boolean setInternalPermission(final @NotNull String permission, final boolean value) {\n        String pathPermission = InternalPermission.path + permission.replace(\".\", \"-\");\n"
+        "startLine": 27,
+        "length": 4,
+        "offset": 56,
+        "surroundingCode": "    protected int page;\n\n    protected NavigableGui(int size, int page) {\n        super(size);\n"
       }
     }
   ],
   "attributes": {
     "module": "VoteReward",
-    "inspectionName": "unused"
+    "inspectionName": "SameParameterValue"
   },
-  "hash": "c89528d8653319f0eaef3d828fb1f87ae7232f84ac21d13414342c9615b2c5ab"
+  "hash": "86e7e7f94716ef720c2d6b94492270b00a9be3c10404dc47e96564ee93c794ba"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",

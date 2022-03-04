@@ -13,6 +13,8 @@ import java.io.File;
 @SuppressWarnings("ClassNamePrefixedWithPackageName")
 public class VoteReward extends JavaPlugin {
 
+    private static final String consoleSuffix = ChatColor.GREEN + "[" + ChatColor.WHITE + "VR" + ChatColor.GREEN + "]";
+
     private static VoteReward instance = null;
 
     private BagManager bagManager = null;
@@ -28,8 +30,7 @@ public class VoteReward extends JavaPlugin {
     }
 
     public static void sendMessageToConsole(String message) {
-        String str = VoteReward.instance.getConfig().getString("message.consoleSuffix");
-        str += " " + ChatColor.RESET + message;
+        String str = VoteReward.consoleSuffix + " " + ChatColor.RESET + message;
         Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
     }
 
@@ -56,7 +57,7 @@ public class VoteReward extends JavaPlugin {
 
         this.commandsManager.unregisterCommands();
 
-        VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.stopMessage"));
+        VoteReward.sendMessageToConsole(ChatColor.RED + "VoteReward disabled");
     }
 
     /**
@@ -81,7 +82,7 @@ public class VoteReward extends JavaPlugin {
 
         InternalPermission.loadingInternalPermissions();
 
-        VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.startMessage"));
+        VoteReward.sendMessageToConsole(ChatColor.GREEN + "VoteReward enabled");
     }
 
     /**
@@ -98,13 +99,13 @@ public class VoteReward extends JavaPlugin {
         super.reloadConfig();
 
         VoteReward.sendMessageToConsole(configExist
-                                        ? this.getConfig().getString("message.system.existingConfig")
-                                        : this.getConfig().getString("message.system.nonExistingConfig"));
+                                        ? ChatColor.GREEN + "Config file found"
+                                        : ChatColor.RED + "Config file not found");
 
         this.rewardsGroupManager.loadRewardGroups();
         this.bagManager.loadBags();
 
-        VoteReward.sendMessageToConsole(this.getConfig().getString("message.system.reloadComplete"));
+        VoteReward.sendMessageToConsole(ChatColor.GREEN + "Reload complete");
     }
 
     @Override

@@ -30,14 +30,11 @@ public class BagManager {
 
     private static final String BAG_FOLDER = "plugins/VoteReward/Bags/";
 
+    private static final String NB_REWARDS = "[nb-rewards]";
+
     private final HashMap<UUID, Bag> bags = new HashMap<>();
 
     public static void giveBag(@NotNull Bag bag, Player player, int maxNbRewardsRetrieving) {
-        if (bag.getBagContent().isEmpty()) {
-            Helper.sendMessageToPlayer(player, Helper.getMessageOnConfig("player.noRewardToBeRetrieved"));
-            return;
-        }
-
         int nbRewardsRetrieving = 0;
         int nbItemInBag = bag.getBagContent().size();
 
@@ -53,7 +50,18 @@ public class BagManager {
                          nbRewardsRetrieving < maxNbRewardsRetrieving;
         }
 
-        String message = Helper.replaceValueInString(Helper.getMessageOnConfig("player.retrieveRewards"), Integer.toString(nbRewardsRetrieving));
+        String message;
+        if (nbRewardsRetrieving == 1) {
+            message = VoteReward.getInstance().getConfig().getString("messages.reward.get.one");
+        } else if (nbRewardsRetrieving > 1) {
+            message = VoteReward.getInstance()
+                                .getConfig()
+                                .getString("messages.reward.get.multiple")
+                                .replace(BagManager.NB_REWARDS, Integer.toString(nbRewardsRetrieving));
+        } else {
+            message = VoteReward.getInstance().getConfig().getString("messages.reward.get.any");
+        }
+
         Helper.sendMessageToPlayer(player, message);
     }
 
@@ -72,9 +80,12 @@ public class BagManager {
     }
 
     public List<String> getOwnerNames() {
-        return this.bags.keySet().stream().map(Bukkit::getOfflinePlayer)
+        return this.bags.keySet()
+                        .stream()
+                        .map(Bukkit::getOfflinePlayer)
                         .filter(offlinePlayer -> offlinePlayer != null && offlinePlayer.hasPlayedBefore())
-                        .map(OfflinePlayer::getName).collect(Collectors.toList());
+                        .map(OfflinePlayer::getName)
+                        .collect(Collectors.toList());
     }
 
     public void loadBags() {

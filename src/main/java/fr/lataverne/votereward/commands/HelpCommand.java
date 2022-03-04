@@ -40,30 +40,27 @@ public class HelpCommand extends CompositeCommand {
                     String subCommandParameters = subCommand.getParameters();
                     String subCommandDescription = subCommand.getDescription();
 
-                    if (subCommandParameters != null && !subCommandParameters.isEmpty()) {
-                        sender.sendMessage(
-                                ChatColor.RED + subCommandUsage + " " + ChatColor.YELLOW + subCommandParameters +
-                                ChatColor.WHITE + " : " + ChatColor.GRAY + subCommandDescription);
-                    } else {
-                        sender.sendMessage(ChatColor.RED + subCommandUsage + ChatColor.WHITE + " : " + ChatColor.GRAY +
-                                           subCommandDescription);
-                    }
+                    sender.sendMessage(subCommandParameters != null && !subCommandParameters.isEmpty()
+                                       ? ChatColor.RED + subCommandUsage + " " + ChatColor.YELLOW +
+                                         subCommandParameters + ChatColor.WHITE + " : " + ChatColor.GRAY +
+                                         subCommandDescription
+                                       : ChatColor.RED + subCommandUsage + ChatColor.WHITE + " : " + ChatColor.GRAY +
+                                         subCommandDescription);
                 }
             }
         } else {
-            String commandUsage = this.getUsage();
-            String commandParameters = this.getParameters();
-            String commandDescription = this.getDescription();
+            String commandUsage = this.parent.getUsage();
+            String commandParameters = this.parent.getParameters();
+            String commandDescription = this.parent.getDescription();
 
             String usage = this.plugin.getConfig().getString("messages.help.usage");
-            String descriptionMessage = this.plugin.getConfig().getString("messages.help.description")
+            String descriptionMessage = this.plugin.getConfig()
+                                                   .getString("messages.help.description")
                                                    .replace(HelpCommand.PARENT_COMMAND_DESCRIPTION, commandDescription);
 
-            if (commandParameters == null || commandParameters.isEmpty()) {
-                usage = usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage);
-            } else {
-                usage = usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage + " " + commandParameters);
-            }
+            usage = commandParameters == null || commandParameters.isEmpty()
+                    ? usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage)
+                    : usage.replace(HelpCommand.PARENT_COMMAND_USAGE, commandUsage + " " + commandParameters);
 
             sender.sendMessage(usage);
             sender.sendMessage(descriptionMessage);

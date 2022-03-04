@@ -2,9 +2,6 @@
 system:
   achievableRewardsPath: "plugins/VoteReward/AchievableRewards.yml"
   bagsFolder: "plugins/VoteReward/Bags/"
-  internalPermission:
-    rv-player-bag-see: true
-    rv-player-bag-get: false
 
 # All messages that can be sent by the plugin
 messages:

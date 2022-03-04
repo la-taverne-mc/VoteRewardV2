@@ -80,8 +80,6 @@ public class VoteReward extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(eventListener, this);
         Bukkit.getPluginManager().registerEvents(votifierManager, this);
 
-        InternalPermission.loadingInternalPermissions();
-
         VoteReward.sendMessageToConsole(ChatColor.GREEN + "VoteReward enabled");
     }
 

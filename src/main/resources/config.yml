@@ -7,39 +7,6 @@ system:
     rv-player-bag-get: false
 
 # All messages that can be sent by the plugin
-message:
-  consoleSuffix: "§2[§fVR§2]"
-  messageSuffix: "§bVoteReward §f:"
-  system:
-    existingConfig: "§aFichier config existant"
-    nonExistingConfig: "§cFichier config inexistant"
-    startMessage: "§aPlugin VoteReward opérationnel"
-    stopMessage: "§cPlugin VoteReward désactivé"
-    achievableRewardsFileNotFound: "§cFichier contenant les récompenses obtenables est introuvable"
-    reloadComplete: "§aReload fini"
-    deleteFileFailed: "§aImpossible de supprimer le fichier {1}"
-    bagsLoading: "§eChargement des sacs de récompenses"
-    bagsLoadingSucceeds: "§aChargement des sacs de récompenses fini"
-    internalPermLoading: "§eChargement des permissions internes"
-    internalPermView: "§fPermission interne \"{1}\" mise sur {2}"
-    internalPermLoadingSucceeds: "§aChargement des permissions internes fini"
-  player:
-    misuseCommand: "§cMauvaise utilisation de la commande"
-    retrieveRewards: "§aVous avez récuperé {1} récompenses"
-    noRewardToBeRetrieved: "§cIl n'y a pas de récompenses à récuperer"
-    rewardsAddedInBag: "§a{1} récompenses ont été ajoutées dans le sac des récompenses"
-    noAchievableRewardsAvailable: "§cAucune récompense disponible"
-    hasNoPlayedBeforeInServer: "§cLe joueur est introuvable ou n'a jamais joué sur le serveur"
-    notPermission: "§cVous n'avez pas la permission de faire ceci! §8Permission manquante: {1}"
-    featureDisabled: "§cCette fonctionnalité est désactivée"
-  admin:
-    reloading: "§7Reload..."
-    successfulReload: "§aReload réussi"
-    stopCommandFailed: "§cL'activation/désactivation de la fonctionnalité a échouée !"
-    stopCommandSucceeds:
-      featureActivated: "§aLa fonctionnalité est maintenant activée"
-      featureDisabled: "§7La fonctionnalité est maintenant désactivée"
-
 messages:
   tips:
     help-command: "Astuce: utilise l'argument help à la fin d'une commande pour afficher l'aide."
@@ -55,6 +22,11 @@ messages:
     confirm: "§6Pour confirmer votre commande, executez la commande §f[confirm-command-usage]§6 dans les 10 prochaines secondes."
     request-cancelled: "§cDélai de confirmation de la command dépassé."
     no-command-to-confirm: "§cVous n'avez pas de commande à confirmer."
+  reward:
+    get:
+      any: "§cAucune récompense récuperé."
+      one: "§aVous avez récuperé une récompense."
+      multiple: "§aVous avez récuperé [nb-rewards] récompenses."
   admin:
     fakevote:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
@@ -163,13 +135,13 @@ commands:
         parameters: "<rewards-group-name>"
         <rewards-group-name>:
           description: "Permet de gérer un groupe de récompenses"
-          usage: "/vr admin rewardsgroups <rewards-group-name>"
+          usage: "/vr admin rewardsgroup <rewards-group-name>"
           parameters: "<addReward | see>"
           addreward:
             description: "Permet d'ajouter l'item dans la main du joueur en tant que récompense."
-            usage: "/vr admin <rewards-group-name> addreward"
+            usage: "/vr admin rewardsgroup <rewards-group-name> addreward"
             parameters: "[percentage]"
           see:
             description: "Permet de visualiser un groupe de récompenses"
-            usage: "/vr admin <rewards-group-name> see"
+            usage: "/vr admin rewardsgroup <rewards-group-name> see"
             parameters: "[page]"

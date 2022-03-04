@@ -114,7 +114,6 @@ public enum Helper {
     }
 
     public static void sendMessageToPlayer(final @NotNull Player player, final String message) {
-        String suffixMessage = Helper.getMessageOnConfig("message.messageSuffix");
-        player.sendMessage(Helper.colorizeString(suffixMessage + " &r" + message));
+        player.sendMessage(Helper.colorizeString(message));
     }
 }

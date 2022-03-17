@@ -9,7 +9,7 @@ import fr.lataverne.votereward.Constant;
 import fr.lataverne.votereward.Helper;
 import fr.lataverne.votereward.VoteReward;
 import fr.lataverne.votereward.objects.Bag;
-import fr.lataverne.votereward.objects.Reward;
+import fr.lataverne.votereward.objects.GivenReward;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
@@ -41,8 +41,8 @@ public class BagManager {
         boolean giveReward = BagManager.inventoryPlayerHasEmptySlot(player) && nbRewardsRetrieving < nbItemInBag &&
                              nbRewardsRetrieving < maxNbRewardsRetrieving;
         while (giveReward) {
-            Reward reward = bag.getRandomReward();
-            player.getInventory().addItem(new ItemStack(reward.itemStack()));
+            GivenReward reward = bag.getRandomReward();
+            player.getInventory().addItem(new ItemStack(reward.reward().getItem()));
             bag.removeReward(reward);
             nbRewardsRetrieving++;
 
@@ -212,8 +212,13 @@ public class BagManager {
                 UUID owner = UUID.fromString(jsonFile.get("owner").getAsString());
                 JsonArray jsonBag = jsonFile.getAsJsonArray("bag");
 
-                Collection<Reward> content = new ArrayList<>();
-                jsonBag.forEach(jsonReward -> content.add(Reward.parseJson(jsonReward)));
+                Collection<GivenReward> content = new ArrayList<>();
+                jsonBag.forEach(jsonReward -> {
+                    GivenReward reward = GivenReward.parseJson(jsonReward);
+                    if (reward != null) {
+                        content.add(reward);
+                    }
+                });
 
                 return new ImmutablePair<>(owner, new Bag(content));
             }

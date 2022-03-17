@@ -13,6 +13,7 @@ api-version: 1.18
 
 softdepend:
   - Votifier
+  - ItemReward
 
 permissions:
   votereward.bag:

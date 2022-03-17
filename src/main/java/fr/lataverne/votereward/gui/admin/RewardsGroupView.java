@@ -42,7 +42,8 @@ public class RewardsGroupView extends NavigableGui {
             rewardsGroupName = "Unknown rewards group";
         }
 
-        return this.plugin.getConfig().getString("gui.admin.rewards-group-view.title")
+        return this.plugin.getConfig()
+                          .getString("gui.admin.rewards-group-view.title")
                           .replace(RewardsGroupView.REWARDS_GROUP_NAME, rewardsGroupName);
     }
 
@@ -79,7 +80,7 @@ public class RewardsGroupView extends NavigableGui {
     }
 
     private @NotNull ItemStack getAchievableRewardView(@NotNull AchievableReward achievableReward) {
-        ItemStack item = new ItemStack(achievableReward.reward());
+        ItemStack item = new ItemStack(achievableReward.reward().getItem());
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
@@ -92,9 +93,11 @@ public class RewardsGroupView extends NavigableGui {
             String realPercentage = String.format(Locale.ENGLISH, "%.2f", this.rewardsGroup.getRealPercentageOfReward(achievableReward));
 
             lore.add("");
-            lore.add(this.plugin.getConfig().getString("gui.admin.rewards-group-view.reward-view.percentage")
+            lore.add(this.plugin.getConfig()
+                                .getString("gui.admin.rewards-group-view.reward-view.percentage")
                                 .replace(RewardsGroupView.PERCENTAGE, Double.toString(achievableReward.percentage())));
-            lore.add(this.plugin.getConfig().getString("gui.admin.rewards-group-view.reward-view.real-percentage")
+            lore.add(this.plugin.getConfig()
+                                .getString("gui.admin.rewards-group-view.reward-view.real-percentage")
                                 .replace(RewardsGroupView.REAL_PERCENTAGE, realPercentage));
 
             meta.setLore(lore);
@@ -130,7 +133,8 @@ public class RewardsGroupView extends NavigableGui {
             }
 
             lore.add("");
-            lore.add(this.plugin.getConfig().getString("gui.admin.rewards-group-view.rewards-group-icon.nb-rewards")
+            lore.add(this.plugin.getConfig()
+                                .getString("gui.admin.rewards-group-view.rewards-group-icon.nb-rewards")
                                 .replace(RewardsGroupView.NB_REWARDS, Integer.toString(this.rewardsGroup.getNbRewards())));
 
             meta.setLore(lore);

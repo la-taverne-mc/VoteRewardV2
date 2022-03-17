@@ -3,7 +3,7 @@ package fr.lataverne.votereward.managers;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import fr.lataverne.votereward.objects.Bag;
-import fr.lataverne.votereward.objects.Reward;
+import fr.lataverne.votereward.objects.rewards.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;

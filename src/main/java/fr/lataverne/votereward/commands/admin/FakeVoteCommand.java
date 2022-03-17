@@ -2,7 +2,7 @@ package fr.lataverne.votereward.commands.admin;
 
 import fr.lataverne.votereward.commands.CompositeCommand;
 import fr.lataverne.votereward.objects.Bag;
-import fr.lataverne.votereward.objects.Reward;
+import fr.lataverne.votereward.objects.rewards.Reward;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

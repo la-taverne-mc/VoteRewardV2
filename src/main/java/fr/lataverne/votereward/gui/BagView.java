@@ -6,7 +6,7 @@ import fr.lataverne.votereward.VoteReward;
 import fr.lataverne.votereward.managers.BagManager;
 import fr.lataverne.votereward.managers.GuiManager;
 import fr.lataverne.votereward.objects.Bag;
-import fr.lataverne.votereward.objects.Reward;
+import fr.lataverne.votereward.objects.GivenReward;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,7 +59,7 @@ public class BagView extends NavigableGui {
 
     @Override
     protected void setContent() {
-        List<Reward> rewards = this.getRewardsToBeDisplayed();
+        List<GivenReward> rewards = this.getRewardsToBeDisplayed();
 
         int size = rewards.size();
 
@@ -82,8 +82,8 @@ public class BagView extends NavigableGui {
         this.content[49] = getRewardsItem;
     }
 
-    private static @NotNull ItemStack getRewardView(@NotNull Reward reward) {
-        ItemStack item = new ItemStack(reward.itemStack());
+    private static @NotNull ItemStack getRewardView(@NotNull GivenReward reward) {
+        ItemStack item = new ItemStack(reward.reward().getItem());
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
@@ -104,12 +104,12 @@ public class BagView extends NavigableGui {
         return item;
     }
 
-    private @NotNull List<Reward> getRewardsToBeDisplayed() {
+    private @NotNull List<GivenReward> getRewardsToBeDisplayed() {
         if (this.bag == null) {
             return new ArrayList<>();
         }
 
-        List<Reward> bagContent = this.bag.getBagContent().stream().toList();
+        List<GivenReward> bagContent = this.bag.getBagContent().stream().toList();
 
         Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(bagContent);
 

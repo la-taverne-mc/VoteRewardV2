@@ -2,6 +2,8 @@ package fr.lataverne.votereward.objects;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import fr.lataverne.votereward.Constant;
+import fr.lataverne.votereward.objects.rewards.Reward;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,30 +15,28 @@ import java.util.Collections;
 
 public class Bag {
 
-    private final Collection<Reward> bagContent;
+    private final Collection<GivenReward> bagContent;
 
-    public Bag(Collection<Reward> content) {
+    public Bag(Collection<GivenReward> content) {
         this.bagContent = new ArrayList<>(content);
         this.verifyExpirationDates();
     }
 
-    public void addReward(Reward item) {
-        this.bagContent.add(item);
+    public void addReward(Reward reward) {
+        this.bagContent.add(new GivenReward(reward, LocalDate.now().plusDays(Constant.EXPIRATION_TIME)));
     }
 
-    public Collection<Reward> getBagContent() {
+    public Collection<GivenReward> getBagContent() {
         return Collections.unmodifiableCollection(this.bagContent);
     }
 
-    public @Nullable Reward getRandomReward() {
-        if (this.bagContent.isEmpty()) {
-            return null;
-        } else {
-            return this.bagContent.stream().toList().get(new SecureRandom().nextInt(this.bagContent.size()));
-        }
+    public @Nullable GivenReward getRandomReward() {
+        return this.bagContent.isEmpty()
+               ? null
+               : this.bagContent.stream().toList().get(new SecureRandom().nextInt(this.bagContent.size()));
     }
 
-    public void removeReward(Reward reward) {
+    public void removeReward(GivenReward reward) {
         this.bagContent.remove(reward);
     }
 

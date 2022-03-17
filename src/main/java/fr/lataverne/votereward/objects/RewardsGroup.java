@@ -2,13 +2,11 @@ package fr.lataverne.votereward.objects;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import fr.lataverne.votereward.Constant;
+import fr.lataverne.votereward.objects.rewards.Reward;
 import fr.lataverne.votereward.utils.collections.RandomCollection;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class RewardsGroup {
@@ -43,12 +41,12 @@ public class RewardsGroup {
         return null;
     }
 
-    public AchievableReward addAchievableReward(ItemStack item) {
-        return this.addAchievableReward(item, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
+    public AchievableReward addAchievableReward(Reward reward) {
+        return this.addAchievableReward(reward, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
     }
 
-    public AchievableReward addAchievableReward(ItemStack item, double percentage) {
-        AchievableReward achievableReward = new AchievableReward(new ItemStack(item), percentage);
+    public AchievableReward addAchievableReward(Reward reward, double percentage) {
+        AchievableReward achievableReward = new AchievableReward(reward, percentage);
         this.achievableRewards.put(this.getAvailableId(), achievableReward);
         return achievableReward;
     }
@@ -73,11 +71,9 @@ public class RewardsGroup {
 
         AchievableReward achievableReward = randomCollection.next();
 
-        if (achievableReward != null) {
-            return new Reward(achievableReward.reward(), LocalDate.now().plusDays(Constant.EXPIRATION_TIME));
-        } else {
-            return null;
-        }
+        return achievableReward != null
+               ? achievableReward.reward()
+               : null;
     }
 
     public double getRealPercentageOfReward(AchievableReward achievableReward) {

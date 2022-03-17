@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,14 +23,23 @@ enum PotionMetaJson {
             } else if (jsonPotionMeta.has("baseEffect")) {
                 JsonObject jsonBaseEffect = jsonPotionMeta.getAsJsonObject("baseEffect");
 
-                if (jsonBaseEffect.has("type") && jsonBaseEffect.has("isExtended") &&
-                    jsonBaseEffect.has("isUpgraded")) {
-                    PotionType type = PotionType.valueOf(jsonBaseEffect.get("type").getAsString());
-                    boolean isExtended = jsonBaseEffect.get("isExtended").getAsBoolean();
-                    boolean isUpgraded = jsonBaseEffect.get("isUpgraded").getAsBoolean();
+                PotionType type = PotionType.UNCRAFTABLE;
+                boolean isExtended = false;
+                boolean isUpgraded = false;
 
-                    potionMeta.setBasePotionData(new PotionData(type, isExtended, isUpgraded));
+                if (jsonBaseEffect.has("type")) {
+                    type = PotionType.valueOf(jsonBaseEffect.get("type").getAsString());
                 }
+
+                if (jsonBaseEffect.has("isExtended")) {
+                    isExtended = jsonBaseEffect.get("isExtended").getAsBoolean();
+                }
+
+                if (jsonBaseEffect.has("isUpgraded")) {
+                    isUpgraded = jsonBaseEffect.get("isUpgraded").getAsBoolean();
+                }
+
+                potionMeta.setBasePotionData(new PotionData(type, isExtended, isUpgraded));
             }
         }
     }
@@ -51,7 +61,11 @@ enum PotionMetaJson {
 
             JsonObject jsonBaseEffect = new JsonObject();
             if (type != null) {
-                jsonBaseEffect.addProperty("type", type.getEffectType().getName());
+                PotionEffectType effectType = type.getEffectType();
+                if (effectType != null) {
+                    jsonBaseEffect.addProperty("type", effectType.getName());
+                }
+
                 jsonBaseEffect.addProperty("isExtended", isExtended);
                 jsonBaseEffect.addProperty("isUpgraded", isUpgraded);
                 jsonPotionMeta.add("baseEffect", jsonBaseEffect);

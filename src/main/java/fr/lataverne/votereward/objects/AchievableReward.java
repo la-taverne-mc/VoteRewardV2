@@ -3,13 +3,12 @@ package fr.lataverne.votereward.objects;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fr.lataverne.votereward.VoteReward;
-import fr.lataverne.votereward.utils.json.ItemStackJson;
+import fr.lataverne.votereward.objects.rewards.Reward;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public record AchievableReward(ItemStack reward, double percentage) {
+public record AchievableReward(Reward reward, double percentage) {
 
     public static @Nullable AchievableReward parseJson(@NotNull JsonElement elemAchievableReward) {
         try {
@@ -17,10 +16,12 @@ public record AchievableReward(ItemStack reward, double percentage) {
                 JsonObject jsonAchievableReward = elemAchievableReward.getAsJsonObject();
 
                 if (jsonAchievableReward.has("reward") && jsonAchievableReward.has("percentage")) {
-                    ItemStack reward = ItemStackJson.deserialize(jsonAchievableReward.get("reward"));
+                    Reward reward = Reward.parseJson(jsonAchievableReward.get("reward"));
                     double percentage = jsonAchievableReward.get("percentage").getAsDouble();
 
-                    return new AchievableReward(reward, percentage);
+                    if (reward != null) {
+                        return new AchievableReward(reward, percentage);
+                    }
                 }
             }
         } catch (IllegalStateException | ClassCastException ignored) {
@@ -34,7 +35,7 @@ public record AchievableReward(ItemStack reward, double percentage) {
     public @NotNull JsonElement toJson() {
         JsonObject jsonAchievableReward = new JsonObject();
 
-        jsonAchievableReward.add("reward", ItemStackJson.serialize(this.reward));
+        jsonAchievableReward.add("reward", this.reward.toJson());
         jsonAchievableReward.addProperty("percentage", this.percentage);
 
         return jsonAchievableReward;

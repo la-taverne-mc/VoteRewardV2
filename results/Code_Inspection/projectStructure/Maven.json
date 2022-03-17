@@ -221,12 +221,12 @@
       "scope": "provided"
     },
     {
-      "ideaName": "Maven: org.jetbrains:annotations:22.0.0",
+      "ideaName": "Maven: org.jetbrains:annotations:23.0.0",
       "unresolved": false,
       "groupId": "org.jetbrains",
       "artifactId": "annotations",
-      "version": "22.0.0",
-      "baseVersion": "22.0.0",
+      "version": "23.0.0",
+      "baseVersion": "23.0.0",
       "type": "jar",
       "optional": false,
       "scope": "provided"
@@ -238,6 +238,17 @@
       "artifactId": "commons-lang3",
       "version": "3.12.0",
       "baseVersion": "3.12.0",
+      "type": "jar",
+      "optional": false,
+      "scope": "provided"
+    },
+    {
+      "ideaName": "Maven: com.github.la-taverne-mc:ItemReward:1.2.0-beta.1",
+      "unresolved": false,
+      "groupId": "com.github.la-taverne-mc",
+      "artifactId": "ItemReward",
+      "version": "1.2.0-beta.1",
+      "baseVersion": "1.2.0-beta.1",
       "type": "jar",
       "optional": false,
       "scope": "provided"

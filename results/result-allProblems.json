@@ -1,5 +1,89 @@
 {"version":"3","listProblem":[{
   "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Method returns per-class constant",
+  "severity": "High",
+  "comment": "Method `getRewardType()` and all its derivables always return constants",
+  "detailsInfo": "Reports methods that only return a constant, which may differ for various inheritors.\n\nAvailable only from **Code \\| Inspect Code** or\n**Code \\| Analyze Code \\| Run Inspection by Name** and isn't reported in the editor.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/objects/rewards/Reward.java",
+      "language": "JAVA",
+      "line": 52,
+      "offset": 36,
+      "length": 13,
+      "code": {
+        "startLine": 50,
+        "length": 13,
+        "offset": 42,
+        "surroundingCode": "    }\n\n    protected abstract ERewardType getRewardType();\n\n    protected abstract @NotNull JsonElement toJsonReward();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "MethodReturnAlwaysConstant"
+  },
+  "hash": "daa70938c4222d56b8ef34a242bab541c08b791bf597dc7512afe071031e43cc"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Method returns per-class constant",
+  "severity": "High",
+  "comment": "Method `getRewardType()` and all its derivables always return constants",
+  "detailsInfo": "Reports methods that only return a constant, which may differ for various inheritors.\n\nAvailable only from **Code \\| Inspect Code** or\n**Code \\| Analyze Code \\| Run Inspection by Name** and isn't reported in the editor.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/objects/rewards/ItemRewardItem.java",
+      "language": "JAVA",
+      "line": 36,
+      "offset": 27,
+      "length": 13,
+      "code": {
+        "startLine": 34,
+        "length": 13,
+        "offset": 41,
+        "surroundingCode": "\n    @Override\n    protected ERewardType getRewardType() {\n        return ERewardType.ItemReward;\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "MethodReturnAlwaysConstant"
+  },
+  "hash": "82bd9d6225fbbc7498b4b59266d175a437e550e335c8b5890e5bbf73a33e9c43"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Method returns per-class constant",
+  "severity": "High",
+  "comment": "Method `getRewardType()` and all its derivables always return constants",
+  "detailsInfo": "Reports methods that only return a constant, which may differ for various inheritors.\n\nAvailable only from **Code \\| Inspect Code** or\n**Code \\| Analyze Code \\| Run Inspection by Name** and isn't reported in the editor.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/objects/rewards/MinecraftItem.java",
+      "language": "JAVA",
+      "line": 29,
+      "offset": 27,
+      "length": 13,
+      "code": {
+        "startLine": 27,
+        "length": 13,
+        "offset": 41,
+        "surroundingCode": "\n    @Override\n    protected ERewardType getRewardType() {\n        return ERewardType.Minecraft;\n    }"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "MethodReturnAlwaysConstant"
+  },
+  "hash": "82950d66df6e425b4fbcd35bbe2bed4115e98bd9ff2db569d95477cb868a13c9"
+},{
+  "tool": "Code Inspection",
   "category": "Declaration redundancy",
   "type": "Method returns the same value",
   "severity": "High",
@@ -446,90 +530,6 @@
     "inspectionName": "SameParameterValue"
   },
   "hash": "86e7e7f94716ef720c2d6b94492270b00a9be3c10404dc47e96564ee93c794ba"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "'if' statement can be replaced with conditional or boolean expression",
-  "severity": "High",
-  "comment": "If statement can be replaced with '?:'",
-  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/objects/Bag.java",
-      "language": "JAVA",
-      "line": 32,
-      "offset": 9,
-      "length": 2,
-      "code": {
-        "startLine": 30,
-        "length": 2,
-        "offset": 57,
-        "surroundingCode": "\n    public @Nullable Reward getRandomReward() {\n        if (this.bagContent.isEmpty()) {\n            return null;\n        } else {"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SimplifiableIfStatement"
-  },
-  "hash": "9736292a5c3150e7e2a61d50ab34f6b769c6968f6519e72f30e206c40224116e"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "'if' statement can be replaced with conditional or boolean expression",
-  "severity": "High",
-  "comment": "If statement can be replaced with '?:'",
-  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/objects/RewardsGroup.java",
-      "language": "JAVA",
-      "line": 76,
-      "offset": 9,
-      "length": 2,
-      "code": {
-        "startLine": 74,
-        "length": 2,
-        "offset": 78,
-        "surroundingCode": "        AchievableReward achievableReward = randomCollection.next();\n\n        if (achievableReward != null) {\n            return new Reward(achievableReward.reward(), LocalDate.now().plusDays(Constant.EXPIRATION_TIME));\n        } else {"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SimplifiableIfStatement"
-  },
-  "hash": "d1c72af90cc631ae375708c2fc5b10116ab70ebab15616664a6c52d1d45a3640"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "'if' statement can be replaced with conditional or boolean expression",
-  "severity": "High",
-  "comment": "If statement can be replaced with '?:'",
-  "detailsInfo": "Reports `if` statements that can be replaced with conditions using the `&&`, `||`, `==`, `!=`, or `?:` operator.\n\nThe result is usually shorter, but not always clearer, so it's not advised to apply the fix in every case.\n\nExample:\n\n\n      if (condition) return true; else return foo;\n\nAfter the quick-fix is applied:\n\n\n      return condition || foo;\n\nConfigure the inspection:\n\n* Use the **Don't suggest '?:' operator** option to disable the warning when the `?:` operator is suggested. In this case, only `&&`, `||`, `==`, and `!=` suggestions will be highlighted. The quick-fix will still be available in the editor.\n* Use the **Ignore chained 'if' statements** option to disable the warning for `if-else` chains. The quick-fix will still be available in the editor.\n\nNew in 2018.2",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroup/AddRewardAdminCommand.java",
-      "language": "JAVA",
-      "line": 54,
-      "offset": 13,
-      "length": 2,
-      "code": {
-        "startLine": 52,
-        "length": 2,
-        "offset": 60,
-        "surroundingCode": "\n            AchievableReward achievableReward;\n            if (Double.compare(percentage, -1.0) == 0) {\n                achievableReward = rewardsGroup.addAchievableReward(item);\n            } else {"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "SimplifiableIfStatement"
-  },
-  "hash": "9de9851907c281bd80fc4b1259f2e790e055dc99e332628d6c73e3c2d0bc64e1"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",

@@ -109,11 +109,15 @@
           "type": "Library"
         },
         {
-          "name": "Maven: org.jetbrains:annotations:22.0.0",
+          "name": "Maven: org.jetbrains:annotations:23.0.0",
           "type": "Library"
         },
         {
           "name": "Maven: org.apache.commons:commons-lang3:3.12.0",
+          "type": "Library"
+        },
+        {
+          "name": "Maven: com.github.la-taverne-mc:ItemReward:1.2.0-beta.1",
           "type": "Library"
         }
       ]

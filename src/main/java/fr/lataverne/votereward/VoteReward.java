@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -25,12 +24,14 @@ public class VoteReward extends JavaPlugin {
 
     private RewardsGroupManager rewardsGroupManager = null;
 
+    private VotingUserManager votingUserManager = null;
+
     public static VoteReward getInstance() {
-        return VoteReward.instance;
+        return instance;
     }
 
     public static void sendMessageToConsole(String message) {
-        String str = VoteReward.consoleSuffix + " " + ChatColor.RESET + message;
+        String str = consoleSuffix + " " + ChatColor.RESET + message;
         Bukkit.getConsoleSender().sendMessage(Helper.colorizeString(str));
     }
 
@@ -50,14 +51,19 @@ public class VoteReward extends JavaPlugin {
         return this.rewardsGroupManager;
     }
 
+    public VotingUserManager getVotingUserManager() {
+        return this.votingUserManager;
+    }
+
     @Override
     public void onDisable() {
+        this.votingUserManager.saveVotingUsers();
         this.rewardsGroupManager.saveRewardGroups();
         this.bagManager.saveBags();
 
         this.commandsManager.unregisterCommands();
 
-        VoteReward.sendMessageToConsole(ChatColor.RED + "VoteReward disabled");
+        sendMessageToConsole(ChatColor.RED + "VoteReward disabled");
     }
 
     /**
@@ -66,8 +72,9 @@ public class VoteReward extends JavaPlugin {
     @Override
     public void onEnable() {
         //noinspection AssignmentToStaticFieldFromInstanceMethod
-        VoteReward.instance = this;
+        instance = this;
 
+        this.votingUserManager = new VotingUserManager();
         this.bagManager = new BagManager();
         this.guiManager = new GuiManager();
         this.rewardsGroupManager = new RewardsGroupManager();
@@ -78,7 +85,7 @@ public class VoteReward extends JavaPlugin {
         Listener eventListener = new EventListener(this);
         Bukkit.getPluginManager().registerEvents(eventListener, this);
 
-        VoteReward.sendMessageToConsole(ChatColor.GREEN + "VoteReward enabled");
+        sendMessageToConsole(ChatColor.GREEN + "VoteReward enabled");
     }
 
     /**
@@ -94,19 +101,14 @@ public class VoteReward extends JavaPlugin {
 
         super.reloadConfig();
 
-        VoteReward.sendMessageToConsole(configExist
-                                        ? ChatColor.GREEN + "Config file found"
-                                        : ChatColor.RED + "Config file not found");
+        sendMessageToConsole(configExist
+                             ? ChatColor.GREEN + "Config file found"
+                             : ChatColor.RED + "Config file not found");
 
+        this.votingUserManager.loadVotingUsers();
         this.rewardsGroupManager.loadRewardGroups();
         this.bagManager.loadBags();
 
-        VoteReward.sendMessageToConsole(ChatColor.GREEN + "Reload complete");
-    }
-
-    @Override
-    public @NotNull String toString() {
-        return "VoteReward{" + "bagManager=" + this.bagManager + ", guiManager=" + this.guiManager +
-               ", rewardGroupManager=" + this.rewardsGroupManager + ", commandsManager=" + this.commandsManager + "}";
+        sendMessageToConsole(ChatColor.GREEN + "Reload complete");
     }
 }

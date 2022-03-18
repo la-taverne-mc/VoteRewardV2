@@ -1,8 +1,3 @@
-# Configuration for the plugin
-system:
-  achievableRewardsPath: "plugins/VoteReward/AchievableRewards.yml"
-  bagsFolder: "plugins/VoteReward/Bags/"
-
 # All messages that can be sent by the plugin
 messages:
   tips:
@@ -20,8 +15,11 @@ messages:
     request-cancelled: "§cDélai de confirmation de la command dépassé."
     no-command-to-confirm: "§cVous n'avez pas de commande à confirmer."
   reward:
+    added:
+      any: "§cAucune récompense n'est obtenable pour le moment."
+      one: "§aVous avez récupéré une récompense."
     get:
-      any: "§cAucune récompense récuperé."
+      any: "§cAucune récompense récuperée."
       one: "§aVous avez récuperé une récompense."
       multiple: "§aVous avez récuperé [nb-rewards] récompenses."
   admin:

@@ -21,5 +21,7 @@ public class VoteRewardCommand extends CompositeCommand {
         new BagCommand(this);
         new AdminCommand(this);
         new ConfirmCommand(this);
+
+        new AddVoteConsoleCommand(this);
     }
 }

@@ -73,13 +73,6 @@
             <version>${spigot.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- NuVotifier -->
-        <dependency>
-            <groupId>com.github.nuvotifier.NuVotifier</groupId>
-            <artifactId>nuvotifier-bukkit</artifactId>
-            <version>${nuvotifier.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- JetBrains annotations -->
         <dependency>
             <groupId>org.jetbrains</groupId>

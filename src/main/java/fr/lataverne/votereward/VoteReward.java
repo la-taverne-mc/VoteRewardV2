@@ -76,9 +76,7 @@ public class VoteReward extends JavaPlugin {
         new VoteRewardCommand();
 
         Listener eventListener = new EventListener(this);
-        Listener votifierManager = new VotifierManager(this.bagManager, this.rewardsGroupManager);
         Bukkit.getPluginManager().registerEvents(eventListener, this);
-        Bukkit.getPluginManager().registerEvents(votifierManager, this);
 
         VoteReward.sendMessageToConsole(ChatColor.GREEN + "VoteReward enabled");
     }

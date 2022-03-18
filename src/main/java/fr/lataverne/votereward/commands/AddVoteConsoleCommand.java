@@ -4,6 +4,7 @@ import fr.lataverne.votereward.VoteReward;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.rewards.Reward;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -36,6 +37,9 @@ public class AddVoteConsoleCommand extends CompositeCommand {
                     Bag bag = VoteReward.getInstance().getBagManager().getOrCreateBag(offlinePlayer.getUniqueId());
                     bag.addReward(reward);
                 }
+            } else {
+                VoteReward.sendMessageToConsole(" [WARN] " + ChatColor.YELLOW + "A player named " + username +
+                                                " voted but he has never played on the server");
             }
         } else {
             return this.parent.execute(sender, label, args);

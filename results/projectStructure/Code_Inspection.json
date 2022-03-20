@@ -77,38 +77,6 @@
           "type": "Library"
         },
         {
-          "name": "Maven: com.github.nuvotifier.NuVotifier:nuvotifier-bukkit:2.6.0",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: com.github.nuvotifier.NuVotifier:nuvotifier-common:2.6.0",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: io.netty:netty-handler:4.1.32.Final",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: io.netty:netty-buffer:4.1.32.Final",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: io.netty:netty-common:4.1.32.Final",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: io.netty:netty-transport:4.1.32.Final",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: io.netty:netty-resolver:4.1.32.Final",
-          "type": "Library"
-        },
-        {
-          "name": "Maven: io.netty:netty-codec:4.1.32.Final",
-          "type": "Library"
-        },
-        {
           "name": "Maven: org.jetbrains:annotations:23.0.0",
           "type": "Library"
         },

@@ -644,7 +644,7 @@
     </inspection_tool>
     <inspection_tool class="ClassEscapesItsScope" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ClassGetClass" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="ClassHasNoToStringMethod" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="ClassHasNoToStringMethod" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="excludeClassNames" value="" />
       <option name="excludeException" value="true" />
       <option name="excludeDeprecated" value="true" />
@@ -3036,7 +3036,7 @@
     <inspection_tool class="UnnecessarilyQualifiedInnerClassAccess" enabled="true" level="INFORMATION" enabled_by_default="true">
       <option name="ignoreReferencesNeedingImport" value="false" />
     </inspection_tool>
-    <inspection_tool class="UnnecessarilyQualifiedStaticUsage" enabled="false" level="WARNING" enabled_by_default="false">
+    <inspection_tool class="UnnecessarilyQualifiedStaticUsage" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_ignoreStaticFieldAccesses" value="false" />
       <option name="m_ignoreStaticMethodCalls" value="false" />
       <option name="m_ignoreStaticAccessFromStaticContext" value="false" />
@@ -3117,7 +3117,7 @@
     </inspection_tool>
     <inspection_tool class="UnqualifiedMemberReference" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnqualifiedMethodAccess" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="UnqualifiedStaticUsage" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="UnqualifiedStaticUsage" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="m_ignoreStaticFieldAccesses" value="false" />
       <option name="m_ignoreStaticMethodCalls" value="false" />
       <option name="m_ignoreStaticAccessFromStaticContext" value="false" />

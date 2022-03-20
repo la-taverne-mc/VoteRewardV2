@@ -7,12 +7,11 @@ description: Manage the vote rewards and the bags
 authors:
   - syuko
 
-version: 2.0.0
+version: ${version}
 
 api-version: 1.18
 
 softdepend:
-  - Votifier
   - ItemReward
 
 permissions:
@@ -73,3 +72,9 @@ permissions:
               votereward.admin.rewardsgroup.<rewards-group-name>.see:
                 description: Allows using /votereward admin rewardsgroups <rewards-group-name> see
                 default: op
+  votereward.topvote:
+    description: Allows using /votereward topvote
+    default: true
+  votereward.vote:
+    description: Allows using /votereward vote
+    default: true

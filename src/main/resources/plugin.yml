@@ -74,3 +74,7 @@ permissions:
                 default: op
   votereward.topvote:
     description: Allows using /votereward topvote
+    default: true
+  votereward.vote:
+    description: Allows using /votereward vote
+    default: true

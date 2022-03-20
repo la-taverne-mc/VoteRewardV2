@@ -35,6 +35,19 @@ messages:
       third: "§6§l3. §f[username] §d([nb-votes])"
       other: "§3§l[rank]. §f[username] §d([nb-votes])"
     footer: "§b===== Page [current-page] sur [last-page] ====="
+  vote:
+    never:
+      all-time: "§e[player] n'a jamais voté pour le serveur."
+      year: "§e[player] n'a pas voté pour le serveur cette année."
+      month: "§e[player] n'a pas voté pour le serveur ce mois-ci."
+      week: "§e[player] n'a pas voté pour le serveur cette semaine."
+      day: "§e[player] n'a pas voté pour le serveur aujourd'hui."
+    one-or-more:
+      all-time: "§e[player] a voté [nb-votes] fois pour le serveur."
+      year: "§e[player] a voté [nb-votes] fois pour le serveur cette année."
+      month: "§e[player] a voté [nb-votes] fois pour le serveur ce mois-ci."
+      week: "§e[player] a voté [nb-votes] fois pour le serveur cette semaine."
+      day: "§e[player] a voté [nb-votes] fois pour le serveur aujourd'hui."
   admin:
     fakevote:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
@@ -157,3 +170,5 @@ commands:
       description: "Permet de voir les meilleurs voteurs du jour/semaine/mois/année"
       usage: "/vr topvote"
       parameters: "[day | week | month | year | all-time] [page]"
+    vote:
+      description: "Permet de voir le nombre de vote d'un joueur "

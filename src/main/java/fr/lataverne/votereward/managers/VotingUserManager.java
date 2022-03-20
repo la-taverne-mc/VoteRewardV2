@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonStreamParser;
 import fr.lataverne.votereward.VoteReward;
-import fr.lataverne.votereward.objects.votes.ETopVoteArg;
+import fr.lataverne.votereward.objects.votes.ETimeRange;
 import fr.lataverne.votereward.objects.votes.VotingUser;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +30,11 @@ public class VotingUserManager {
         }
     }
 
-    public Collection<VotingUser> getVotingUsers(ETopVoteArg topVoteArg) {
+    public Collection<VotingUser> getVotingUsers() {
+        return this.votingUsers.values();
+    }
+
+    public Collection<VotingUser> getVotingUsers(ETimeRange topVoteArg) {
         return this.votingUsers.values().stream().filter(v -> !v.getVotes(topVoteArg).isEmpty()).toList();
     }
 

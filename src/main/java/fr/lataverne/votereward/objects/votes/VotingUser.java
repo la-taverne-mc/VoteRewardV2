@@ -61,7 +61,7 @@ public class VotingUser {
         return Collections.unmodifiableList(this.votes);
     }
 
-    public List<Vote> getVotes(ETopVoteArg arg) {
+    public List<Vote> getVotes(ETimeRange arg) {
         LocalDate now = LocalDate.now();
 
         return switch (arg) {

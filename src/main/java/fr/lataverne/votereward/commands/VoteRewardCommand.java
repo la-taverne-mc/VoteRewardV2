@@ -22,6 +22,7 @@ public class VoteRewardCommand extends CompositeCommand {
         new AdminCommand(this);
         new ConfirmCommand(this);
         new TopVoteCommand(this);
+        new VoteCommand(this);
 
         new AddVoteConsoleCommand(this);
     }

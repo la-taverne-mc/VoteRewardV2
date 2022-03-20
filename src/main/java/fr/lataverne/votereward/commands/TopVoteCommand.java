@@ -1,7 +1,7 @@
 package fr.lataverne.votereward.commands;
 
 import fr.lataverne.votereward.VoteReward;
-import fr.lataverne.votereward.objects.votes.ETopVoteArg;
+import fr.lataverne.votereward.objects.votes.ETimeRange;
 import fr.lataverne.votereward.objects.votes.VotingUser;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -35,12 +35,12 @@ public class TopVoteCommand extends CompositeCommand {
             return true;
         }
 
-        ETopVoteArg topVoteArg = ETopVoteArg.MONTH;
+        ETimeRange topVoteArg = ETimeRange.MONTH;
         int page = 1;
 
         try {
             if (!cmdArgs.isEmpty()) {
-                topVoteArg = ETopVoteArg.valueOf(cmdArgs.get(0).toUpperCase(Locale.ENGLISH).replace("-", "_"));
+                topVoteArg = ETimeRange.valueOf(cmdArgs.get(0).toUpperCase(Locale.ENGLISH).replace("-", "_"));
             }
 
             if (cmdArgs.size() > 1) {
@@ -80,18 +80,18 @@ public class TopVoteCommand extends CompositeCommand {
     @Override
     protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         return args.isEmpty() || args.size() == 1
-               ? Arrays.asList("all-time", "year", "month", "week", "day")
+               ? Arrays.stream(ETimeRange.values()).map(ETimeRange::toString).toList()
                : new ArrayList<>();
     }
 
-    private static int compareVotingUsers(@NotNull VotingUser votingUser1, @NotNull VotingUser votingUser2, ETopVoteArg topVoteArg) {
+    private static int compareVotingUsers(@NotNull VotingUser votingUser1, @NotNull VotingUser votingUser2, ETimeRange topVoteArg) {
         int nbVotes1 = votingUser1.getVotes(topVoteArg).size();
         int nbVotes2 = votingUser2.getVotes(topVoteArg).size();
 
         return Integer.compare(nbVotes2, nbVotes1);
     }
 
-    private static void displayTopVote(@NotNull CommandSender sender, @NotNull Iterable<? extends VotingUser> votingUsers, ETopVoteArg topVoteArg, int currentPage, int lastPage) {
+    private static void displayTopVote(@NotNull CommandSender sender, @NotNull Iterable<? extends VotingUser> votingUsers, ETimeRange topVoteArg, int currentPage, int lastPage) {
         String headerPath = switch (topVoteArg) {
             case ALL_TIME -> "messages.topvote.header.all-time";
             case YEAR -> "messages.topvote.header.year";
@@ -135,7 +135,7 @@ public class TopVoteCommand extends CompositeCommand {
                                      .replace(LAST_PAGE, Integer.toString(lastPage)));
     }
 
-    private static @NotNull List<VotingUser> getTopVotingUserToDisplay(@NotNull Collection<VotingUser> votingUsers, ETopVoteArg topVoteArg, int page) {
+    private static @NotNull List<VotingUser> getTopVotingUserToDisplay(@NotNull Collection<VotingUser> votingUsers, ETimeRange topVoteArg, int page) {
         List<VotingUser> votingUsersToDisplay = votingUsers.stream()
                                                            .sorted(((votingUser1, votingUser2) -> compareVotingUsers(votingUser1, votingUser2, topVoteArg)))
                                                            .toList();

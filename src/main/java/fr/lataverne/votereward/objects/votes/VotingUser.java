@@ -65,6 +65,7 @@ public class VotingUser {
         LocalDate now = LocalDate.now();
 
         return switch (arg) {
+            case ALL_TIME -> this.getVotes();
             case YEAR -> this.votes.stream().filter(v -> v.date().getYear() == now.getYear()).toList();
             case MONTH -> this.votes.stream()
                                     .filter(v -> v.date().getYear() == now.getYear() &&

@@ -72,3 +72,5 @@ permissions:
               votereward.admin.rewardsgroup.<rewards-group-name>.see:
                 description: Allows using /votereward admin rewardsgroups <rewards-group-name> see
                 default: op
+  votereward.topvote:
+    description: Allows using /votereward topvote

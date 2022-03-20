@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonStreamParser;
 import fr.lataverne.votereward.VoteReward;
+import fr.lataverne.votereward.objects.votes.ETopVoteArg;
 import fr.lataverne.votereward.objects.votes.VotingUser;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +30,10 @@ public class VotingUserManager {
         }
     }
 
+    public Collection<VotingUser> getVotingUsers(ETopVoteArg topVoteArg) {
+        return this.votingUsers.values().stream().filter(v -> !v.getVotes(topVoteArg).isEmpty()).toList();
+    }
+
     public void loadVotingUsers() {
         File folder = getVotingUserFolder();
 
@@ -51,7 +56,7 @@ public class VotingUserManager {
 
                     if (votingUser != null) {
                         VoteReward.sendMessageToConsole(
-                                "[VOTING USER] " + votingUser.getUUID() + ChatColor.GREEN + "loaded");
+                                "[VOTING USER] " + votingUser.getUUID() + ": " + ChatColor.GREEN + "loaded");
                         this.votingUsers.put(votingUser.getUUID(), votingUser);
                         count++;
                     }

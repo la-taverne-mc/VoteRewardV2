@@ -22,6 +22,19 @@ messages:
       any: "§cAucune récompense récuperée."
       one: "§aVous avez récuperé une récompense."
       multiple: "§aVous avez récuperé [nb-rewards] récompenses."
+  topvote:
+    header:
+      all-time: "§b===== Meilleur voteurs ====="
+      year: "§b===== Meilleurs voteurs de l'année ====="
+      month: "§b===== Meilleurs voteurs du mois ====="
+      week: "§b===== Meilleurs voteurs de la semaine ====="
+      day: "§b===== Meilleurs voteurs du jours ====="
+    voting-user-line:
+      first: "§e§l1. §f[username] §d([nb-votes])"
+      second: "§7§l2. §f[username] §d([nb-votes])"
+      third: "§6§l3. §f[username] §d([nb-votes])"
+      other: "§3§l[rank]. §f[username] §d([nb-votes])"
+    footer: "§b===== Page [current-page] sur [last-page] ====="
   admin:
     fakevote:
       one: "§aUn vote a été simulé. Vous avez récupéré [nb-given-rewards] récompense."
@@ -69,7 +82,7 @@ commands:
   votereward:
     description: "Commande de base de VoteReward"
     usage: "/vr"
-    parameters: "<bag | admin | stats | confirm >"
+    parameters: "<bag | admin | topvote | confirm >"
     confirm:
       description: "Permets de valider l'éxecution d'une commande demandant une confirmation"
       usage: "/vr confirm"
@@ -140,3 +153,7 @@ commands:
             description: "Permet de visualiser un groupe de récompenses"
             usage: "/vr admin rewardsgroup <rewards-group-name> see"
             parameters: "[page]"
+    topvote:
+      description: "Permet de voir les meilleurs voteurs du jour/semaine/mois/année"
+      usage: "/vr topvote"
+      parameters: "[day | week | month | year | all-time] [page]"

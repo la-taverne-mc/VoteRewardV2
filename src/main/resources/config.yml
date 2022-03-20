@@ -95,7 +95,7 @@ commands:
   votereward:
     description: "Commande de base de VoteReward"
     usage: "/vr"
-    parameters: "<bag | admin | topvote | confirm >"
+    parameters: "<bag | admin | topvote | vote | confirm >"
     confirm:
       description: "Permets de valider l'éxecution d'une commande demandant une confirmation"
       usage: "/vr confirm"

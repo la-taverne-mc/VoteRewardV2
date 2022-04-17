@@ -1,8 +1,8 @@
 package fr.lataverne.votereward.managers;
 
 import fr.lataverne.votereward.gui.BagView;
+import fr.lataverne.votereward.gui.ConfirmView;
 import fr.lataverne.votereward.gui.Gui;
-import fr.lataverne.votereward.gui.RewardGroupStatsView;
 import fr.lataverne.votereward.gui.admin.RewardsGroupListAdminView;
 import fr.lataverne.votereward.gui.admin.RewardsGroupView;
 import fr.lataverne.votereward.objects.Bag;
@@ -35,6 +35,12 @@ public class GuiManager {
         }
     }
 
+    public ConfirmView getConfirmView(@NotNull Player player, String actionInfo, Runnable action) {
+        ConfirmView confirmView = new ConfirmView(actionInfo, action);
+        this.guis.put(player.getUniqueId(), confirmView);
+        return confirmView;
+    }
+
     public @Nullable Gui getGui(UUID uuid) {
         return this.guis.getOrDefault(uuid, null);
     }
@@ -47,18 +53,6 @@ public class GuiManager {
         }
 
         return null;
-    }
-
-    public RewardGroupStatsView getRewardGroupStatsView(@NotNull Player player, int page) {
-        Gui gui = this.getGui(player.getUniqueId());
-
-        if (gui instanceof RewardGroupStatsView rewardGroupStatsView) {
-            return rewardGroupStatsView;
-        } else {
-            RewardGroupStatsView rewardGroupStatsView = new RewardGroupStatsView(page);
-            this.guis.put(player.getUniqueId(), rewardGroupStatsView);
-            return rewardGroupStatsView;
-        }
     }
 
     public RewardsGroupListAdminView getRewardsGroupListView(@NotNull Player player, int page) {

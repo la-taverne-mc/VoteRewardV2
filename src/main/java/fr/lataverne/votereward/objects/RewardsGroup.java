@@ -42,7 +42,7 @@ public class RewardsGroup {
     }
 
     public AchievableReward addAchievableReward(Reward reward) {
-        return this.addAchievableReward(reward, RewardsGroup.DEFAULT_PERCENTAGE_REWARD);
+        return this.addAchievableReward(reward, DEFAULT_PERCENTAGE_REWARD);
     }
 
     public AchievableReward addAchievableReward(Reward reward, double percentage) {
@@ -51,8 +51,12 @@ public class RewardsGroup {
         return achievableReward;
     }
 
-    public Collection<AchievableReward> getAchievableRewards() {
-        return Collections.unmodifiableCollection(this.achievableRewards.values());
+    public @Nullable AchievableReward getAchievableReward(int id) {
+        return this.achievableRewards.get(id);
+    }
+
+    public Set<Map.Entry<Integer, AchievableReward>> getAchievableRewardsAndIds() {
+        return this.achievableRewards.entrySet();
     }
 
     public int getNbRewards() {
@@ -84,6 +88,10 @@ public class RewardsGroup {
         double total = this.achievableRewards.values().stream().mapToDouble(AchievableReward::percentage).sum();
 
         return 100.0 * achievableReward.percentage() / total;
+    }
+
+    public void removeAchievableReward(int id) {
+        this.achievableRewards.remove(id);
     }
 
     public JsonElement toJson() {

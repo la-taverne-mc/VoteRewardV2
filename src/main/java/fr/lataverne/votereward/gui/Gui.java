@@ -4,23 +4,22 @@ import fr.lataverne.votereward.VoteReward;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.UUID;
 
 @SuppressWarnings("ClassNamePrefixedWithPackageName")
 public abstract class Gui {
 
     protected final ItemStack[] content;
 
-    @SuppressWarnings("FieldNotUsedInToString")
     protected final VoteReward plugin;
 
-    @SuppressWarnings("FieldNotUsedInToString")
     private Inventory inventory = null;
 
     protected Gui(int size) {
@@ -48,11 +47,6 @@ public abstract class Gui {
 
     public abstract EInventoryAction onInventoryClickEvent(@NotNull InventoryClickEvent event);
 
-    @Override
-    public String toString() {
-        return "GUI{" + "content=" + Arrays.toString(this.content) + "}";
-    }
-
     protected static @NotNull ItemStack getEmptySpace() {
         ItemStack emptySpaceItem = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
 
@@ -63,6 +57,19 @@ public abstract class Gui {
         }
 
         return emptySpaceItem;
+    }
+
+    protected void close() {
+        UUID uuid = this.plugin.getGuiManager().getOwnerOfGui(this);
+
+        if (uuid != null) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.closeInventory();
+            }
+
+            this.plugin.getGuiManager().removeGui(uuid);
+        }
     }
 
     protected abstract void setContent();

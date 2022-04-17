@@ -21,13 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class RewardsGroupView extends NavigableGui {
-
-    private static final String ID_LINE = "ID: ";
-
-    private static final Pattern ID_REWARD_LORE_PATTERN = Pattern.compile("^(ID: \\d+)$");
 
     private static final String NB_REWARDS = "[nb-rewards]";
 
@@ -65,7 +60,7 @@ public class RewardsGroupView extends NavigableGui {
             ItemStack clickedItem = event.getCurrentItem();
             if (clickedItem != null) {
                 if (event.getClick() == ClickType.SHIFT_RIGHT) {
-                    int id = getIdOfAchievableRewardClicked(clickedItem);
+                    int id = getIdOfItemClicked(clickedItem);
                     if (id != -1) {
                         String rewardsGroupName = this.plugin.getRewardsGroupManager()
                                                              .getRewardsGroupName(this.rewardsGroup);
@@ -117,28 +112,6 @@ public class RewardsGroupView extends NavigableGui {
         }
 
         super.setContent();
-    }
-
-    private static int getIdOfAchievableRewardClicked(@NotNull ItemStack clickedItem) {
-        ItemMeta meta = clickedItem.getItemMeta();
-        if (meta != null) {
-            List<String> lore = meta.getLore();
-            if (lore != null && !lore.isEmpty()) {
-                for (String line : lore) {
-                    String str = ChatColor.stripColor(line);
-                    if (ID_REWARD_LORE_PATTERN.matcher(str).matches()) {
-                        try {
-                            String strId = str.replace(ID_LINE, "");
-                            return Integer.parseInt(strId);
-                        } catch (NumberFormatException ignored) {
-                            return -1;
-                        }
-                    }
-                }
-            }
-        }
-
-        return -1;
     }
 
     private @NotNull ItemStack getAchievableRewardView(int id, @NotNull AchievableReward achievableReward) {

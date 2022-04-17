@@ -11,10 +11,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("ClassNamePrefixedWithPackageName")
 public abstract class Gui {
+
+    protected static final String ID_LINE = "ID: ";
+
+    protected static final Pattern ID_REWARD_LORE_PATTERN = Pattern.compile("^(ID: \\d+)$");
 
     protected final ItemStack[] content;
 
@@ -57,6 +63,28 @@ public abstract class Gui {
         }
 
         return emptySpaceItem;
+    }
+
+    protected static int getIdOfItemClicked(@NotNull ItemStack clickedItem) {
+        ItemMeta meta = clickedItem.getItemMeta();
+        if (meta != null) {
+            List<String> lore = meta.getLore();
+            if (lore != null && !lore.isEmpty()) {
+                for (String line : lore) {
+                    String str = ChatColor.stripColor(line);
+                    if (ID_REWARD_LORE_PATTERN.matcher(str).matches()) {
+                        try {
+                            String strId = str.replace(ID_LINE, "");
+                            return Integer.parseInt(strId);
+                        } catch (NumberFormatException ignored) {
+                            return -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return -1;
     }
 
     protected void close() {

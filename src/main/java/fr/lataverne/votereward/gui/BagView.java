@@ -11,6 +11,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,11 +19,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class BagView extends NavigableGui {
+
+    private static final String ID_LINE = "ID: ";
+
+    private static final Pattern ID_REWARD_LORE_PATTERN = Pattern.compile("^(ID: \\d+)$");
 
     private final Bag bag;
 
@@ -48,25 +54,37 @@ public class BagView extends NavigableGui {
             return EInventoryAction.Close;
         }
 
+        if (event.getRawSlot() >= 0 && event.getRawSlot() < 45) {
+            ItemStack clickedItem = event.getCurrentItem();
+            if (clickedItem != null && clickedItem.getType() != Material.AIR) {
+                int id = getIdOfItemClicked(clickedItem);
+                if (id != -1) {
+                    Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+
+                    BagManager.giveReward(this.bag, player, id);
+
+                    event.getWhoClicked().openInventory(this.getInventory());
+                    this.plugin.getGuiManager().addGui(event.getWhoClicked().getUniqueId(), this);
+                }
+            }
+        }
+
         return super.onInventoryClickEvent(event);
     }
 
     @Override
-    public String toString() {
-        return "BagView{" + "bag=" + this.bag + ", content=" + Arrays.toString(this.content) + ", page=" + this.page +
-               "}";
-    }
-
-    @Override
     protected void setContent() {
-        List<GivenReward> rewards = this.getRewardsToBeDisplayed();
+        List<Map.Entry<Integer, GivenReward>> rewards = this.getRewardsToBeDisplayed();
 
         int size = rewards.size();
 
         for (int i = 0; i < 45; i++) {
-            this.content[i] = i < size
-                              ? BagView.getRewardView(rewards.get(i))
-                              : new ItemStack(Material.AIR);
+            if (i < size) {
+                Map.Entry<Integer, GivenReward> entry = rewards.get(i);
+                this.content[i] = getRewardView(entry.getKey().intValue(), entry.getValue());
+            } else {
+                this.content[i] = new ItemStack(Material.AIR);
+            }
         }
 
         super.setContent();
@@ -82,7 +100,7 @@ public class BagView extends NavigableGui {
         this.content[49] = getRewardsItem;
     }
 
-    private static @NotNull ItemStack getRewardView(@NotNull GivenReward reward) {
+    private static @NotNull ItemStack getRewardView(int id, @NotNull GivenReward reward) {
         ItemStack item = new ItemStack(reward.reward().getItem());
         ItemMeta meta = item.getItemMeta();
 
@@ -93,6 +111,7 @@ public class BagView extends NavigableGui {
                 lore = new ArrayList<>();
             }
 
+            lore.add(ChatColor.GRAY + ID_LINE + id);
             lore.add("");
             lore.add(ChatColor.BLUE + "Expire le " +
                      reward.expirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -104,17 +123,17 @@ public class BagView extends NavigableGui {
         return item;
     }
 
-    private @NotNull List<GivenReward> getRewardsToBeDisplayed() {
+    private @NotNull List<Map.Entry<Integer, GivenReward>> getRewardsToBeDisplayed() {
         if (this.bag == null) {
             return new ArrayList<>();
         }
 
-        List<GivenReward> bagContent = this.bag.getBagContent().stream().toList();
+        List<Map.Entry<Integer, GivenReward>> rewardsWithId = this.bag.getBagContent().stream().toList();
 
-        Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(bagContent);
+        Pair<Integer, Integer> indexes = this.getFirstAndLastIndexes(rewardsWithId);
 
         return indexes.getLeft().intValue() == -1 || indexes.getRight().intValue() == -1
                ? new ArrayList<>()
-               : bagContent.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
+               : rewardsWithId.subList(indexes.getLeft().intValue(), indexes.getRight().intValue());
     }
 }

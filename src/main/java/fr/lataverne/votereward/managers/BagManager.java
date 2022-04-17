@@ -10,6 +10,7 @@ import fr.lataverne.votereward.Helper;
 import fr.lataverne.votereward.VoteReward;
 import fr.lataverne.votereward.objects.Bag;
 import fr.lataverne.votereward.objects.GivenReward;
+import fr.lataverne.votereward.objects.rewards.Reward;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
@@ -38,15 +39,19 @@ public class BagManager {
         int nbRewardsRetrieving = 0;
         int nbItemInBag = bag.getBagContent().size();
 
-        boolean giveReward = BagManager.inventoryPlayerHasEmptySlot(player) && nbRewardsRetrieving < nbItemInBag &&
+        boolean giveReward = inventoryPlayerHasEmptySlot(player) && nbRewardsRetrieving < nbItemInBag &&
                              nbRewardsRetrieving < maxNbRewardsRetrieving;
         while (giveReward) {
-            GivenReward reward = bag.getRandomReward();
-            player.getInventory().addItem(new ItemStack(reward.reward().getItem()));
-            bag.removeReward(reward);
+            var rewardAndId = bag.getRandomReward();
+
+            int id = rewardAndId.getKey().intValue();
+            Reward reward = rewardAndId.getValue().reward();
+
+            player.getInventory().addItem(new ItemStack(reward.getItem()));
+            bag.removeReward(id);
             nbRewardsRetrieving++;
 
-            giveReward = BagManager.inventoryPlayerHasEmptySlot(player) && nbRewardsRetrieving < nbItemInBag &&
+            giveReward = inventoryPlayerHasEmptySlot(player) && nbRewardsRetrieving < nbItemInBag &&
                          nbRewardsRetrieving < maxNbRewardsRetrieving;
         }
 
@@ -57,12 +62,30 @@ public class BagManager {
             message = VoteReward.getInstance()
                                 .getConfig()
                                 .getString("messages.reward.get.multiple")
-                                .replace(BagManager.NB_REWARDS, Integer.toString(nbRewardsRetrieving));
+                                .replace(NB_REWARDS, Integer.toString(nbRewardsRetrieving));
         } else {
             message = VoteReward.getInstance().getConfig().getString("messages.reward.get.any");
         }
 
         Helper.sendMessageToPlayer(player, message);
+    }
+
+    public static void giveReward(@NotNull Bag bag, Player player, int idReward) {
+        if (!inventoryPlayerHasEmptySlot(player)) {
+            player.sendMessage(VoteReward.getInstance().getConfig().getString("messages.reward.inventory-full"));
+            return;
+        }
+
+        GivenReward givenReward = bag.getReward(idReward);
+
+        if (givenReward != null) {
+            player.getInventory().addItem(new ItemStack(givenReward.reward().getItem()));
+            bag.removeReward(idReward);
+
+            player.sendMessage(VoteReward.getInstance().getConfig().getString("messages.reward.get.one"));
+        } else {
+            player.sendMessage(VoteReward.getInstance().getConfig().getString("messages.reward.get.not-found"));
+        }
     }
 
     public Bag getOrCreateBag(UUID uuid) {
@@ -89,7 +112,7 @@ public class BagManager {
     }
 
     public void loadBags() {
-        File bagsFolder = BagManager.getBagsFolder();
+        File bagsFolder = getBagsFolder();
 
         if (bagsFolder == null) {
             return;
@@ -106,7 +129,7 @@ public class BagManager {
 
             for (File file : files) {
                 try {
-                    Pair<UUID, Bag> ownerAndBag = BagManager.parseBagFile(file);
+                    Pair<UUID, Bag> ownerAndBag = parseBagFile(file);
                     if (ownerAndBag != null) {
                         this.bags.put(ownerAndBag.getKey(), ownerAndBag.getValue());
                         VoteReward.sendMessageToConsole(
@@ -133,7 +156,7 @@ public class BagManager {
 
         if (bag != null) {
             try {
-                BagManager.writeBagOnFile(uuid, bag);
+                writeBagOnFile(uuid, bag);
                 VoteReward.sendMessageToConsole("[BAG] " + uuid + ": " + ChatColor.GREEN + "saved");
                 return true;
             } catch (Exception e) {
@@ -171,7 +194,7 @@ public class BagManager {
     }
 
     private static @Nullable File getBagsFolder() {
-        File bagsFolder = new File(BagManager.BAG_FOLDER);
+        File bagsFolder = new File(BAG_FOLDER);
 
         if (!bagsFolder.exists()) {
             try {
@@ -212,7 +235,7 @@ public class BagManager {
                 UUID owner = UUID.fromString(jsonFile.get("owner").getAsString());
                 JsonArray jsonBag = jsonFile.getAsJsonArray("bag");
 
-                Collection<GivenReward> content = new ArrayList<>();
+                List<GivenReward> content = new ArrayList<>();
                 jsonBag.forEach(jsonReward -> {
                     GivenReward reward = GivenReward.parseJson(jsonReward);
                     if (reward != null) {
@@ -236,8 +259,8 @@ public class BagManager {
     }
 
     private static void writeBagOnFile(@NotNull UUID uuid, @NotNull Bag bag) throws Exception {
-        try (FileWriter fileWriter = new FileWriter(BagManager.BAG_FOLDER + "/" +
-                                                    uuid, StandardCharsets.UTF_8); JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
+        try (FileWriter fileWriter = new FileWriter(
+                BAG_FOLDER + "/" + uuid, StandardCharsets.UTF_8); JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
             jsonWriter.beginObject();
             jsonWriter.name("owner").value(uuid.toString());
             jsonWriter.name("bag").jsonValue(bag.toJson().toString());

@@ -15,10 +15,12 @@ messages:
     request-cancelled: "§cDélai de confirmation de la command dépassé."
     no-command-to-confirm: "§cVous n'avez pas de commande à confirmer."
   reward:
+    inventory-full: "§cVotre inventaire est plein, vous ne pouvez pas recevoir de récompense."
     added:
       any: "§cAucune récompense n'est obtenable pour le moment."
       one: "§aVous avez récupéré une récompense."
     get:
+      not-found: "§cLa récompense n'a pas été trouvée."
       any: "§cAucune récompense récuperée."
       one: "§aVous avez récuperé une récompense."
       multiple: "§aVous avez récuperé [nb-rewards] récompenses."

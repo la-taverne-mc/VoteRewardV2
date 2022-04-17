@@ -66,14 +66,16 @@ messages:
 
 # All string used in the different interfaces
 gui:
+  confirm:
+    title: "Confirmer ?"
+    confirm-button: "§aConfirmer"
+    cancel-button: "§cAnnuler"
   navigationButton:
     previousPage: "§r§a← Page précédente"
     nextPage: "§r§aPage suivante →"
   bagSee:
     title: "Sac de récompenses"
     getRewards: "§r§eRécuperer les récompenses"
-  stat:
-    title: "Récompenses obtenables"
   admin:
     rewards-group-list:
       title: "Groupes de récompenses"
@@ -86,6 +88,9 @@ gui:
       reward-view:
         percentage: "§7Pourcentage: [percentage]%"
         real-percentage: "§7Pourcentage réel: [real-percentage]%"
+        shortcut-to-remove: "§cSHIFT + RIGHT_CLICK to remove"
+      action-info:
+        remove-reward: "§7Voulez-vous vraiment retirer cette récompense du groupe de récompense [rewards-group-name] ?"
 
 # Commands
 commands:

@@ -5,46 +5,58 @@ import com.google.gson.JsonElement;
 import fr.lataverne.votereward.Constant;
 import fr.lataverne.votereward.objects.rewards.Reward;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Bag {
 
-    private final Collection<GivenReward> bagContent;
+    private final Map<Integer, GivenReward> bagContent;
 
-    public Bag(Collection<GivenReward> content) {
-        this.bagContent = new ArrayList<>(content);
+    public Bag(@NotNull List<GivenReward> content) {
+        this.bagContent = new HashMap<>();
+        int size = content.size();
+        for (int i = 0; i < size; i++) {
+            this.bagContent.put(i, content.get(i));
+        }
+
         this.verifyExpirationDates();
     }
 
     public void addReward(Reward reward) {
-        this.bagContent.add(new GivenReward(reward, LocalDate.now().plusDays(Constant.EXPIRATION_TIME)));
+        this.bagContent.put(this.getAvailableId(), new GivenReward(reward, LocalDate.now()
+                                                                                    .plusDays(Constant.EXPIRATION_TIME)));
     }
 
-    public Collection<GivenReward> getBagContent() {
-        return Collections.unmodifiableCollection(this.bagContent);
+    public Set<Map.Entry<Integer, GivenReward>> getBagContent() {
+        return this.bagContent.entrySet();
     }
 
-    public @Nullable GivenReward getRandomReward() {
+    public @Nullable Map.Entry<Integer, GivenReward> getRandomReward() {
         return this.bagContent.isEmpty()
                ? null
-               : this.bagContent.stream().toList().get(new SecureRandom().nextInt(this.bagContent.size()));
+               : this.bagContent.entrySet().stream().toList().get(new SecureRandom().nextInt(this.bagContent.size()));
     }
 
-    public void removeReward(GivenReward reward) {
-        this.bagContent.remove(reward);
+    public GivenReward getReward(int id) {
+        return this.bagContent.getOrDefault(id, null);
+    }
+
+    public void removeReward(int id) {
+        this.bagContent.remove(id);
     }
 
     public JsonElement toJson() {
         JsonArray jsonRewards = new JsonArray();
 
         if (!this.bagContent.isEmpty()) {
-            this.bagContent.forEach(reward -> jsonRewards.add(reward.toJson()));
+            this.bagContent.forEach((id, reward) -> jsonRewards.add(reward.toJson()));
         }
 
         return jsonRewards;
@@ -56,8 +68,25 @@ public class Bag {
     }
 
     public final void verifyExpirationDates() {
-        if (!this.bagContent.isEmpty()) {
-            this.bagContent.removeIf(reward -> reward.expirationDate().isBefore(LocalDate.now()));
+        this.bagContent.forEach((id, reward) -> {
+            if (reward.expirationDate().isBefore(LocalDate.now())) {
+                this.removeReward(id.intValue());
+            }
+        });
+    }
+
+    private Integer getAvailableId() {
+        int id = 0;
+        boolean idNotAvailable = true;
+
+        while (idNotAvailable) {
+            if (this.bagContent.containsKey(id)) {
+                id++;
+            } else {
+                idNotAvailable = false;
+            }
         }
+
+        return id;
     }
 }

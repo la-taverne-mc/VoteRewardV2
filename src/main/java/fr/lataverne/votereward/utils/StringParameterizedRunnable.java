@@ -1,12 +1,10 @@
 package fr.lataverne.votereward.utils;
 
-@FunctionalInterface
-public interface StringParameterizedRunnable extends Runnable {
+public abstract class StringParameterizedRunnable implements Runnable {
 
-    @Override
-    public default void run() {
-        this.run("");
+    protected String parameter = "";
+
+    public void setParameter(String param) {
+        this.parameter = param;
     }
-
-    public void run(String param);
 }

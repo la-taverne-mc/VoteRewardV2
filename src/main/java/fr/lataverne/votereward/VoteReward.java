@@ -85,7 +85,7 @@ public class VoteReward extends JavaPlugin {
         this.guiManager = new GuiManager();
         this.rewardsGroupManager = new RewardsGroupManager();
         this.commandsManager = new CommandsManager();
-        this.chatResponseManager = new ChatResponseManager();
+        this.chatResponseManager = new ChatResponseManager(this);
 
         new VoteRewardCommand();
 

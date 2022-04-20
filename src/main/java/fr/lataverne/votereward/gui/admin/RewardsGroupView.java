@@ -193,7 +193,14 @@ public class RewardsGroupView extends NavigableGui {
         player.sendMessage(this.plugin.getConfig()
                                       .getString("messages.admin.rewards-group.update-reward-percentage.request"));
 
-        StringParameterizedRunnable runnable = (String param) -> this.parsePercentageRunnable(player, reward, param);
+        Runnable runnable = new StringParameterizedRunnable() {
+
+            @Override
+            public void run() {
+                RewardsGroupView.this.parsePercentageRunnable(player, reward, this.parameter);
+            }
+        };
+
         this.plugin.getChatResponseManager().add(player.getUniqueId(), runnable);
     }
 

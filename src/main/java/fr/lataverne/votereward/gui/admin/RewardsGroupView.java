@@ -59,9 +59,12 @@ public class RewardsGroupView extends NavigableGui {
 
             ItemStack clickedItem = event.getCurrentItem();
             if (clickedItem != null) {
-                if (event.getClick() == ClickType.SHIFT_RIGHT) {
-                    int id = getIdOfItemClicked(clickedItem);
-                    if (id != -1) {
+                int id = getIdOfItemClicked(clickedItem);
+
+                if (id != -1) {
+                    if (event.getClick() == ClickType.RIGHT) {
+                        this.close();
+                    } else if (event.getClick() == ClickType.SHIFT_RIGHT) {
                         String rewardsGroupName = this.plugin.getRewardsGroupManager()
                                                              .getRewardsGroupName(this.rewardsGroup);
                         String actionInfo = this.plugin.getConfig()
@@ -136,6 +139,8 @@ public class RewardsGroupView extends NavigableGui {
                                 .getString("gui.admin.rewards-group-view.reward-view.real-percentage")
                                 .replace(REAL_PERCENTAGE, realPercentage));
             lore.add("");
+            lore.add(this.plugin.getConfig()
+                                .getString("gui.admin.rewards-group-view.reward-view.shortcut-to-edit-percentage"));
             lore.add(this.plugin.getConfig().getString("gui.admin.rewards-group-view.reward-view.shortcut-to-remove"));
 
             meta.setLore(lore);

@@ -90,7 +90,8 @@ gui:
       reward-view:
         percentage: "§7Pourcentage: [percentage]%"
         real-percentage: "§7Pourcentage réel: [real-percentage]%"
-        shortcut-to-remove: "§cSHIFT + RIGHT_CLICK to remove"
+        shortcut-to-edit-percentage: "§aRIGHT_CLICK pour modifier le pourcentage"
+        shortcut-to-remove: "§cSHIFT + RIGHT_CLICK pour supprimer"
       action-info:
         remove-reward: "§7Voulez-vous vraiment retirer cette récompense du groupe de récompense [rewards-group-name] ?"
 

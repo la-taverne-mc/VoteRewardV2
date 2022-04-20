@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SPLITTER_PROPORTION" value="0.328391" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="957027ae-108a-4cd8-874e-4225e463a6cf" name="Changes" comment="Update config.yml and add action info in the items on RewardsGroupView">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Record" />
+        <option value="package-info" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="issue-47" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="Config files" pattern="file:src/main/resources/config.yml" />
+    <scope name="Idea Config" pattern="file[VoteReward]:.idea/*||file[VoteReward]:.idea//*" />
+    <scope name="GitHub Config" pattern="file[VoteReward]:.github/*||file[VoteReward]:.github//*" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="22vHpvQQBjPJcLbVGfeiotnPDWi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.scopes"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="fr.lataverne.votereward.utils.json" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="fr.lataverne.votereward.objects.Bag" />
+      <recent name="fr.lataverne.votereward.managers.CommandManager" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="fr.lataverne.votereward.Constant" />
+      <recent name="fr.lataverne.votereward.managers.Constant" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="fr.lataverne.votereward.commands" />
+      <recent name="fr.lataverne.votereward" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="fr.lataverne.votereward.objects" />
+      <recent name="fr.lataverne.votereward.managers" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="fr.lataverne.votereward.utils.json" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn " />
+      <command value="_COLOR" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Maven.VoteReward build">
+    <configuration name="ItemStackJsonTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VoteReward" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fr.lataverne.votereward.utils.json.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="fr.lataverne.votereward.utils.json" />
+      <option name="MAIN_CLASS_NAME" value="fr.lataverne.votereward.utils.json.ItemStackJsonTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ItemStackJsonTest.testSerialize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VoteReward" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fr.lataverne.votereward.utils.json.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="fr.lataverne.votereward.utils.json" />
+      <option name="MAIN_CLASS_NAME" value="fr.lataverne.votereward.utils.json.ItemStackJsonTest" />
+      <option name="METHOD_NAME" value="testSerialize" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VoteReward build" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings">
+          <MavenGeneralSettings>
+            <option name="alwaysUpdateSnapshots" value="false" />
+            <option name="checksumPolicy" value="NOT_SET" />
+            <option name="failureBehavior" value="NOT_SET" />
+            <option name="localRepository" value="" />
+            <option name="mavenHome" value="Bundled (Maven 3)" />
+            <option name="nonRecursive" value="false" />
+            <option name="outputLevel" value="INFO" />
+            <option name="pluginUpdatePolicy" value="DEFAULT" />
+            <option name="printErrorStackTraces" value="false" />
+            <option name="showDialogWithAdvancedSettings" value="false" />
+            <option name="threads" />
+            <option name="useMavenConfig" value="false" />
+            <option name="usePluginRegistry" value="false" />
+            <option name="userSettingsFile" value="" />
+            <option name="workOffline" value="false" />
+          </MavenGeneralSettings>
+        </option>
+        <option name="myRunnerSettings">
+          <MavenRunnerSettings>
+            <option name="delegateBuildToMaven" value="false" />
+            <option name="environmentProperties">
+              <map />
+            </option>
+            <option name="jreName" value="#USE_PROJECT_JDK" />
+            <option name="mavenProperties">
+              <map />
+            </option>
+            <option name="passParentEnv" value="true" />
+            <option name="runMavenInBackground" value="true" />
+            <option name="skipTests" value="false" />
+            <option name="vmOptions" value="" />
+          </MavenRunnerSettings>
+        </option>
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="C:\Users\Antonin\source\repos\la-taverne-mc\VoteReward" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.ItemStackJsonTest" />
+      <item itemvalue="JUnit.ItemStackJsonTest.testSerialize" />
+      <item itemvalue="Maven.VoteReward build" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ItemStackJsonTest.testSerialize" />
+        <item itemvalue="JUnit.ItemStackJsonTest" />
+        <item itemvalue="JUnit.ItemStackJsonTest.testSerialize" />
+        <item itemvalue="JUnit.ItemStackJsonTest" />
+        <item itemvalue="JUnit.ItemStackJsonTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="1" Folder0="C:\Users\Antonin\source\repos\la-taverne-mc\VoteReward\.idea\dictionaries" CustomDictionaries="1" CustomDictionary0="C:\Users\Antonin\source\repos\la-taverne-mc\VoteReward\.idea\dictionaries\VoteRewardDictionary.dic" DefaultDictionary="project-level" UseSingleDictionary="false" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Antonin\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="957027ae-108a-4cd8-874e-4225e463a6cf" name="Changes" comment="" />
+      <created>1640711331713</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1640711331713</updated>
+      <workItem from="1640711333609" duration="5940000" />
+      <workItem from="1640787058890" duration="4965000" />
+      <workItem from="1641333449167" duration="4848000" />
+      <workItem from="1641338582839" duration="8000" />
+      <workItem from="1641371535687" duration="14689000" />
+      <workItem from="1641418688918" duration="4989000" />
+      <workItem from="1641502857684" duration="1774000" />
+      <workItem from="1641567921249" duration="2309000" />
+      <workItem from="1641750349885" duration="930000" />
+      <workItem from="1641752033914" duration="2264000" />
+      <workItem from="1641804547077" duration="41000" />
+      <workItem from="1641805314235" duration="888000" />
+      <workItem from="1641806288102" duration="459000" />
+      <workItem from="1641816957441" duration="30000" />
+      <workItem from="1641821945275" duration="12156000" />
+      <workItem from="1641855223635" duration="23531000" />
+      <workItem from="1641982965319" duration="1734000" />
+      <workItem from="1641988185326" duration="73000" />
+      <workItem from="1641988308180" duration="3658000" />
+      <workItem from="1642075776593" duration="13318000" />
+      <workItem from="1642266367922" duration="17079000" />
+      <workItem from="1642341886639" duration="588000" />
+      <workItem from="1642368526793" duration="16328000" />
+      <workItem from="1642459842798" duration="8438000" />
+      <workItem from="1642621347405" duration="3703000" />
+      <workItem from="1642662769414" duration="9310000" />
+      <workItem from="1642707905215" duration="1686000" />
+      <workItem from="1642749442520" duration="2175000" />
+      <workItem from="1642765896425" duration="8769000" />
+      <workItem from="1642891980986" duration="1259000" />
+      <workItem from="1642974890434" duration="614000" />
+      <workItem from="1643012238446" duration="22699000" />
+      <workItem from="1643112169878" duration="2055000" />
+      <workItem from="1643114259975" duration="19243000" />
+      <workItem from="1643184925216" duration="10224000" />
+      <workItem from="1643200039779" duration="3548000" />
+      <workItem from="1643207794665" duration="4399000" />
+      <workItem from="1643271875802" duration="5786000" />
+      <workItem from="1643284828603" duration="4947000" />
+      <workItem from="1643355456750" duration="905000" />
+      <workItem from="1643361813014" duration="14000" />
+      <workItem from="1643362195064" duration="1111000" />
+      <workItem from="1643371284764" duration="5423000" />
+      <workItem from="1643386524565" duration="1867000" />
+      <workItem from="1643639921067" duration="2106000" />
+      <workItem from="1643670214368" duration="604000" />
+      <workItem from="1643705544844" duration="12396000" />
+      <workItem from="1643802639406" duration="4235000" />
+      <workItem from="1643888854507" duration="9093000" />
+      <workItem from="1643990466441" duration="4739000" />
+      <workItem from="1644011282810" duration="1787000" />
+      <workItem from="1644013106061" duration="24610000" />
+      <workItem from="1644225110228" duration="26528000" />
+      <workItem from="1644347479017" duration="7246000" />
+      <workItem from="1644408503804" duration="26985000" />
+      <workItem from="1644477255720" duration="2574000" />
+      <workItem from="1644492206739" duration="8376000" />
+      <workItem from="1644512202371" duration="14007000" />
+      <workItem from="1644587089625" duration="719000" />
+      <workItem from="1644589098005" duration="5538000" />
+      <workItem from="1644847080683" duration="6106000" />
+      <workItem from="1644853375155" duration="186000" />
+      <workItem from="1644853698906" duration="41000" />
+      <workItem from="1644853868756" duration="11065000" />
+      <workItem from="1644927053213" duration="667000" />
+      <workItem from="1645039922359" duration="1422000" />
+      <workItem from="1645098386055" duration="1530000" />
+      <workItem from="1645100462489" duration="15980000" />
+      <workItem from="1645278353044" duration="2338000" />
+      <workItem from="1645453720828" duration="6180000" />
+      <workItem from="1645472820530" duration="2870000" />
+      <workItem from="1645519303605" duration="594000" />
+      <workItem from="1645522946913" duration="6409000" />
+      <workItem from="1645533998100" duration="16223000" />
+      <workItem from="1645690645647" duration="2928000" />
+      <workItem from="1645693640920" duration="1873000" />
+      <workItem from="1645695793335" duration="2474000" />
+      <workItem from="1645698305923" duration="21000" />
+      <workItem from="1645705226135" duration="4788000" />
+      <workItem from="1645777441942" duration="274000" />
+      <workItem from="1645778476114" duration="9171000" />
+      <workItem from="1645870774542" duration="17763000" />
+      <workItem from="1646159738565" duration="2697000" />
+      <workItem from="1646223157542" duration="4296000" />
+      <workItem from="1646291643561" duration="4430000" />
+      <workItem from="1646310202763" duration="1764000" />
+      <workItem from="1646318049885" duration="1583000" />
+      <workItem from="1646378218417" duration="5890000" />
+      <workItem from="1646396499768" duration="1620000" />
+      <workItem from="1646412705339" duration="975000" />
+      <workItem from="1646685499881" duration="1498000" />
+      <workItem from="1646918832604" duration="1077000" />
+      <workItem from="1646920725322" duration="2748000" />
+      <workItem from="1647008786846" duration="984000" />
+      <workItem from="1647084440403" duration="6704000" />
+      <workItem from="1647107058872" duration="206000" />
+      <workItem from="1647107336229" duration="4736000" />
+      <workItem from="1647288891407" duration="762000" />
+      <workItem from="1647338551133" duration="7525000" />
+      <workItem from="1647458372032" duration="2256000" />
+      <workItem from="1647501674990" duration="2163000" />
+      <workItem from="1647510900446" duration="2649000" />
+      <workItem from="1647590412022" duration="17829000" />
+      <workItem from="1647618685756" duration="22221000" />
+      <workItem from="1647802247927" duration="7137000" />
+      <workItem from="1647876059172" duration="11223000" />
+      <workItem from="1647958126525" duration="596000" />
+      <workItem from="1648193930687" duration="273000" />
+      <workItem from="1648589967734" duration="363000" />
+      <workItem from="1648667166054" duration="1687000" />
+      <workItem from="1650192365835" duration="135000" />
+      <workItem from="1650192520006" duration="11470000" />
+      <workItem from="1650439556108" duration="170000" />
+      <workItem from="1650440314092" duration="759000" />
+      <workItem from="1650441543296" duration="311000" />
+    </task>
+    <task id="LOCAL-00007" summary="Create RewardGroup and RewardGroupManager">
+      <created>1643734096292</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1643734096292</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add new commands manager&#10;Added commands :&#10;* votereward&#10;* votereward bag&#10;* votereward bag get&#10;* votereward bag see">
+      <created>1644090056417</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1644090056417</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add permission for Bag command">
+      <created>1644091470934</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1644091470934</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add fakevote command">
+      <created>1644103105430</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1644103105430</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add bag admin commands :&#10;* /vr admin bag get&#10;* /vr admin bag see">
+      <created>1644233336973</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1644233336973</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Rename RewardGroup to RewardsGroup">
+      <created>1644234547114</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1644234547114</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add 3 new commands and 1 gui :&#10;* ActivateRewardsGroupAdminCommands&#10;* CreateRewardsGroupAdminCommand&#10;* RewardsGroupListAdminCommand&#10;and&#10;* RewardsGroupListAdminView">
+      <created>1644422915651</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1644422915651</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add autocompletion for commands">
+      <created>1644436426611</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1644436426611</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Change the default execution of commands to show the usage and a tip and change the help command for the commands without children">
+      <created>1644446452142</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1644446452142</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add hidden property for commands">
+      <created>1644497736648</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1644497736648</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Add DynamicCommand interface and add command to add a reward in rewards group (not finished)">
+      <created>1644574740499</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1644574740499</updated>
+    </task>
+    <task id="LOCAL-00018" summary="The commands and subcommands now have access to all command arguments">
+      <created>1644592419216</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1644592419216</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Add command to add a reward in a rewards group">
+      <created>1644855719852</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1644855719852</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Add an id for each the achievable rewards contained by a rewards group">
+      <created>1644861263034</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1644861263034</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Add new command to see a rewards group.&#10;A RewardsGroupView was created.">
+      <created>1645104280559</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1645104280559</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Rename ActivateRewardsGroupAdminCommands to ActivateRewardsGroupAdminCommand">
+      <created>1645461080266</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1645461080266</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Add confirmable command system and a command to delete a rewards group">
+      <created>1645534073964</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1645534073964</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Make ToString method of CompositeCommand class to final">
+      <created>1645535120886</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1645535120886</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Add code style rules">
+      <created>1645546744706</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1645546744706</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Update code style rules">
+      <created>1645604682043</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1645604682043</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward&quot;">
+      <created>1645609462466</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1645609462466</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.utils&quot;">
+      <created>1645692215707</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1645692215707</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.objects&quot;">
+      <created>1645692500871</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1645692500871</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.managers&quot;">
+      <created>1645692734918</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1645692734918</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.gui&quot;">
+      <created>1645695983533</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1645695983533</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.commands&quot;">
+      <created>1645698248934</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1645698248934</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Update qodana_workflow.yml and Project_Default.xml. Add qodana.yaml file.">
+      <created>1645791738824</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1645791738824</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Add qodana workflow and its config. Update the project inspection profile">
+      <created>1645873698731</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1645873698731</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Split rewardsgroups command">
+      <created>1646059274185</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1646059274185</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Add advanced log for loading and saving bags">
+      <created>1646081334887</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1646081334887</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Add advanced log for loading and saving rewards groups">
+      <created>1646293799015</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1646293799015</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Add Votifier dependency">
+      <created>1646302108556</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1646302108556</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Add Votifier dependency">
+      <created>1646302771671</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1646302771671</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Fix the help command">
+      <created>1646313303431</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1646313303431</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Clear the message in config.yml">
+      <created>1646382712202</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1646382712202</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Remove internal permissions">
+      <created>1646385923915</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1646385923915</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Remove internal permissions">
+      <created>1647501789511</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1647501789511</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Abort Votifier to use the command /vr addVote">
+      <created>1647596708846</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1647596708846</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Add a warning message in console if a player votes but has never played on the server">
+      <created>1647597824079</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1647597824079</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Add system to save the voting history">
+      <created>1647632764658</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1647632764658</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Add topvote command">
+      <created>1647801919201</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1647801919201</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Add vote command to see the number of votes made by a player">
+      <created>1647808181550</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1647808181550</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Change version to DEV-VERSION">
+      <created>1647808525498</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1647808525498</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Add parameters for votereward command in config.yml">
+      <created>1647809216534</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1647809216535</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Add parameters for votereward command in config.yml">
+      <created>1650206946667</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1650206946668</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Change the used version of ItemReward">
+      <created>1650207441056</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1650207441056</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Add id for GivenReward">
+      <created>1650214612668</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1650214612668</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Player can get rewards in the bag view with a left click in a reward">
+      <created>1650214657488</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1650214657488</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Update config.yml and add action info in the items on RewardsGroupView">
+      <created>1650439654753</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1650439654754</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CODE_SMELLS_PROFILE" value="Project Default" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Project Default" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.utils&quot;" />
+    <MESSAGE value="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.objects&quot;" />
+    <MESSAGE value="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.managers&quot;" />
+    <MESSAGE value="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.gui&quot;" />
+    <MESSAGE value="Apply code style rules on the classes of the package &quot;fr.lataverne.votereward.commands&quot;" />
+    <MESSAGE value="Update qodana_workflow.yml and Project_Default.xml. Add qodana.yaml file." />
+    <MESSAGE value="Add qodana workflow and its config. Update the project inspection profile" />
+    <MESSAGE value="Split rewardsgroups command" />
+    <MESSAGE value="Add advanced log for loading and saving bags" />
+    <MESSAGE value="Add advanced log for loading and saving rewards groups" />
+    <MESSAGE value="Add Votifier dependency" />
+    <MESSAGE value="Fix the help command" />
+    <MESSAGE value="Clear the message in config.yml" />
+    <MESSAGE value="Remove internal permissions" />
+    <MESSAGE value="Abort Votifier to use the command /vr addVote" />
+    <MESSAGE value="Add a warning message in console if a player votes but has never played on the server" />
+    <MESSAGE value="Add system to save the voting history" />
+    <MESSAGE value="Add topvote command" />
+    <MESSAGE value="Add vote command to see the number of votes made by a player" />
+    <MESSAGE value="Change version to DEV-VERSION" />
+    <MESSAGE value="Add parameters for votereward command in config.yml" />
+    <MESSAGE value="Change the used version of ItemReward" />
+    <MESSAGE value="Add id for GivenReward" />
+    <MESSAGE value="Player can get rewards in the bag view with a left click in a reward" />
+    <MESSAGE value="Update config.yml and add action info in the items on RewardsGroupView" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update config.yml and add action info in the items on RewardsGroupView" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

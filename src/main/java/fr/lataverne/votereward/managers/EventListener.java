@@ -34,6 +34,7 @@ public class EventListener implements Listener {
 
         if (this.chatResponseManager.awaitingResponse(uuid)) {
             this.chatResponseManager.runProcessing(uuid, event.getMessage());
+            event.setCancelled(true);
         }
     }
 

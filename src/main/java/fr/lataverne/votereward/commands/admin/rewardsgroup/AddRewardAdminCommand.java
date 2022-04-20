@@ -59,8 +59,8 @@ public class AddRewardAdminCommand extends CompositeCommand {
 
             String message = this.plugin.getConfig()
                                         .getString("messages.admin.rewards-group.add-reward.successfully-added-reward");
-            message = message.replace(AddRewardAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName)
-                             .replace(AddRewardAdminCommand.PERCENTAGE, Double.toString(achievableReward.percentage()));
+            message = message.replace(REWARDS_GROUP_NAME, rewardsGroupName)
+                             .replace(PERCENTAGE, Double.toString(achievableReward.getPercentage()));
 
             sender.sendMessage(message);
         }

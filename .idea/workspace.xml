@@ -8,7 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="957027ae-108a-4cd8-874e-4225e463a6cf" name="Changes" comment="Update config.yml and add action info in the items on RewardsGroupView">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/managers/ChatResponseManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/utils/StringParameterizedRunnable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/utils/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/VoteReward.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/VoteReward.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroup/AddRewardAdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroup/AddRewardAdminCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/gui/admin/RewardsGroupView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/gui/admin/RewardsGroupView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/managers/EventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/managers/EventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/objects/AchievableReward.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/objects/AchievableReward.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/objects/RewardsGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/lataverne/votereward/objects/RewardsGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +34,8 @@
         <option value="Interface" />
         <option value="Enum" />
         <option value="Record" />
-        <option value="package-info" />
         <option value="Class" />
+        <option value="package-info" />
       </list>
     </option>
   </component>
@@ -84,11 +96,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
+    "code.cleanup.on.save": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "project.scopes"
+    "rearrange.code.on.save": "true",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "Errors"
   }
 }]]></component>
   <component name="RecentsManager">

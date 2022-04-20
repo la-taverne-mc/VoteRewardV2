@@ -8,20 +8,33 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class EventListener implements Listener {
 
-    @SuppressWarnings("FieldNotUsedInToString")
     private final BagManager bagManager;
 
-    @SuppressWarnings("FieldNotUsedInToString")
+    private final ChatResponseManager chatResponseManager;
+
     private final GuiManager guiManager;
 
     public EventListener(@NotNull VoteReward plugin) {
         this.bagManager = plugin.getBagManager();
         this.guiManager = plugin.getGuiManager();
+        this.chatResponseManager = plugin.getChatResponseManager();
+    }
+
+    @EventHandler
+    public void onAsyncPlayerChatEvent(@NotNull AsyncPlayerChatEvent event) {
+        UUID uuid = event.getPlayer().getUniqueId();
+
+        if (this.chatResponseManager.awaitingResponse(uuid)) {
+            this.chatResponseManager.runProcessing(uuid, event.getMessage());
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -47,10 +60,5 @@ public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuitEvent(@NotNull PlayerQuitEvent event) {
         this.bagManager.saveBag(event.getPlayer().getUniqueId());
-    }
-
-    @Override
-    public String toString() {
-        return "EventListener{}";
     }
 }

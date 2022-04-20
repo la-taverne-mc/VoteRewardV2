@@ -70,13 +70,13 @@ public class RewardsGroup {
 
         RandomCollection<AchievableReward> randomCollection = new RandomCollection<>();
         for (AchievableReward achievableReward : this.achievableRewards.values()) {
-            randomCollection.add(achievableReward.percentage(), achievableReward);
+            randomCollection.add(achievableReward.getPercentage(), achievableReward);
         }
 
         AchievableReward achievableReward = randomCollection.next();
 
         return achievableReward != null
-               ? achievableReward.reward()
+               ? achievableReward.getReward()
                : null;
     }
 
@@ -85,9 +85,9 @@ public class RewardsGroup {
             return -1;
         }
 
-        double total = this.achievableRewards.values().stream().mapToDouble(AchievableReward::percentage).sum();
+        double total = this.achievableRewards.values().stream().mapToDouble(AchievableReward::getPercentage).sum();
 
-        return 100.0 * achievableReward.percentage() / total;
+        return 100.0 * achievableReward.getPercentage() / total;
     }
 
     public void removeAchievableReward(int id) {

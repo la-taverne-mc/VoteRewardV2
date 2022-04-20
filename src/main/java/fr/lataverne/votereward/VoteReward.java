@@ -18,6 +18,8 @@ public class VoteReward extends JavaPlugin {
 
     private BagManager bagManager = null;
 
+    private ChatResponseManager chatResponseManager = null;
+
     private CommandsManager commandsManager = null;
 
     private GuiManager guiManager = null;
@@ -37,6 +39,10 @@ public class VoteReward extends JavaPlugin {
 
     public BagManager getBagManager() {
         return this.bagManager;
+    }
+
+    public ChatResponseManager getChatResponseManager() {
+        return this.chatResponseManager;
     }
 
     public CommandsManager getCommandsManager() {
@@ -79,6 +85,7 @@ public class VoteReward extends JavaPlugin {
         this.guiManager = new GuiManager();
         this.rewardsGroupManager = new RewardsGroupManager();
         this.commandsManager = new CommandsManager();
+        this.chatResponseManager = new ChatResponseManager();
 
         new VoteRewardCommand();
 

@@ -8,7 +8,16 @@ import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public record AchievableReward(Reward reward, double percentage) {
+public class AchievableReward {
+
+    private final Reward reward;
+
+    private double percentage;
+
+    public AchievableReward(Reward reward, double percentage) {
+        this.reward = reward;
+        this.percentage = percentage;
+    }
 
     public static @Nullable AchievableReward parseJson(@NotNull JsonElement elemAchievableReward) {
         try {
@@ -30,6 +39,18 @@ public record AchievableReward(Reward reward, double percentage) {
         }
 
         return null;
+    }
+
+    public double getPercentage() {
+        return this.percentage;
+    }
+
+    public void setPercentage(double percentage) {
+        this.percentage = percentage;
+    }
+
+    public Reward getReward() {
+        return this.reward;
     }
 
     public @NotNull JsonElement toJson() {

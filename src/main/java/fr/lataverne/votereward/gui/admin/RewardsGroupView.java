@@ -6,12 +6,12 @@ import fr.lataverne.votereward.gui.Gui;
 import fr.lataverne.votereward.gui.NavigableGui;
 import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.RewardsGroup;
+import fr.lataverne.votereward.utils.StringParameterizedRunnable;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,26 +59,13 @@ public class RewardsGroupView extends NavigableGui {
 
             ItemStack clickedItem = event.getCurrentItem();
             if (clickedItem != null) {
-                if (event.getClick() == ClickType.SHIFT_RIGHT) {
-                    int id = getIdOfItemClicked(clickedItem);
-                    if (id != -1) {
-                        String rewardsGroupName = this.plugin.getRewardsGroupManager()
-                                                             .getRewardsGroupName(this.rewardsGroup);
-                        String actionInfo = this.plugin.getConfig()
-                                                       .getString("gui.admin.rewards-group-view.action-info.remove-reward")
-                                                       .replace(REWARDS_GROUP_NAME, rewardsGroupName);
-                        Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
+                int id = getIdOfItemClicked(clickedItem);
+                Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
 
-                        this.close();
-
-                        ConfirmView confirmView = this.plugin.getGuiManager().getConfirmView(player, actionInfo, () -> {
-                            this.rewardsGroup.removeAchievableReward(id);
-                            RewardsGroupView rewardsGroupView = this.plugin.getGuiManager()
-                                                                           .getRewardsGroupView(player, this.rewardsGroup, this.page);
-                            player.openInventory(rewardsGroupView.getInventory());
-                        });
-
-                        player.openInventory(confirmView.getInventory());
+                if (id != -1) {
+                    switch (event.getClick()) {
+                        case RIGHT -> this.rightClickOnItem(player, id);
+                        case SHIFT_RIGHT -> this.shiftRightClickOnItem(player, id);
                     }
                 }
             }
@@ -87,11 +74,6 @@ public class RewardsGroupView extends NavigableGui {
         } else {
             return super.onInventoryClickEvent(event);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "RewardsGroupView{" + ", page=" + this.page + ", rewardsGroup=" + this.rewardsGroup + "}";
     }
 
     @Override
@@ -115,7 +97,7 @@ public class RewardsGroupView extends NavigableGui {
     }
 
     private @NotNull ItemStack getAchievableRewardView(int id, @NotNull AchievableReward achievableReward) {
-        ItemStack item = new ItemStack(achievableReward.reward().getItem());
+        ItemStack item = new ItemStack(achievableReward.getReward().getItem());
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
@@ -131,11 +113,13 @@ public class RewardsGroupView extends NavigableGui {
             lore.add("");
             lore.add(this.plugin.getConfig()
                                 .getString("gui.admin.rewards-group-view.reward-view.percentage")
-                                .replace(PERCENTAGE, Double.toString(achievableReward.percentage())));
+                                .replace(PERCENTAGE, Double.toString(achievableReward.getPercentage())));
             lore.add(this.plugin.getConfig()
                                 .getString("gui.admin.rewards-group-view.reward-view.real-percentage")
                                 .replace(REAL_PERCENTAGE, realPercentage));
             lore.add("");
+            lore.add(this.plugin.getConfig()
+                                .getString("gui.admin.rewards-group-view.reward-view.shortcut-to-edit-percentage"));
             lore.add(this.plugin.getConfig().getString("gui.admin.rewards-group-view.reward-view.shortcut-to-remove"));
 
             meta.setLore(lore);
@@ -188,6 +172,38 @@ public class RewardsGroupView extends NavigableGui {
         return item;
     }
 
+    private void parsePercentageRunnable(@NotNull Player player, @NotNull AchievableReward reward, String runnableParam) {
+        try {
+            double percentage = Double.parseDouble(runnableParam);
+            reward.setPercentage(percentage);
+
+            RewardsGroupView view = this.plugin.getGuiManager()
+                                               .getRewardsGroupView(player, this.rewardsGroup, this.page);
+            player.openInventory(view.getInventory());
+        } catch (NumberFormatException ignored) {
+            player.sendMessage(this.plugin.getConfig()
+                                          .getString("messages.admin.rewards-group.update-reward-percentage.failed"));
+        }
+    }
+
+    private void rightClickOnItem(@NotNull Player player, int rewardId) {
+        AchievableReward reward = this.rewardsGroup.getAchievableReward(rewardId);
+
+        this.close();
+        player.sendMessage(this.plugin.getConfig()
+                                      .getString("messages.admin.rewards-group.update-reward-percentage.request"));
+
+        Runnable runnable = new StringParameterizedRunnable() {
+
+            @Override
+            public void run() {
+                RewardsGroupView.this.parsePercentageRunnable(player, reward, this.parameter);
+            }
+        };
+
+        this.plugin.getChatResponseManager().add(player.getUniqueId(), runnable);
+    }
+
     private void setHeader() {
         this.content[0] = Gui.getEmptySpace();
         this.content[1] = Gui.getEmptySpace();
@@ -198,5 +214,23 @@ public class RewardsGroupView extends NavigableGui {
         this.content[6] = Gui.getEmptySpace();
         this.content[7] = Gui.getEmptySpace();
         this.content[8] = Gui.getEmptySpace();
+    }
+
+    private void shiftRightClickOnItem(Player player, int id) {
+        String rewardsGroupName = this.plugin.getRewardsGroupManager().getRewardsGroupName(this.rewardsGroup);
+        String actionInfo = this.plugin.getConfig()
+                                       .getString("gui.admin.rewards-group-view.action-info.remove-reward")
+                                       .replace(REWARDS_GROUP_NAME, rewardsGroupName);
+
+        this.close();
+
+        ConfirmView confirmView = this.plugin.getGuiManager().getConfirmView(player, actionInfo, () -> {
+            this.rewardsGroup.removeAchievableReward(id);
+            RewardsGroupView rewardsGroupView = this.plugin.getGuiManager()
+                                                           .getRewardsGroupView(player, this.rewardsGroup, this.page);
+            player.openInventory(rewardsGroupView.getInventory());
+        });
+
+        player.openInventory(confirmView.getInventory());
     }
 }

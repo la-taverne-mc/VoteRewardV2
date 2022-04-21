@@ -62,6 +62,9 @@ messages:
       unable-to-delete: "§cImpossible de supprimer le groupe de récompense §7[rewards-group-name]§c."
       unknown-rewards-group: "§cLe groupe de récompenses §4[rewards-group-name]§c n'existe pas."
       rewards-group-activated: "§aLe groupe de récompenses §2[rewards-group-name]§a est maintenant activé."
+      update-reward-percentage:
+        request: "§eEntrer le nouveau pourcentage:"
+        failed: "§cNombre invalide."
       add-reward:
         nothing-in-main-hand: "§cVous devez tenir l'item à ajouter dans votre main principal."
         successfully-added-reward: "§aNouvelle récompense ajoutée au groupe §2[rewards-group-name]§a avec un pourcentage d'obtention de §2[percentage]."
@@ -90,7 +93,8 @@ gui:
       reward-view:
         percentage: "§7Pourcentage: [percentage]%"
         real-percentage: "§7Pourcentage réel: [real-percentage]%"
-        shortcut-to-remove: "§cSHIFT + RIGHT_CLICK to remove"
+        shortcut-to-edit-percentage: "§aRIGHT_CLICK pour modifier le pourcentage"
+        shortcut-to-remove: "§cSHIFT + RIGHT_CLICK pour supprimer"
       action-info:
         remove-reward: "§7Voulez-vous vraiment retirer cette récompense du groupe de récompense [rewards-group-name] ?"
 

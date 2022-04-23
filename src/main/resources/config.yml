@@ -68,6 +68,10 @@ messages:
       add-reward:
         nothing-in-main-hand: "§cVous devez tenir l'item à ajouter dans votre main principal."
         successfully-added-reward: "§aNouvelle récompense ajoutée au groupe §2[rewards-group-name]§a avec un pourcentage d'obtention de §2[percentage]."
+      reward:
+        unknown-reward: "§cAucune récompense contenue dans ce groupe de récompenses n'a l'id §4[reward-id]§c."
+        percentage-must-be-positive-number: "§cLe pourcentage de la récompense doit être un nombre positif."
+        percentage-updated: "§aLe pourcentage de la récompense a été mis à jour."
 
 # All string used in the different interfaces
 gui:

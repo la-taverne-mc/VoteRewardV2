@@ -3,6 +3,7 @@ package fr.lataverne.votereward.commands.admin;
 import fr.lataverne.votereward.commands.CompositeCommand;
 import fr.lataverne.votereward.commands.DynamicCommand;
 import fr.lataverne.votereward.commands.admin.rewardsgroup.AddRewardAdminCommand;
+import fr.lataverne.votereward.commands.admin.rewardsgroup.RewardAdminCommand;
 import fr.lataverne.votereward.commands.admin.rewardsgroup.SeeRewardsGroupAdminCommand;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,10 @@ public class DynRewardsGroupAdminCommand extends CompositeCommand implements Dyn
 
     @Override
     public boolean isDynamicCommand(String label) {
-        return this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream()
+        return this.plugin.getRewardsGroupManager()
+                          .getRewardsGroups()
+                          .keySet()
+                          .stream()
                           .anyMatch(subCmdLabel -> subCmdLabel.equalsIgnoreCase(label));
     }
 
@@ -24,5 +28,6 @@ public class DynRewardsGroupAdminCommand extends CompositeCommand implements Dyn
 
         new AddRewardAdminCommand(this);
         new SeeRewardsGroupAdminCommand(this);
+        new RewardAdminCommand(this);
     }
 }

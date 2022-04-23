@@ -22,7 +22,8 @@ public class DeleteRewardsGroupAdminCommand extends ConfirmableCommand {
     }
 
     protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        return cmdArgs.isEmpty() || cmdArgs.size() == 1
                ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
                : new ArrayList<>();
     }
@@ -35,10 +36,12 @@ public class DeleteRewardsGroupAdminCommand extends ConfirmableCommand {
         boolean success = this.plugin.getRewardsGroupManager().deleteRewardsGroup(rewardsGroupName);
 
         String message = success
-                         ? this.plugin.getConfig().getString("messages.admin.rewards-group.deleted")
-                                      .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName)
-                         : this.plugin.getConfig().getString("messages.admin.rewards-group.unable-to-delete")
-                                      .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName);
+                         ? this.plugin.getConfig()
+                                      .getString("messages.admin.rewards-group.deleted")
+                                      .replace(REWARDS_GROUP_NAME, rewardsGroupName)
+                         : this.plugin.getConfig()
+                                      .getString("messages.admin.rewards-group.unable-to-delete")
+                                      .replace(REWARDS_GROUP_NAME, rewardsGroupName);
 
         sender.sendMessage(message);
 
@@ -55,8 +58,9 @@ public class DeleteRewardsGroupAdminCommand extends ConfirmableCommand {
 
         String rewardsGroupName = cmdArgs.get(0);
         if (this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName) == null) {
-            String message = this.plugin.getConfig().getString("messages.admin.rewards-group.unknown-rewards-group")
-                                        .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName);
+            String message = this.plugin.getConfig()
+                                        .getString("messages.admin.rewards-group.unknown-rewards-group")
+                                        .replace(REWARDS_GROUP_NAME, rewardsGroupName);
             sender.sendMessage(message);
             return false;
         }

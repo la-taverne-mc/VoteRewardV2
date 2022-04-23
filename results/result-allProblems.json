@@ -8,34 +8,6 @@
   "sources": [
     {
       "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/objects/rewards/Reward.java",
-      "language": "JAVA",
-      "line": 52,
-      "offset": 36,
-      "length": 13,
-      "code": {
-        "startLine": 50,
-        "length": 13,
-        "offset": 42,
-        "surroundingCode": "    }\n\n    protected abstract ERewardType getRewardType();\n\n    protected abstract @NotNull JsonElement toJsonReward();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "MethodReturnAlwaysConstant"
-  },
-  "hash": "daa70938c4222d56b8ef34a242bab541c08b791bf597dc7512afe071031e43cc"
-},{
-  "tool": "Code Inspection",
-  "category": "Class structure",
-  "type": "Method returns per-class constant",
-  "severity": "High",
-  "comment": "Method `getRewardType()` and all its derivables always return constants",
-  "detailsInfo": "Reports methods that only return a constant, which may differ for various inheritors.\n\nAvailable only from **Code \\| Inspect Code** or\n**Code \\| Analyze Code \\| Run Inspection by Name** and isn't reported in the editor.",
-  "sources": [
-    {
-      "type": "file",
       "path": "src/main/java/fr/lataverne/votereward/objects/rewards/MinecraftItem.java",
       "language": "JAVA",
       "line": 29,
@@ -82,6 +54,34 @@
     "inspectionName": "MethodReturnAlwaysConstant"
   },
   "hash": "82bd9d6225fbbc7498b4b59266d175a437e550e335c8b5890e5bbf73a33e9c43"
+},{
+  "tool": "Code Inspection",
+  "category": "Class structure",
+  "type": "Method returns per-class constant",
+  "severity": "High",
+  "comment": "Method `getRewardType()` and all its derivables always return constants",
+  "detailsInfo": "Reports methods that only return a constant, which may differ for various inheritors.\n\nAvailable only from **Code \\| Inspect Code** or\n**Code \\| Analyze Code \\| Run Inspection by Name** and isn't reported in the editor.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/objects/rewards/Reward.java",
+      "language": "JAVA",
+      "line": 52,
+      "offset": 36,
+      "length": 13,
+      "code": {
+        "startLine": 50,
+        "length": 13,
+        "offset": 42,
+        "surroundingCode": "    }\n\n    protected abstract ERewardType getRewardType();\n\n    protected abstract @NotNull JsonElement toJsonReward();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "MethodReturnAlwaysConstant"
+  },
+  "hash": "daa70938c4222d56b8ef34a242bab541c08b791bf597dc7512afe071031e43cc"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -311,62 +311,6 @@
   "category": "Code style issues",
   "type": "Unnecessarily qualified static access",
   "severity": "High",
-  "comment": "Unnecessarily qualified static access `GetBagAdminCommand.PLAYER`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/bag/GetBagAdminCommand.java",
-      "language": "JAVA",
-      "line": 36,
-      "offset": 56,
-      "length": 18,
-      "code": {
-        "startLine": 34,
-        "length": 18,
-        "offset": 202,
-        "surroundingCode": "            if (!player.hasPlayedBefore()) {\n                sender.sendMessage(this.plugin.getConfig().getString(\"messages.error.unknown-player\")\n                                              .replace(GetBagAdminCommand.PLAYER, player.getName()));\n                return true;\n            }"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "e4f4edd6eb8a3795aeea60fbcc91adfe711c2dd9eabaa3ddc954b6617199313c"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `SeeBagAdminCommand.PLAYER`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/bag/SeeBagAdminCommand.java",
-      "language": "JAVA",
-      "line": 36,
-      "offset": 52,
-      "length": 18,
-      "code": {
-        "startLine": 34,
-        "length": 18,
-        "offset": 190,
-        "surroundingCode": "        if (!player.hasPlayedBefore()) {\n            sender.sendMessage(this.plugin.getConfig().getString(\"messages.error.unknown-player\")\n                                          .replace(SeeBagAdminCommand.PLAYER, player.getName()));\n            return true;\n        }"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "5713ee7af044bb9d09590146998f1600d1ad5612859749cc87b9690a592f79a1"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
   "comment": "Unnecessarily qualified static access `RewardsGroupListAdminCommand.HEADER_LIST`",
   "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
   "sources": [
@@ -451,146 +395,6 @@
   "category": "Code style issues",
   "type": "Unnecessarily qualified static access",
   "severity": "High",
-  "comment": "Unnecessarily qualified static access `DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroups/DeleteRewardsGroupAdminCommand.java",
-      "language": "JAVA",
-      "line": 39,
-      "offset": 48,
-      "length": 30,
-      "code": {
-        "startLine": 37,
-        "length": 30,
-        "offset": 181,
-        "surroundingCode": "        String message = success\n                         ? this.plugin.getConfig().getString(\"messages.admin.rewards-group.deleted\")\n                                      .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName)\n                         : this.plugin.getConfig().getString(\"messages.admin.rewards-group.unable-to-delete\")\n                                      .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName);"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "3808ea45536a79461ca665c5c5b4e6f747abfd62ceb4cf1b099bfb500ab95d35"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroups/DeleteRewardsGroupAdminCommand.java",
-      "language": "JAVA",
-      "line": 41,
-      "offset": 48,
-      "length": 30,
-      "code": {
-        "startLine": 39,
-        "length": 30,
-        "offset": 273,
-        "surroundingCode": "                                      .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName)\n                         : this.plugin.getConfig().getString(\"messages.admin.rewards-group.unable-to-delete\")\n                                      .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName);\n\n        sender.sendMessage(message);"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "b23ba0dd59605ac45e1e5837e0cb6c01423dd950c61cdd83369257e70c18398c"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroups/DeleteRewardsGroupAdminCommand.java",
-      "language": "JAVA",
-      "line": 59,
-      "offset": 50,
-      "length": 30,
-      "code": {
-        "startLine": 57,
-        "length": 30,
-        "offset": 259,
-        "surroundingCode": "        if (this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName) == null) {\n            String message = this.plugin.getConfig().getString(\"messages.admin.rewards-group.unknown-rewards-group\")\n                                        .replace(DeleteRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName);\n            sender.sendMessage(message);\n            return false;"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "992a995cb3e7fb79ad907b987cc69d3019f3004bc8b7496cb6062b4f08a7db6c"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroups/ActivateRewardsGroupAdminCommand.java",
-      "language": "JAVA",
-      "line": 32,
-      "offset": 52,
-      "length": 32,
-      "code": {
-        "startLine": 30,
-        "length": 32,
-        "offset": 206,
-        "surroundingCode": "        if (rewardsGroup == null) {\n            sender.sendMessage(this.plugin.getConfig().getString(\"messages.admin.rewards-group.unknown-rewards-group\")\n                                          .replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));\n            return true;\n        }"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "0fd4a9766244b342a671960ca63a6409a4c470cb08eb2fa3eb6aca38badaee35"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/admin/rewardsgroups/ActivateRewardsGroupAdminCommand.java",
-      "language": "JAVA",
-      "line": 38,
-      "offset": 48,
-      "length": 32,
-      "code": {
-        "startLine": 36,
-        "length": 32,
-        "offset": 255,
-        "surroundingCode": "        this.plugin.getRewardsGroupManager().setEnabledRewardsGroupName(rewardsGroupName);\n        sender.sendMessage(this.plugin.getConfig().getString(\"messages.admin.rewards-group.rewards-group-activated\")\n                                      .replace(ActivateRewardsGroupAdminCommand.REWARDS_GROUP_NAME, rewardsGroupName));\n\n        return true;"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "d2d0f142bc78e835480eb9f138829f0e68babc4bde7a74ef57f7993947d19ec6"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
   "comment": "Unnecessarily qualified static access `FakeVoteCommand.NB_FAKEVOTE`",
   "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
   "sources": [
@@ -670,6 +474,34 @@
     "inspectionName": "UnnecessarilyQualifiedStaticUsage"
   },
   "hash": "0b8606eecab924350c410711de54bab5757597019f95612412abc3ce58ad8296"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "Unnecessarily qualified static access",
+  "severity": "High",
+  "comment": "Unnecessarily qualified static access `HelpCommand.PARENT_COMMAND_USAGE`",
+  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/commands/HelpCommand.java",
+      "language": "JAVA",
+      "line": 77,
+      "offset": 30,
+      "length": 11,
+      "code": {
+        "startLine": 75,
+        "length": 11,
+        "offset": 110,
+        "surroundingCode": "    public @NotNull String getUsage() {\n        String usage = super.getUsage();\n        return usage.replace(HelpCommand.PARENT_COMMAND_USAGE, this.parent.getUsage());\n    }\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
+  },
+  "hash": "0dc5d21b080901d0dd2b89f578a178b56c8b23a42e19fc0960ec8280781d3d7e"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",
@@ -815,174 +647,6 @@
   "category": "Code style issues",
   "type": "Unnecessarily qualified static access",
   "severity": "High",
-  "comment": "Unnecessarily qualified static access `HelpCommand.PARENT_COMMAND_USAGE`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/HelpCommand.java",
-      "language": "JAVA",
-      "line": 77,
-      "offset": 30,
-      "length": 11,
-      "code": {
-        "startLine": 75,
-        "length": 11,
-        "offset": 110,
-        "surroundingCode": "    public @NotNull String getUsage() {\n        String usage = super.getUsage();\n        return usage.replace(HelpCommand.PARENT_COMMAND_USAGE, this.parent.getUsage());\n    }\n"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "0dc5d21b080901d0dd2b89f578a178b56c8b23a42e19fc0960ec8280781d3d7e"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `CompositeCommand.COMMANDS`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
-      "language": "JAVA",
-      "line": 131,
-      "offset": 68,
-      "length": 16,
-      "code": {
-        "startLine": 129,
-        "length": 16,
-        "offset": 176,
-        "surroundingCode": "    public @NotNull String getUsage() {\n        return Objects.requireNonNullElseGet(this.plugin.getConfig()\n                                                        .getString(CompositeCommand.COMMANDS + this.usageMessage), () ->\n                                                     CompositeCommand.COMMANDS + this.usageMessage);\n    }"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "d1a806e557dd6c330a9f65f803536765f718547527e540a67402cb7648075908"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `CompositeCommand.COMMANDS`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
-      "language": "JAVA",
-      "line": 132,
-      "offset": 54,
-      "length": 16,
-      "code": {
-        "startLine": 130,
-        "length": 16,
-        "offset": 243,
-        "surroundingCode": "        return Objects.requireNonNullElseGet(this.plugin.getConfig()\n                                                        .getString(CompositeCommand.COMMANDS + this.usageMessage), () ->\n                                                     CompositeCommand.COMMANDS + this.usageMessage);\n    }\n"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "b040cc35eb670b5d256c4988d54837772b94b05d5d62b0d132f48a706f9bff78"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `CompositeCommand.COMMANDS`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
-      "language": "JAVA",
-      "line": 119,
-      "offset": 68,
-      "length": 16,
-      "code": {
-        "startLine": 117,
-        "length": 16,
-        "offset": 188,
-        "surroundingCode": "    public final @NotNull String getDescription() {\n        return Objects.requireNonNullElseGet(this.plugin.getConfig()\n                                                        .getString(CompositeCommand.COMMANDS + this.description), () ->\n                                                     CompositeCommand.COMMANDS + this.description);\n    }"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "f6e8ddffc352a769fe0cfa3427e19ccc1cfee2963029a1c436938e1142ffe53b"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `CompositeCommand.COMMANDS`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
-      "language": "JAVA",
-      "line": 120,
-      "offset": 54,
-      "length": 16,
-      "code": {
-        "startLine": 118,
-        "length": 16,
-        "offset": 242,
-        "surroundingCode": "        return Objects.requireNonNullElseGet(this.plugin.getConfig()\n                                                        .getString(CompositeCommand.COMMANDS + this.description), () ->\n                                                     CompositeCommand.COMMANDS + this.description);\n    }\n"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "a78d7511e90cf93ca725c3a457d62204ccfdd8eadcd1e7275e739732c1bed845"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `CompositeCommand.COMMANDS`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
-      "language": "JAVA",
-      "line": 244,
-      "offset": 50,
-      "length": 16,
-      "code": {
-        "startLine": 242,
-        "length": 16,
-        "offset": 105,
-        "surroundingCode": "\n    protected final @Nullable String getParameters() {\n        return this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.configPath + \".parameters\");\n    }\n"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "069be8822c92b3888e32db54b9e8b3cd117b4efd822c3d2dc7381badb931f9ba"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
   "comment": "Unnecessarily qualified static access `ConfirmableCommand.CONFIRM_COMMAND_USAGE`",
   "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
   "sources": [
@@ -1006,90 +670,6 @@
     "inspectionName": "UnnecessarilyQualifiedStaticUsage"
   },
   "hash": "28ec412f7057d7cf6e8eddc62ecda645495a9454c5f312b57e3e05f07cbb533e"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static access `RewardsGroupManager.REWARD_GROUPS_FOLDER`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/RewardsGroupManager.java",
-      "language": "JAVA",
-      "line": 234,
-      "offset": 53,
-      "length": 19,
-      "code": {
-        "startLine": 232,
-        "length": 19,
-        "offset": 194,
-        "surroundingCode": "\n    private static void writeRewardGroupOnFile(@NotNull String name, @NotNull RewardsGroup rewardsGroup, boolean enabled) throws Exception {\n        try (FileWriter fileWriter = new FileWriter(RewardsGroupManager.REWARD_GROUPS_FOLDER + \"/\" +\n                                                    name, StandardCharsets.UTF_8); JsonWriter jsonWriter = new JsonWriter(fileWriter)) {\n            jsonWriter.beginObject();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "709f517bcc13dd5eecc6206005ac8fb2f1aac1cf1269aa7167a96e516cb65233"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static method call `RewardsGroupManager.getRewardGroupsFolder()`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/RewardsGroupManager.java",
-      "language": "JAVA",
-      "line": 83,
-      "offset": 35,
-      "length": 19,
-      "code": {
-        "startLine": 81,
-        "length": 19,
-        "offset": 119,
-        "surroundingCode": "        VoteReward.sendMessageToConsole(ChatColor.GOLD + \"Loading rewards groups\");\n\n        File rewardGroupsFolder = RewardsGroupManager.getRewardGroupsFolder();\n\n        if (rewardGroupsFolder == null) {"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "dada90599ec75cea28da8d1610c185ffa80d763ea8256669cce87a511e9c5ff1"
-},{
-  "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static method call `RewardsGroupManager.parseRewardFile()`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/managers/RewardsGroupManager.java",
-      "language": "JAVA",
-      "line": 103,
-      "offset": 68,
-      "length": 19,
-      "code": {
-        "startLine": 101,
-        "length": 19,
-        "offset": 119,
-        "surroundingCode": "        for (File file : files) {\n            try {\n                Triple<String, RewardsGroup, Boolean> parsedFile = RewardsGroupManager.parseRewardFile(file);\n                if (parsedFile != null) {\n                    String name = parsedFile.getLeft();"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "5f75823a8c243bcd626eaefa9bc8d47654c4702099275cdfd1bad4cd2eebcf46"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",
@@ -1151,6 +731,90 @@
   "category": "Code style issues",
   "type": "Unnecessarily qualified static access",
   "severity": "High",
+  "comment": "Unnecessarily qualified static method call `RewardsGroupManager.getRewardGroupsFolder()`",
+  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/RewardsGroupManager.java",
+      "language": "JAVA",
+      "line": 83,
+      "offset": 35,
+      "length": 19,
+      "code": {
+        "startLine": 81,
+        "length": 19,
+        "offset": 119,
+        "surroundingCode": "        VoteReward.sendMessageToConsole(ChatColor.GOLD + \"Loading rewards groups\");\n\n        File rewardGroupsFolder = RewardsGroupManager.getRewardGroupsFolder();\n\n        if (rewardGroupsFolder == null) {"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
+  },
+  "hash": "dada90599ec75cea28da8d1610c185ffa80d763ea8256669cce87a511e9c5ff1"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "Unnecessarily qualified static access",
+  "severity": "High",
+  "comment": "Unnecessarily qualified static method call `RewardsGroupManager.parseRewardFile()`",
+  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/RewardsGroupManager.java",
+      "language": "JAVA",
+      "line": 103,
+      "offset": 68,
+      "length": 19,
+      "code": {
+        "startLine": 101,
+        "length": 19,
+        "offset": 119,
+        "surroundingCode": "        for (File file : files) {\n            try {\n                Triple<String, RewardsGroup, Boolean> parsedFile = RewardsGroupManager.parseRewardFile(file);\n                if (parsedFile != null) {\n                    String name = parsedFile.getLeft();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
+  },
+  "hash": "5f75823a8c243bcd626eaefa9bc8d47654c4702099275cdfd1bad4cd2eebcf46"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "Unnecessarily qualified static access",
+  "severity": "High",
+  "comment": "Unnecessarily qualified static access `RewardsGroupManager.REWARD_GROUPS_FOLDER`",
+  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/managers/RewardsGroupManager.java",
+      "language": "JAVA",
+      "line": 234,
+      "offset": 53,
+      "length": 19,
+      "code": {
+        "startLine": 232,
+        "length": 19,
+        "offset": 194,
+        "surroundingCode": "\n    private static void writeRewardGroupOnFile(@NotNull String name, @NotNull RewardsGroup rewardsGroup, boolean enabled) throws Exception {\n        try (FileWriter fileWriter = new FileWriter(RewardsGroupManager.REWARD_GROUPS_FOLDER + \"/\" +\n                                                    name, StandardCharsets.UTF_8); JsonWriter jsonWriter = new JsonWriter(fileWriter)) {\n            jsonWriter.beginObject();"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
+  },
+  "hash": "709f517bcc13dd5eecc6206005ac8fb2f1aac1cf1269aa7167a96e516cb65233"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "Unnecessarily qualified static access",
+  "severity": "High",
   "comment": "Unnecessarily qualified static access `RewardsGroupManager.REWARD_GROUPS_FOLDER`",
   "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
   "sources": [
@@ -1174,6 +838,34 @@
     "inspectionName": "UnnecessarilyQualifiedStaticUsage"
   },
   "hash": "f5f2e9cfc5640971b03a1cef58ddb9d05dadd99c1e6488a4067fba3e6b4bf601"
+},{
+  "tool": "Code Inspection",
+  "category": "Code style issues",
+  "type": "Unnecessarily qualified static access",
+  "severity": "High",
+  "comment": "Unnecessarily qualified static method call `Helper.colorizeString()`",
+  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "src/main/java/fr/lataverne/votereward/Helper.java",
+      "language": "JAVA",
+      "line": 117,
+      "offset": 28,
+      "length": 6,
+      "code": {
+        "startLine": 115,
+        "length": 6,
+        "offset": 125,
+        "surroundingCode": "\n    public static void sendMessageToPlayer(final @NotNull Player player, final String message) {\n        player.sendMessage(Helper.colorizeString(message));\n    }\n}"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "VoteReward",
+    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
+  },
+  "hash": "8bfa987345d699e5fa53a4b714edd134cf09f5f950dfaebab8a1a0403218bedf"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",
@@ -1792,62 +1484,6 @@
   "hash": "445147a7528c969761e16e64ca0af67d3c1ef40ae40360bad6273f14dc2ef91c"
 },{
   "tool": "Code Inspection",
-  "category": "Code style issues",
-  "type": "Unnecessarily qualified static access",
-  "severity": "High",
-  "comment": "Unnecessarily qualified static method call `Helper.colorizeString()`",
-  "detailsInfo": "Reports usages of static members qualified with the class name.\n\n\nSuch qualification is unnecessary and may be safely removed.\n\n**Example:**\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          Foo.foo();\n          System.out.println(Foo.x);\n        }\n\n        static void baz() { Foo.foo(); }\n      }\n\nAfter the quick-fix is applied:\n\n\n      class Foo {\n        static void foo() {}\n        static int x;\n\n        void bar() {\n          foo();\n          System.out.println(x);\n        }\n\n        static void baz() { foo(); }\n      }\n\n\nUse the inspection options to toggle the reporting for:\n\n* Static fields access:  \n  `void bar() { System.out.println(Foo.x); }`\n\n* Calls to static methods:  \n  `void bar() { Foo.foo(); }`\n\n\nAlso, you can configure the inspection to only report static member usage\nin a static context. In this case, only `static void baz() { Foo.foo(); }` will be reported.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/Helper.java",
-      "language": "JAVA",
-      "line": 117,
-      "offset": 28,
-      "length": 6,
-      "code": {
-        "startLine": 115,
-        "length": 6,
-        "offset": 125,
-        "surroundingCode": "\n    public static void sendMessageToPlayer(final @NotNull Player player, final String message) {\n        player.sendMessage(Helper.colorizeString(message));\n    }\n}"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "UnnecessarilyQualifiedStaticUsage"
-  },
-  "hash": "8bfa987345d699e5fa53a4b714edd134cf09f5f950dfaebab8a1a0403218bedf"
-},{
-  "tool": "Code Inspection",
-  "category": "Embedded",
-  "type": "Interface with a single direct inheritor",
-  "severity": "High",
-  "comment": "Interface `DynamicCommand` has only one direct inheritor",
-  "detailsInfo": "Reports interfaces that have precisely one direct inheritor. While such interfaces may offer admirable clarity of design, in memory-constrained or bandwidth-limited environments, they needlessly increase the total footprint of the application. Consider merging the interface with its inheritor.\n\n\nThis inspection is intended for Java ME and other highly resource constrained environments.\nApplying the results of this inspection without consideration might have negative effects on code clarity and design.",
-  "sources": [
-    {
-      "type": "file",
-      "path": "src/main/java/fr/lataverne/votereward/commands/DynamicCommand.java",
-      "language": "JAVA",
-      "line": 4,
-      "offset": 18,
-      "length": 14,
-      "code": {
-        "startLine": 2,
-        "length": 14,
-        "offset": 39,
-        "surroundingCode": "\n@FunctionalInterface\npublic interface DynamicCommand {\n\n    boolean isDynamicCommand(String label);"
-      }
-    }
-  ],
-  "attributes": {
-    "module": "VoteReward",
-    "inspectionName": "InterfaceWithOnlyOneDirectInheritor"
-  },
-  "hash": "91fe2af58d01350f28dc8130a0f3045f45dd981cadca3ff405dd4b18af047cd6"
-},{
-  "tool": "Code Inspection",
   "category": "Declaration redundancy",
   "type": "Unused library",
   "severity": "High",
@@ -1970,11 +1606,11 @@
       "type": "file",
       "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
       "language": "JAVA",
-      "line": 273,
+      "line": 278,
       "offset": 72,
       "length": 6,
       "code": {
-        "startLine": 271,
+        "startLine": 276,
         "length": 6,
         "offset": 109,
         "surroundingCode": "    protected abstract void setup();\n\n    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {\n        return new ArrayList<>();\n    }"
@@ -1985,7 +1621,7 @@
     "module": "VoteReward",
     "inspectionName": "unused"
   },
-  "hash": "edbc37801c0735b26f01fe64d18f7606e6cc9db8b2fe0f882f2afac6b8a70eea"
+  "hash": "851b85721afeda78869ff3b70e5f07a64cf91414ac81999d16f31d82d67480da"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -1998,11 +1634,11 @@
       "type": "file",
       "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
       "language": "JAVA",
-      "line": 273,
+      "line": 278,
       "offset": 96,
       "length": 5,
       "code": {
-        "startLine": 271,
+        "startLine": 276,
         "length": 5,
         "offset": 133,
         "surroundingCode": "    protected abstract void setup();\n\n    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {\n        return new ArrayList<>();\n    }"
@@ -2013,7 +1649,7 @@
     "module": "VoteReward",
     "inspectionName": "unused"
   },
-  "hash": "016f8f4910fce155868f6e6469a7827e78ba166845a25d84320903d53a267009"
+  "hash": "24bcd86e6f44d3a954da60be2b7921fadbb78bb16b472f3f5f2dfd50066a4dc2"
 },{
   "tool": "Code Inspection",
   "category": "Declaration redundancy",
@@ -2194,11 +1830,11 @@
       "type": "file",
       "path": "src/main/java/fr/lataverne/votereward/commands/CompositeCommand.java",
       "language": "JAVA",
-      "line": 168,
+      "line": 166,
       "offset": 9,
       "length": 2,
       "code": {
-        "startLine": 166,
+        "startLine": 164,
         "length": 2,
         "offset": 127,
         "surroundingCode": "    public boolean showHelp(CommandSender sender) {\n        CompositeCommand helpCommand = this.getSubCommand(\"help\");\n        if (helpCommand != null) {\n            return helpCommand.call(sender, \"help\", new ArrayList<>());\n        } else {"
@@ -2209,7 +1845,7 @@
     "module": "VoteReward",
     "inspectionName": "SimplifiableIfStatement"
   },
-  "hash": "19b2600362b2aeecd91daee2cc9f160fec95fe2da2a63a3fc3d0d19a1f3e4980"
+  "hash": "ede3ea8bc50cb11c5b61edf99a81158098faab412deb8e68b378086328e6b6bf"
 },{
   "tool": "Code Inspection",
   "category": "Code style issues",

@@ -1,13 +1,13 @@
 {
-  "total": 80,
+  "total": 67,
   "tools inspection": {
-    "Code Inspection": 80
+    "Code Inspection": 67
   },
   "attributes": {
     "vcs": {
       "sarifIdea": {
         "repositoryUri": "https://github.com/la-taverne-mc/VoteRewardV2",
-        "revisionId": "b73693b24f60e2d24e8d2a2a50c65a3a15f54d04",
+        "revisionId": "29aa6bcf87af4c5b040ff612d960b276e23e9470",
         "branch": "master"
       }
     },

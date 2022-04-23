@@ -72,6 +72,17 @@ permissions:
               votereward.admin.rewardsgroup.<rewards-group-name>.see:
                 description: Allows using /votereward admin rewardsgroups <rewards-group-name> see
                 default: op
+              votereward.admin.rewardsgroup.<rewards-group-name>.reward:
+                description: Allows the commands to manage a reward of a rewards group
+                default: op
+                children:
+                  votereward.admin.rewardsgroup.<rewards-group-name>.reward.modify:
+                    description: Allows the commands to modify a reward of a rewards group
+                    default: op
+                    children:
+                      votereward.admin.rewardsgroup.<rewards-group-name>.reward.modify.percentage:
+                        description: Allows to modify the percentage of a reward
+                        default: op
   votereward.topvote:
     description: Allows using /votereward topvote
     default: true

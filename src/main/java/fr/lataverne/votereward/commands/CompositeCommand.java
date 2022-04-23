@@ -115,9 +115,8 @@ public abstract class CompositeCommand extends Command {
 
     @Override
     public final @NotNull String getDescription() {
-        return Objects.requireNonNullElseGet(this.plugin.getConfig()
-                                                        .getString(CompositeCommand.COMMANDS + this.description), () ->
-                                                     CompositeCommand.COMMANDS + this.description);
+        return Objects.requireNonNullElseGet(this.plugin.getConfig().getString(COMMANDS + this.description), () ->
+                COMMANDS + this.description);
     }
 
     @Contract(pure = true)
@@ -127,9 +126,8 @@ public abstract class CompositeCommand extends Command {
 
     @Override
     public @NotNull String getUsage() {
-        return Objects.requireNonNullElseGet(this.plugin.getConfig()
-                                                        .getString(CompositeCommand.COMMANDS + this.usageMessage), () ->
-                                                     CompositeCommand.COMMANDS + this.usageMessage);
+        return Objects.requireNonNullElseGet(this.plugin.getConfig().getString(COMMANDS + this.usageMessage), () ->
+                COMMANDS + this.usageMessage);
     }
 
     public boolean hasSubCommands() {
@@ -183,11 +181,14 @@ public abstract class CompositeCommand extends Command {
         List<String> cmdArgs = Arrays.asList(args).subList(command.level, args.length);
 
         if ((!command.onlyPlayer || sender instanceof Player) && command.canExecute(sender, false)) {
-            options.addAll(command.tabComplete(sender, cmdLabel, cmdArgs));
+            options.addAll(command.tabComplete(sender, cmdLabel, Arrays.asList(args)));
 
             if (command.hasSubCommands() && cmdArgs.size() < 2) {
-                command.getSubCommands().stream().filter(subCommand -> subCommand.canExecute(sender, false))
-                       .filter(subCommand -> !(subCommand instanceof DynamicCommand)).map(Command::getLabel)
+                command.getSubCommands()
+                       .stream()
+                       .filter(subCommand -> subCommand.canExecute(sender, false))
+                       .filter(subCommand -> !(subCommand instanceof DynamicCommand))
+                       .map(Command::getLabel)
                        .forEach(options::add);
             }
 
@@ -195,8 +196,10 @@ public abstract class CompositeCommand extends Command {
                              ? ""
                              : args[args.length - 1];
 
-            return options.stream().filter(s -> s != null && s.toLowerCase(Locale.ENGLISH)
-                                                              .startsWith(lastArg.toLowerCase(Locale.ENGLISH))).sorted()
+            return options.stream()
+                          .filter(s -> s != null &&
+                                       s.toLowerCase(Locale.ENGLISH).startsWith(lastArg.toLowerCase(Locale.ENGLISH)))
+                          .sorted()
                           .toList();
         } else {
             return options;
@@ -228,7 +231,8 @@ public abstract class CompositeCommand extends Command {
             return true;
         } else {
             if (sendMessage) {
-                sender.sendMessage(this.plugin.getConfig().getString("messages.error.no-permission")
+                sender.sendMessage(this.plugin.getConfig()
+                                              .getString("messages.error.no-permission")
                                               .replace("[permission]", this.getPermission()));
             }
             return false;
@@ -241,7 +245,7 @@ public abstract class CompositeCommand extends Command {
     }
 
     protected final @Nullable String getParameters() {
-        return this.plugin.getConfig().getString(CompositeCommand.COMMANDS + this.configPath + ".parameters");
+        return this.plugin.getConfig().getString(COMMANDS + this.configPath + ".parameters");
     }
 
     protected @Nullable CompositeCommand getSubCommand(@NotNull String label) {
@@ -253,7 +257,8 @@ public abstract class CompositeCommand extends Command {
             subCommand = this.subCommandAliases.getOrDefault(lowerLabel, null);
 
             if (subCommand == null) {
-                Optional<DynamicCommand> dynamicCommand = this.subCommands.values().stream()
+                Optional<DynamicCommand> dynamicCommand = this.subCommands.values()
+                                                                          .stream()
                                                                           .filter(cmd -> cmd instanceof DynamicCommand)
                                                                           .map(cmd -> (DynamicCommand) cmd)
                                                                           .filter(cmd -> cmd.isDynamicCommand(lowerLabel))

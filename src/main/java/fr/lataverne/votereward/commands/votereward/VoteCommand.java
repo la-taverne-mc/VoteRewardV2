@@ -82,7 +82,8 @@ public class VoteCommand extends CompositeCommand {
 
     @Override
     protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        if (args.isEmpty() || args.size() == 1) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        if (cmdArgs.isEmpty() || cmdArgs.size() == 1) {
             return VoteReward.getInstance()
                              .getVotingUserManager()
                              .getVotingUsers()
@@ -90,7 +91,7 @@ public class VoteCommand extends CompositeCommand {
                              .filter(v -> !v.getVotes().isEmpty())
                              .map(v -> Bukkit.getOfflinePlayer(v.getUUID()).getName())
                              .toList();
-        } else if (args.size() == 2) {
+        } else if (cmdArgs.size() == 2) {
             return Arrays.stream(ETimeRange.values()).map(ETimeRange::toString).toList();
         } else {
             return new ArrayList<>();

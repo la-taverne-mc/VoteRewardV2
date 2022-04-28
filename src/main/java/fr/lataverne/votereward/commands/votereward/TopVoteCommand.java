@@ -79,7 +79,8 @@ public class TopVoteCommand extends CompositeCommand {
 
     @Override
     protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        return cmdArgs.isEmpty() || cmdArgs.size() == 1
                ? Arrays.stream(ETimeRange.values()).map(ETimeRange::toString).toList()
                : new ArrayList<>();
     }

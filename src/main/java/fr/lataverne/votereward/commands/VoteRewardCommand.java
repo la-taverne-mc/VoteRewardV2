@@ -1,5 +1,11 @@
 package fr.lataverne.votereward.commands;
 
+import fr.lataverne.votereward.commands.common.ConfirmCommand;
+import fr.lataverne.votereward.commands.votereward.AdminCommand;
+import fr.lataverne.votereward.commands.votereward.BagCommand;
+import fr.lataverne.votereward.commands.votereward.TopVoteCommand;
+import fr.lataverne.votereward.commands.votereward.VoteCommand;
+import fr.lataverne.votereward.utils.commands.CompositeCommand;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,12 +24,10 @@ public class VoteRewardCommand extends CompositeCommand {
 
     @Override
     protected void setup() {
-        new BagCommand(this);
-        new AdminCommand(this);
-        new ConfirmCommand(this);
-        new TopVoteCommand(this);
-        new VoteCommand(this);
-
-        new AddVoteConsoleCommand(this);
+        this.addChildren(new BagCommand(this));
+        this.addChildren(new AdminCommand(this));
+        this.addChildren(new ConfirmCommand(this));
+        this.addChildren(new TopVoteCommand(this));
+        this.addChildren(new VoteCommand(this));
     }
 }

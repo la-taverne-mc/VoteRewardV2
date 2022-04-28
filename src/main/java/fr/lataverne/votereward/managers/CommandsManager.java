@@ -1,7 +1,7 @@
 package fr.lataverne.votereward.managers;
 
 import fr.lataverne.votereward.VoteReward;
-import fr.lataverne.votereward.commands.CompositeCommand;
+import fr.lataverne.votereward.utils.commands.CompositeCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

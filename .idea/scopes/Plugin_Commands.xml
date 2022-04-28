@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Plugin Commands" pattern="file[VoteReward]:src/main/java/fr/lataverne/votereward/commands/votereward//*||file[VoteReward]:src/main/java/fr/lataverne/votereward/commands/voterewardconsole//*" />
+</component>

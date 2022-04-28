@@ -14,6 +14,8 @@ public abstract class ConfirmableCommand extends CompositeCommand {
         super(parent, label, aliases);
     }
 
+    public abstract boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);
+
     @Override
     protected final boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         if (!this.validate(sender, label, args)) {
@@ -34,8 +36,6 @@ public abstract class ConfirmableCommand extends CompositeCommand {
             return true;
         }
     }
-
-    protected abstract boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);
 
     protected abstract boolean validate(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args);
 }

@@ -17,17 +17,7 @@ public class DeleteCommand extends ConfirmableCommand {
     }
 
     @Override
-    protected void setup() {
-    }
-
-    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        return args.isEmpty() || args.size() == 1
-               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
-               : new ArrayList<>();
-    }
-
-    @Override
-    protected boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+    public boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         List<String> cmdArgs = args.subList(this.level, args.size());
 
         String rewardsGroupName = cmdArgs.get(0);
@@ -44,6 +34,16 @@ public class DeleteCommand extends ConfirmableCommand {
         sender.sendMessage(message);
 
         return true;
+    }
+
+    @Override
+    protected void setup() {
+    }
+
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        return args.isEmpty() || args.size() == 1
+               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
+               : new ArrayList<>();
     }
 
     @Override

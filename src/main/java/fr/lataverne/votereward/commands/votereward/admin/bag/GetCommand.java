@@ -58,7 +58,6 @@ public class GetCommand extends CompositeCommand {
 
     @Override
     protected void setup() {
-        this.setPermission("votereward.admin.bag.get");
     }
 
     @Override

@@ -1,35 +1,23 @@
-package fr.lataverne.votereward.commands.admin.rewardsgroups;
+package fr.lataverne.votereward.commands.votereward.admin.rewardsgroups;
 
-import fr.lataverne.votereward.commands.CompositeCommand;
-import fr.lataverne.votereward.commands.ConfirmableCommand;
+import fr.lataverne.votereward.utils.commands.CompositeCommand;
+import fr.lataverne.votereward.utils.commands.ConfirmableCommand;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteRewardsGroupAdminCommand extends ConfirmableCommand {
+public class DeleteCommand extends ConfirmableCommand {
 
     private static final String REWARDS_GROUP_NAME = "[rewards-group-name]";
 
-    public DeleteRewardsGroupAdminCommand(@NotNull CompositeCommand parent) {
+    public DeleteCommand(@NotNull CompositeCommand parent) {
         super(parent, "delete");
     }
 
     @Override
-    protected void setup() {
-        this.setPermission("votereward.admin.rewardsgroups.delete");
-    }
-
-    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        List<String> cmdArgs = args.subList(this.level, args.size());
-        return cmdArgs.isEmpty() || cmdArgs.size() == 1
-               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
-               : new ArrayList<>();
-    }
-
-    @Override
-    protected boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+    public boolean toBeExecuted(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         List<String> cmdArgs = args.subList(this.level, args.size());
 
         String rewardsGroupName = cmdArgs.get(0);
@@ -46,6 +34,17 @@ public class DeleteRewardsGroupAdminCommand extends ConfirmableCommand {
         sender.sendMessage(message);
 
         return true;
+    }
+
+    protected void setup() {
+        this.setPermission("votereward.admin.rewardsgroups.delete");
+    }
+
+    protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+        List<String> cmdArgs = args.subList(this.level, args.size());
+        return cmdArgs.isEmpty() || cmdArgs.size() == 1
+               ? this.plugin.getRewardsGroupManager().getRewardsGroups().keySet().stream().toList()
+               : new ArrayList<>();
     }
 
     @Override

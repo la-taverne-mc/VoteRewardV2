@@ -15,9 +15,9 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-public class VoteRewardConsole extends CompositeCommand {
+public class VoteRewardConsoleCommand extends CompositeCommand {
 
-    public VoteRewardConsole() {
+    public VoteRewardConsoleCommand() {
         super("votereward-console", "vr-console", "vrc");
     }
 

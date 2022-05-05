@@ -23,5 +23,6 @@ public class DynRewardsGroupCommand extends DynamicCommand {
     protected void setup() {
         this.addChildren(new AddRewardCommand(this));
         this.addChildren(new SeeCommand(this));
+        this.addChildren(new RewardsCommand(this));
     }
 }

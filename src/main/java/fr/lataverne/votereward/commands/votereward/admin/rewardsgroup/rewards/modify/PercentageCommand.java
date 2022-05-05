@@ -1,15 +1,15 @@
-package fr.lataverne.votereward.commands.admin.rewardsgroup.reward.modify;
+package fr.lataverne.votereward.commands.votereward.admin.rewardsgroup.rewards.modify;
 
-import fr.lataverne.votereward.commands.CompositeCommand;
 import fr.lataverne.votereward.objects.RewardsGroup;
+import fr.lataverne.votereward.utils.commands.CompositeCommand;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class PercentageAdminCommand extends CompositeCommand {
+public class PercentageCommand extends CompositeCommand {
 
-    public PercentageAdminCommand(@NotNull CompositeCommand parent) {
+    public PercentageCommand(@NotNull CompositeCommand parent) {
         super(parent, "percentage");
     }
 

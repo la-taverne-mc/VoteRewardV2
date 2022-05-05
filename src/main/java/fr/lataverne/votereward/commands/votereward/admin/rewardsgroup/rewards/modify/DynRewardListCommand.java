@@ -1,12 +1,12 @@
-package fr.lataverne.votereward.commands.admin.rewardsgroup.reward.modify;
+package fr.lataverne.votereward.commands.votereward.admin.rewardsgroup.rewards.modify;
 
-import fr.lataverne.votereward.commands.CompositeCommand;
-import fr.lataverne.votereward.commands.DynamicCommand;
+import fr.lataverne.votereward.utils.commands.CompositeCommand;
+import fr.lataverne.votereward.utils.commands.DynamicCommand;
 import org.jetbrains.annotations.NotNull;
 
-public class DynRewardListAdminCommand extends CompositeCommand implements DynamicCommand {
+public class DynRewardListCommand extends DynamicCommand {
 
-    public DynRewardListAdminCommand(@NotNull CompositeCommand parent) {
+    public DynRewardListCommand(@NotNull CompositeCommand parent) {
         super(parent, "<reward-id>");
     }
 
@@ -24,6 +24,6 @@ public class DynRewardListAdminCommand extends CompositeCommand implements Dynam
     protected void setup() {
         this.inheritPermission();
 
-        new PercentageAdminCommand(this);
+        this.addChildren(new PercentageCommand(this));
     }
 }

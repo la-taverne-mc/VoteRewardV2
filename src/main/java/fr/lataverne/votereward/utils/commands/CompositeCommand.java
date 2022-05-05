@@ -1,6 +1,8 @@
-package fr.lataverne.votereward.commands;
+package fr.lataverne.votereward.utils.commands;
 
 import fr.lataverne.votereward.VoteReward;
+import fr.lataverne.votereward.commands.common.ConfirmCommand;
+import fr.lataverne.votereward.commands.common.HelpCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,13 +19,13 @@ public abstract class CompositeCommand extends Command {
 
     protected final int level;
 
-    @SuppressWarnings("FieldNotUsedInToString")
     protected final @Nullable CompositeCommand parent;
 
-    @SuppressWarnings("FieldNotUsedInToString")
     protected final VoteReward plugin;
 
     private final String configPath;
+
+    private final Collection<Parameter> parameters = new ArrayList<>();
 
     private final Map<String, CompositeCommand> subCommandAliases = new LinkedHashMap<>();
 
@@ -48,10 +50,11 @@ public abstract class CompositeCommand extends Command {
 
         this.setDescription(this.configPath + ".description");
         this.setUsage(this.configPath + ".usage");
+        this.setPermission();
         this.setup();
 
         if (this.getSubCommand("help") == null && !"help".equals(label)) {
-            new HelpCommand(this);
+            this.addChildren(new HelpCommand(this));
         }
 
         if (this.plugin.getCommand(label) == null) {
@@ -81,10 +84,31 @@ public abstract class CompositeCommand extends Command {
 
         this.setDescription(this.configPath + ".description");
         this.setUsage(this.configPath + ".usage");
+        this.setPermission();
         this.setup();
 
         if (this.getSubCommand("help") == null && !"help".equals(label)) {
-            new HelpCommand(this);
+            this.addChildren(new HelpCommand(this));
+        }
+    }
+
+    public boolean canExecute(CommandSender sender, boolean sendMessage) {
+        if (this.onlyPlayer && !(sender instanceof Player)) {
+            if (sendMessage) {
+                sender.sendMessage(this.plugin.getConfig().getString("messages.error.use-only-in-game"));
+            }
+            return false;
+        }
+
+        if (sender.isOp() || this.getPermission() == null || sender.hasPermission(this.getPermission())) {
+            return true;
+        } else {
+            if (sendMessage) {
+                sender.sendMessage(this.plugin.getConfig()
+                                              .getString("messages.error.no-permission")
+                                              .replace("[permission]", this.getPermission()));
+            }
+            return false;
         }
     }
 
@@ -119,6 +143,10 @@ public abstract class CompositeCommand extends Command {
                 COMMANDS + this.description);
     }
 
+    public final @Nullable String getParameters() {
+        return this.plugin.getConfig().getString(COMMANDS + this.configPath + ".parameters");
+    }
+
     @Contract(pure = true)
     public final @NotNull Collection<CompositeCommand> getSubCommands() {
         return this.subCommands.values().stream().filter(compositeCommand -> !compositeCommand.hidden).toList();
@@ -148,11 +176,11 @@ public abstract class CompositeCommand extends Command {
 
     public final void misuseCommand(@NotNull CommandSender sender) {
         String usage = this.getUsage();
-        String parameters = this.getParameters();
+        String params = this.getParameters();
 
         sender.sendMessage(this.plugin.getConfig().getString("messages.error.misuse-command"));
-        sender.sendMessage(ChatColor.RED + usage + (parameters != null
-                                                    ? " " + parameters
+        sender.sendMessage(ChatColor.RED + usage + (params != null
+                                                    ? " " + params
                                                     : ""));
         sender.sendMessage(ChatColor.RED + this.plugin.getConfig().getString("messages.tips.help-command"));
     }
@@ -161,13 +189,13 @@ public abstract class CompositeCommand extends Command {
         this.onlyPlayer = onlyPlayer;
     }
 
+    public void setPermission() {
+        super.setPermission(this.parent.getPermission() + "." + this.getLabel());
+    }
+
     public boolean showHelp(CommandSender sender) {
         CompositeCommand helpCommand = this.getSubCommand("help");
-        if (helpCommand != null) {
-            return helpCommand.call(sender, "help", new ArrayList<>());
-        } else {
-            return false;
-        }
+        return helpCommand != null && helpCommand.call(sender, "help", new ArrayList<>());
     }
 
     @Override
@@ -206,46 +234,21 @@ public abstract class CompositeCommand extends Command {
         }
     }
 
-    @Override
-    public final @NotNull String toString() {
-        return "CompositeCommand{" + "configPath='" + this.configPath + "'" + ", label='" + this.getLabel() + "'" +
-               ", subCommands=" + this.subCommands + ", subCommandAliases=" + this.subCommandAliases +
-               ", permission='" + this.getPermission() + "'" + ", level=" + this.level + ", topLabel='" +
-               this.topLabel + "'" + ", description='" + this.description + "'" + ", usageMessage='" +
-               this.usageMessage + "'" + ", onlyPlayer=" + this.onlyPlayer + ", hidden=" + this.hidden + "}";
+    protected void addChildren(@NotNull CompositeCommand subCommand) {
+        this.parameters.add(new Parameter(subCommand.getLabel(), false));
+    }
+
+    protected void addChildren(String parameter, boolean isOptional) {
+        this.parameters.add(new Parameter(parameter, isOptional));
     }
 
     protected final boolean call(CommandSender sender, String label, List<String> args) {
         return this.canExecute(sender, true) && this.execute(sender, label, args);
     }
 
-    protected boolean canExecute(CommandSender sender, boolean sendMessage) {
-        if (this.onlyPlayer && !(sender instanceof Player)) {
-            if (sendMessage) {
-                sender.sendMessage(this.plugin.getConfig().getString("messages.error.use-only-in-game"));
-            }
-            return false;
-        }
-
-        if (sender.isOp() || this.getPermission() == null || sender.hasPermission(this.getPermission())) {
-            return true;
-        } else {
-            if (sendMessage) {
-                sender.sendMessage(this.plugin.getConfig()
-                                              .getString("messages.error.no-permission")
-                                              .replace("[permission]", this.getPermission()));
-            }
-            return false;
-        }
-    }
-
     protected boolean execute(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
         this.misuseCommand(sender);
         return true;
-    }
-
-    protected final @Nullable String getParameters() {
-        return this.plugin.getConfig().getString(COMMANDS + this.configPath + ".parameters");
     }
 
     protected @Nullable CompositeCommand getSubCommand(@NotNull String label) {
@@ -265,7 +268,7 @@ public abstract class CompositeCommand extends Command {
                                                                           .findFirst();
 
                 if (dynamicCommand.isPresent()) {
-                    subCommand = (CompositeCommand) dynamicCommand.get();
+                    subCommand = dynamicCommand.get();
                 }
             }
         }

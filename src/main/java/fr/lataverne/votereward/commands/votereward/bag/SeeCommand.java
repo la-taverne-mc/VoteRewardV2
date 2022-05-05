@@ -35,6 +35,5 @@ public class SeeCommand extends CompositeCommand {
 
     @Override
     protected void setup() {
-        this.setPermission("votereward.bag.see");
     }
 }

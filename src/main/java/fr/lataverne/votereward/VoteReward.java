@@ -1,6 +1,7 @@
 package fr.lataverne.votereward;
 
 import fr.lataverne.votereward.commands.VoteRewardCommand;
+import fr.lataverne.votereward.commands.VoteRewardConsoleCommand;
 import fr.lataverne.votereward.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -88,6 +89,7 @@ public class VoteReward extends JavaPlugin {
         this.chatResponseManager = new ChatResponseManager(this);
 
         new VoteRewardCommand();
+        new VoteRewardConsoleCommand();
 
         Listener eventListener = new EventListener(this);
         Bukkit.getPluginManager().registerEvents(eventListener, this);

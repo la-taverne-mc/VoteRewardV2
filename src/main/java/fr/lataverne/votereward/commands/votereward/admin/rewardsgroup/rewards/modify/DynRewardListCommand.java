@@ -22,8 +22,6 @@ public class DynRewardListCommand extends DynamicCommand {
 
     @Override
     protected void setup() {
-        this.inheritPermission();
-
         this.addChildren(new PercentageCommand(this));
     }
 }

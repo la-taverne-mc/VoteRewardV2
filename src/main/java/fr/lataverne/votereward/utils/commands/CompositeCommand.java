@@ -190,7 +190,9 @@ public abstract class CompositeCommand extends Command {
     }
 
     public void setPermission() {
-        super.setPermission(this.parent.getPermission() + "." + this.getLabel());
+        super.setPermission(this.parent == null
+                            ? this.getLabel()
+                            : this.parent.getPermission() + "." + this.getLabel());
     }
 
     public boolean showHelp(CommandSender sender) {

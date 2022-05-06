@@ -22,7 +22,11 @@ public class ModifyCommand extends CompositeCommand {
 
     @Override
     protected @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-        RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(args.get(this.level - 2));
+        RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(args.get(this.level - 3));
+
+        if (rewardsGroup == null) {
+            return new ArrayList<>();
+        }
 
         List<String> cmdArgs = args.subList(this.level, args.size());
         return cmdArgs.isEmpty() || cmdArgs.size() == 1

@@ -1,4 +1,4 @@
-package fr.lataverne.votereward.commands.votereward.admin.rewardsgroup;
+package fr.lataverne.votereward.commands.votereward.admin.rewardsgroup.rewards;
 
 import fr.lataverne.votereward.objects.AchievableReward;
 import fr.lataverne.votereward.objects.RewardsGroup;
@@ -12,14 +12,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AddRewardCommand extends CompositeCommand {
+public class AddCommand extends CompositeCommand {
 
     private static final String PERCENTAGE = "[percentage]";
 
     private static final String REWARDS_GROUP_NAME = "[rewards-group-name]";
 
-    public AddRewardCommand(@NotNull CompositeCommand parent) {
-        super(parent, "addreward", "add");
+    public AddCommand(@NotNull CompositeCommand parent) {
+        super(parent, "add");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AddRewardCommand extends CompositeCommand {
             sender.sendMessage(this.plugin.getConfig()
                                           .getString("messages.admin.rewards-group.add-reward.nothing-in-main-hand"));
         } else {
-            String rewardsGroupName = args.get(this.level - 2);
+            String rewardsGroupName = args.get(this.level - 3);
             RewardsGroup rewardsGroup = this.plugin.getRewardsGroupManager().getRewardGroup(rewardsGroupName);
 
             Reward reward = Reward.getReward(item);

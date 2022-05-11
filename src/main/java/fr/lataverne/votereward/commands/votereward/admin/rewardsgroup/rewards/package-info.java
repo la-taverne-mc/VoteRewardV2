@@ -1,0 +1,1 @@
+package fr.lataverne.votereward.commands.votereward.admin.rewardsgroup.rewards;

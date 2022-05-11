@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Config files" pattern="file:src/main/resources/config.yml" />
+</component>
